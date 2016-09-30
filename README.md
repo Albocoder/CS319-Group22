@@ -15,4 +15,3 @@ Description:
 <p>
 Then the player will have their chat saved in our databases and he/she can later share it. The more the player plays the more they can earn points. In different events users can participate with the plots they have played before for that particular event's scenario and be voted by the readers as "Best Actor", "Best Villain", "Best Supportive Character" etc. The more they earn achievements the more they climb the "Hall of Fame" board.
 </p>
-<p>The player can also form private lobbies with pre-made team and create their own scenario and characters. But it won't be acknowledged in any voting event.</p>
