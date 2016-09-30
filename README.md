@@ -1,6 +1,6 @@
 # CS319-Group22
 Object-Oriented Software Engineering Fall 2016
-</hr>
+<hr />
 ###Members:
 <ul>
 <li>ALI GÜNEŞ</li>
@@ -8,3 +8,6 @@ Object-Oriented Software Engineering Fall 2016
 <li>ERIN AVLLAZAGAJ</li>
 <li>ERTUĞRUL AKAY</li>
 </ul>
+<hr />
+Description:
+<p></p>
