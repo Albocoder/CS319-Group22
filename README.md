@@ -1,5 +1,5 @@
 # CS319-Group22 project "Be Someone Else"
-Object-Oriented Software Engineering Fall 2016
+Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, that will motivate us.
 <hr />
 ### Members:
 <ul>
