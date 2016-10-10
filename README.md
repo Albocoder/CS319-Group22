@@ -10,7 +10,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 </ul>
 <hr />
 ### News
-1. Meeting 3 added in wiki.
+1- Meeting 3 added in wiki.
 <hr>
 ### Wiki page
 An update on meetings and any decision of the group will be written down in the wiki page <a href="https://github.com/Albocoder/CS319-Group22/wiki" >here</a>.
