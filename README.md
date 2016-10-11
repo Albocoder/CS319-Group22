@@ -10,7 +10,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 </ul>
 <hr />
 ### News
-2- Meeting 4 added in wiki
+2- Meeting 4 added in wiki<br>
 1- Meeting 3 added in wiki.
 <hr>
 ### Wiki page
