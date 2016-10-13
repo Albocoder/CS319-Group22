@@ -10,7 +10,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 </ul>
 <hr />
 ### News
-3- Cancelled meeting on Thursday to give time evryone do their task <br>
+3- Cancelled meeting on Thursday to give time everyone do their task <br>
 2- Meeting 4 added in wiki<br>
 1- Meeting 3 added in wiki.
 <hr>
