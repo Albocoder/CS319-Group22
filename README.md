@@ -22,3 +22,9 @@ An update on meetings and any decision of the group will be written down in the 
 </p>
 <p>
 Then the player will have their chat saved in our databases and he/she can later share it. The more the player plays the more they can earn points. The user can then review his play by reading what was saved.
+<hr />
+### Documents
+<ol>
+<li><a href="https://docs.google.com/document/d/1Mt_w4YM0yXP6K4x1gDQ2HkVc-V8cEorFd96zPhOmGLk/edit?usp=sharing">Analysis Report 1</a></li>
+<li></li>
+</ol>
