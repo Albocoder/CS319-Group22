@@ -26,5 +26,5 @@ Then the player will have their chat saved in our databases and he/she can later
 ### Documents
 <ol>
 <li><a href="https://docs.google.com/document/d/1Mt_w4YM0yXP6K4x1gDQ2HkVc-V8cEorFd96zPhOmGLk/edit?usp=sharing">Analysis Report 1</a></li>
-<li></li>
+<li><a href="https://drive.google.com/open?id=0BwarO5T4uRH5YTFWZC0yQ1N5RTA</a>Analysis Report 1 (Downloadable PDF Version)</li>
 </ol>
