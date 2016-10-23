@@ -8,7 +8,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 <li>ERIN AVLLAZAGAJ</li>
 <li>ERTUĞRUL AKAY</li>
 </ul>
-<hr />
+<hr /> 
 ### News
 5- Reminder: Next meeting is on Sunday will be 4 hours starting at 10:30 in SA building. <br>
 4- Cancelled meeting on Sunday and Thursday due to heavy workload <br>
