@@ -11,6 +11,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 </ul>
 <hr /> 
 ### News
+7- New meeting announced! Check the wiki page.<br>
 6- Meetings updated at wiki! Next meeting time announced! Please be there at least 5 minutes earlier!<br>
 5- Reminder: Next meeting is on Sunday will be 4 hours starting at 10:30 in SA building. <br>
 4- Cancelled meeting on Sunday and Thursday due to heavy workload <br>
