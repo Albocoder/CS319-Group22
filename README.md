@@ -36,4 +36,5 @@ Then the player will have their chat saved in our databases and he/she can later
 <ol>
 <li><a href="https://drive.google.com/open?id=0BwarO5T4uRH5YTFWZC0yQ1N5RTA"> Analysis Report 1</a></li>
 <li><a href= "https://drive.google.com/file/d/0BwarO5T4uRH5aTNRYk45dzhlTlk/view?usp=sharing" > Extended Story Lore</a></li>
+<li><a href="https://docs.google.com/document/d/1RDlcQgzhPQ4OoRu9781tc-6XM0EhNj4Q9oFhTJhgoxQ/edit?usp=sharing">Story found while procrastinating</a></li>
 </ol>
