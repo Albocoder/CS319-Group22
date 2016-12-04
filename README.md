@@ -11,6 +11,7 @@ Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, 
 </ul>
 <hr /> 
 ### News
+12-Wiki page updated to the latest meeting's results!<br>
 11-Meeting on Sunday cancelled<br>
 10-Meeting on Sunday 12 PM rather than the usual 2 PM. At 76 study room.<br>
 9- Meeting on Sunday cancelled due to heavy workload on other subjects<br>
