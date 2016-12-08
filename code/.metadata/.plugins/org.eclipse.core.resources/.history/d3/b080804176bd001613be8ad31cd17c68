@@ -1,0 +1,33 @@
+import javax.swing.JFrame;
+
+public class HomeView extends JFrame implements Viewable{
+	
+	public HomeView(){
+		
+	}
+
+	@Override
+	public void terminateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

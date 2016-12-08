@@ -1,0 +1,65 @@
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
+public class HomeView extends JFrame implements Viewable{
+	
+	//private HomePage mainData;
+	private ViewManager referrer;
+	private JScrollPane onWaitLobbies;
+	private JLabel profilePic;
+	private JButton logoutButton;
+	private JButton viewFinished;
+	private JComboBox onGoing;
+	private JButton createLobby;
+	private JLabel onlineUsers;
+	
+	public HomeView(){
+		
+	}
+	
+	public void logout() {
+		// TODO - implement HomeView.logout
+		throw new UnsupportedOperationException();
+	}
+
+	public void createLobby() {
+		// TODO - implement HomeView.createLobby
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param aLobby
+	 */
+	public void joinLobby(Lobby aLobby) {
+		// TODO - implement HomeView.joinLobby
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void terminateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

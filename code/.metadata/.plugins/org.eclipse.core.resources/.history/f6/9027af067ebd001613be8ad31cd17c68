@@ -1,0 +1,95 @@
+/*==================================================================
+ * Author: Erin Avllazagaj AKA "Albocoder"
+ * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
+ * Date: Dec/07/2016
+ * Version: 1.0.0
+ *==================================================================
+ * Referrer: https://github.com/Albocoder/CS319-Group22
+ *==================================================================
+ * Changelog:
+ *==================================================================
+ * Description:
+ * This class is the homepage view that the user will see when 
+ * logged in.
+ * */
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.awt.*;
+
+public class HomeView extends JFrame implements Viewable{
+	
+	//private HomePage mainData;
+	private ViewManager referrer;
+	private JScrollPane onWaitLobbies;
+	private JLabel profilePic;
+	private JButton logoutButton;
+	private JButton viewFinished;
+	private JComboBox onGoing;
+	private JButton createLobby;
+	private JLabel onlineUsers;
+	
+	private ArrayList<JPanel> lobbies;
+	private JPanel lobbiesContainer;
+	
+	public HomeView(ViewManager ref){
+		referrer = ref;
+		onWaitLobbies = new JScrollPane();
+		lobbiesContainer = new JPanel();
+		lobbiesContainer.setLayout(new GridLayout(/*mainData.getLobbiesWaiting().size()*/9,1));
+		for(Lobby l:mainData.getLobbiesWaiting()){
+			JPanel tmpLobby = new JPanel(new BorderLayout());
+			tmpLobby.add(new JPanel(), BorderLayout.NORTH);
+			tmpLobby.add(new JPanel(), BorderLayout.SOUTH);
+			tmpLobby.add(new JPanel(), BorderLayout.EAST);
+			tmpLobby.add(new JPanel(), BorderLayout.WEST);
+			JPanel toFill = new JPanel(new BorderLayout());
+			JLabel icon = new JLabel();
+			icon.setIcon(null);
+			toFill.add(,BorderLayout.WEST);
+			tmpLobby.add(, BorderLayout.CENTER);
+			lobbies.add()
+		}
+	}
+	
+	public void logout() {
+		// TODO - implement HomeView.logout
+		throw new UnsupportedOperationException();
+	}
+
+	public void createLobby() {
+		// TODO - implement HomeView.createLobby
+		throw new UnsupportedOperationException();
+	}
+
+	public void joinLobby(/*Lobby aLobby   ******** uncomment when Lobby is created ***********/) {
+		// TODO - implement HomeView.joinLobby
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void terminateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

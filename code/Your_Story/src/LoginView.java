@@ -22,6 +22,7 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class LoginView extends JFrame implements Viewable{
 	private JTextField username;
 	private JPasswordField password;
@@ -48,10 +49,12 @@ public class LoginView extends JFrame implements Viewable{
         BufferedImage gameIcon = null;
         // Game's icon
         try {
+        	/////// get image and resize it///////////////////////////////////////////////
         	FileInputStream fis = new FileInputStream(new File("./img/gameWelcome.jpg"));
         	gameIcon = ImageIO.read(fis);
         	Image dimg = gameIcon.getScaledInstance(387, 290,Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(dimg);
+            //////////////////////////////////////////////////////////////////////////////
             icon = new JLabel();
             icon.setBounds(10, 10, 387, 290);
             icon.setIcon(imageIcon);
