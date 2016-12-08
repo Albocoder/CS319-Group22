@@ -1,0 +1,8 @@
+
+public interface Viewable {
+	ViewManager referrer = null;
+	public void terminateView();
+	public void hideView();
+	public void updateView();
+	public void showView();
+}

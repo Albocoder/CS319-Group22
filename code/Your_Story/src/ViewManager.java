@@ -1,3 +1,17 @@
+/*==================================================================
+ * Author: Erin Avllazagaj AKA "Albocoder"
+ * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
+ * Date: Dec/07/2016
+ * Version: 1.0.0
+ *==================================================================
+ * Referrer: https://github.com/Albocoder/CS319-Group22
+ *==================================================================
+ * Changelog:
+ *==================================================================
+ * Description:
+ * This class is the one responsible for managing and coordinating
+ * the views.
+ * */
 import java.util.*;
 
 public class ViewManager {
