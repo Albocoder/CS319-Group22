@@ -32,10 +32,8 @@ public class HomeView extends JFrame implements Viewable{
 	private JButton createLobby;
 	private JLabel onlineUsers;
 	
-	//newly added classes
 	private ArrayList<JPanel> lobbies;
 	private JPanel lobbiesContainer;
-	private JPanel allTheThings;
 	
 	public HomeView(ViewManager ref){
 		referrer = ref;
@@ -78,21 +76,8 @@ public class HomeView extends JFrame implements Viewable{
 			lobbies.add(tmpLobby);
 		}
 		onWaitLobbies.add(lobbiesContainer);
-		profilePic = new JLabel();
 		profilePic.setIcon(null/*mainData.getPlayer().getProfile().getPhoto()*/);
-		logoutButton = new JButton("Logout");
-		viewFinished = new JButton("Finished Games");
-		onGoing = new JComboBox();
-		onGoing.addItem("Ongoing Games");
-		for(int i = 0; i < 1; i++/*Lobby l:mainData.getPlayer().getOngoingGames()*/){
-			onGoing.addItem("Secret Lobby"/*l.getName()*/);
-		}
-		//add listeners for the combobox and the buttons(especially finished games button)
-		createLobby = new JButton("Create Lobby");
-		onlineUsers = new JLabel("Online users: "/*+mainData.getOnlineUsers()*/);
 		
-		// add all the things created above to one JPanel and add that JPanel to the JFrame
-		allTheThings = new JPanel( new BorderLayout());// TODO - do this crap here
 	}
 	
 	public void logout() {
