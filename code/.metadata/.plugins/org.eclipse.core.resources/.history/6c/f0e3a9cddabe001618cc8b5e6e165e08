@@ -1,0 +1,253 @@
+/*==================================================================
+ * Author: Erin Avllazagaj AKA "Albocoder"
+ * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
+ * Date: Dec/07/2016
+ * Version: 1.0.0
+ *==================================================================
+ * Referrer: https://github.com/Albocoder/CS319-Group22
+ *==================================================================
+ * Changelog:
+ *==================================================================
+ * Description:
+ * This class is the homepage view that the user will see when 
+ * logged in.
+ * */
+import javax.swing.border.EtchedBorder;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Random;
+import java.awt.*;
+
+@SuppressWarnings("serial")
+public class HomeView extends JFrame implements Viewable{
+
+	//private HomePage mainData;
+	private ViewManager referrer;
+	private JScrollPane onWaitLobbies;
+	private JLabel profilePic;
+	private JButton logoutButton;
+	private JButton viewFinished;
+	private JComboBox onGoing;
+	private JButton createLobby;
+	private JLabel onlineUsers;
+
+	//newly added classes
+	private ArrayList<JPanel> lobbies;
+	private JPanel lobbiesContainer;
+	private JPanel allTheThings;
+
+	public HomeView(ViewManager ref){
+		
+		Random r = new Random();
+		getContentPane().setBackground(new Color(0, 0, 0));
+		referrer = ref;
+		lobbies = new ArrayList<JPanel>();
+		
+		lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/9,1));
+		//lobbiesContainer.setPreferredSize(new Dimension());
+
+		for(int i = 0; i < 9; i++/*Lobby l:mainData.getLobbiesWaiting()*/){
+			JPanel emptyPanel = new JPanel();
+			Color c = new Color(r.nextInt(155),r.nextInt(155),r.nextInt(155));
+			emptyPanel.setBackground(c);
+			JPanel tmpLobby = new JPanel(new BorderLayout());
+			tmpLobby.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+			tmpLobby.setBackground(c);
+			//this sets up a padding from the border to the components
+			tmpLobby.add(emptyPanel, BorderLayout.NORTH);
+			tmpLobby.add(emptyPanel, BorderLayout.SOUTH);
+			tmpLobby.add(emptyPanel, BorderLayout.EAST);
+			tmpLobby.add(emptyPanel, BorderLayout.WEST);
+			//here add the specifics for each lobby
+			JPanel toFill = new JPanel(new BorderLayout());
+			
+			toFill.setBackground(c);
+			
+			//adding the icon to the left
+			JLabel icon = new JLabel();
+			try {
+				/////// get image and resize it///////////////////////////////////////////////
+				FileInputStream fis = new FileInputStream(new File("./img/castleBlack.jpg"));
+				BufferedImage gameIcon = ImageIO.read(fis);
+				Image dimg = gameIcon.getScaledInstance(50, 50,Image.SCALE_SMOOTH);
+				ImageIcon imageIcon = new ImageIcon(dimg);
+				//////////////////////////////////////////////////////////////////////////////
+				icon.setIcon(imageIcon);
+				icon.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			toFill.add(icon,BorderLayout.WEST);
+
+			JLabel lobbyName = new JLabel("Best Lobby"/*l.getName()*/);
+			lobbyName.setForeground(Color.WHITE);
+			toFill.add(lobbyName,BorderLayout.NORTH);
+
+			JLabel lobbyQuota = new JLabel();
+			lobbyQuota.setText("4"/*l.getQuota()*/+"/"+"5"/*l.getSeats().size()*/);
+			lobbyQuota.setForeground(Color.WHITE);
+			toFill.add(lobbyQuota,BorderLayout.SOUTH);
+
+			JLabel storyTimeline = new JLabel("Timeline: "/*+l.getStory().getTimeline()*/);
+			storyTimeline.setForeground(Color.WHITE);
+			toFill.add(storyTimeline,BorderLayout.CENTER);
+
+			tmpLobby.add(toFill, BorderLayout.CENTER);
+			
+			//adding the listeners for the components
+			//tmpLobby.addMouseListener(l);
+
+			lobbiesContainer.add(tmpLobby,BorderLayout.CENTER);
+			lobbies.add(tmpLobby);
+		}
+		
+		onWaitLobbies = new JScrollPane(lobbiesContainer);
+		onWaitLobbies.getVerticalScrollBar().setUnitIncrement(16);
+		
+		profilePic = new JLabel();
+		try {
+			/////// get image and resize it///////////////////////////////////////////////
+			FileInputStream fis = new FileInputStream(new File("./img/gameWelcome.jpg"));
+			BufferedImage gameIcon = ImageIO.read(fis);
+			Image dimg = gameIcon.getScaledInstance(200, 200,Image.SCALE_SMOOTH);
+			ImageIcon imageIcon = new ImageIcon(dimg);
+			//////////////////////////////////////////////////////////////////////////////
+			profilePic.setIcon(imageIcon/*mainData.getPlayer().getProfile().getPhoto()*/);
+			profilePic.setBorder(BorderFactory.createLineBorder(
+					new Color(r.nextInt(155),r.nextInt(155),r.nextInt(155)), 5));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		
+		logoutButton = new JButton("Logout");
+		try {
+			/////// get image and resize it///////////////////////////////////////////////
+			FileInputStream fis = new FileInputStream(new File("./img/logout.png"));
+			Image gameIcon = ImageIO.read(fis);
+			ImageIcon imageIcon = new ImageIcon(gameIcon);
+			//////////////////////////////////////////////////////////////////////////////
+			logoutButton.setIcon(imageIcon);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		viewFinished = new JButton("Finished Games"); 
+		try {
+			/////// get image and resize it///////////////////////////////////////////////
+			FileInputStream fis = new FileInputStream(new File("./img/finished.png"));
+			Image gameIcon = ImageIO.read(fis);
+			ImageIcon imageIcon = new ImageIcon(gameIcon);
+			//////////////////////////////////////////////////////////////////////////////
+			viewFinished.setIcon(imageIcon);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		
+		onGoing = new JComboBox();
+		onGoing.addItem("Ongoing Games");
+		for(int i = 0; i < 1; i++/*Lobby l:mainData.getPlayer().getOngoingGames()*/){
+			onGoing.addItem("Secret Lobby"/*l.getName()*/);
+		}
+		
+		createLobby = new JButton("Create Lobby");
+		try {
+			/////// get image and resize it///////////////////////////////////////////////
+			FileInputStream fis = new FileInputStream(new File("./img/create.png"));
+			Image gameIcon = ImageIO.read(fis);
+			ImageIcon imageIcon = new ImageIcon(gameIcon);
+			//////////////////////////////////////////////////////////////////////////////
+			createLobby.setIcon(imageIcon);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		onlineUsers = new JLabel("Online users: 286"/*+mainData.getOnlineUsers()/*remove 286*/);
+		onlineUsers.setFont(new Font("SansSerif", Font.BOLD, 10));
+		onlineUsers.setBackground(Color.BLACK);
+		onlineUsers.setForeground(Color.GREEN);
+		
+		//TODO- add listeners for the combobox and the buttons(especially finished games button)
+		// add all the things created above to one JPanel and add that JPanel to the JFrame
+		
+		allTheThings = new JPanel( new BorderLayout());// TODO - do this crap here 
+		allTheThings.setPreferredSize(new Dimension(550,600));
+		allTheThings.add(onWaitLobbies,BorderLayout.CENTER);
+		JPanel theRest = new JPanel(new GridLayout(4,1));
+		JPanel nullOne = new JPanel();
+		JPanel profPicPan = new JPanel();
+		theRest.add(profilePic);
+		theRest.setBackground(Color.BLACK);
+		
+		
+		nullOne.setBackground(Color.BLACK);
+		
+		JPanel finOngoing = new JPanel(new BorderLayout());
+		finOngoing.add(viewFinished,BorderLayout.NORTH);
+		finOngoing.add(onGoing,BorderLayout.SOUTH);
+		finOngoing.add(nullOne,BorderLayout.CENTER);
+		finOngoing.setBackground(Color.BLACK);
+		
+		theRest.add(finOngoing);
+		
+		JPanel logCreate = new JPanel(new BorderLayout());
+		logCreate.add(createLobby,BorderLayout.NORTH);
+		logCreate.add(onlineUsers,BorderLayout.SOUTH);
+		logCreate.add(nullOne,BorderLayout.CENTER);
+		logCreate.setBackground(Color.BLACK);
+		
+		theRest.add(logCreate);
+		
+		theRest.add(logoutButton);
+		
+		allTheThings.add(theRest,BorderLayout.EAST);
+		add(allTheThings);
+		pack();
+		showView();
+	}
+
+	public void logout() {
+		// TODO - implement HomeView.logout
+		throw new UnsupportedOperationException();
+	}
+
+	public void createLobby() {
+		// TODO - implement HomeView.createLobby
+		throw new UnsupportedOperationException();
+	}
+
+	public void joinLobby(/*Lobby aLobby   ******** uncomment when Lobby is created ***********/) {
+		// TODO - implement HomeView.joinLobby
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void terminateView() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hideView() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateView() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void showView() {
+		this.setVisible(true);
+	}
+
+}

@@ -26,7 +26,7 @@ public class ViewManager {
 	
 	public ViewManager(){
 		hiddenViews = new ArrayList<Viewable>();
-		login = new LoginView();
+		login = new LoginView(this);
 		login.setVisible(true);
 	}
 	

@@ -1,0 +1,20 @@
+import java.sql.Connection;
+
+import thirdparty.DBConn;
+
+public class DBInterface {
+
+	private static DBConn c;
+	private static Connection con;
+
+	public DBInterface(){
+		//c = new DBConn("mysql","dormstudios.com://localhost","3306","dormlotk_yourstory","dormlotk_ys","your319");
+	}
+
+	public static void main(String[] args){
+		c = new DBConn("mysql","localhost","3306","myDBs","root","Asdf!234");
+		System.out.println("Hi!");
+		con = c.ConnectToDB();
+	}
+
+}
