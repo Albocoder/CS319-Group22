@@ -45,7 +45,8 @@ public class DBInter {
 	}
 
 	//for selections
-	public ResultSet selectStuff(String query, int timeout) throws InterruptedException {
+	public ResultSet selectStuff(String query) throws InterruptedException {
+		int timeout = 0;
 		Statement stat;
 		ResultSet rs = null;
 		try {
