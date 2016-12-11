@@ -1,3 +1,5 @@
+package thirdparty;
+
 
 
 /*==================================================================
@@ -28,7 +30,7 @@ import java.util.logging.Logger;
 public class DBInter {
 	private Connection c;
 
-	DBInter(Connection con){
+	public DBInter(Connection con){
 		c = con;
 	}
 	

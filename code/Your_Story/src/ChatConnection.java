@@ -1,5 +1,5 @@
-
 import java.sql.ResultSet;
+import thirdparty.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,11 +20,7 @@ public class ChatConnection {
     }
     public static String[] getMessages(int lobby, int lastMessage){
         ResultSet r = null;
-        try {
-			r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
         return DBInterface.resultSetToStringArray(r);
     }
     public static int sendMessage(String message, int lobby){
