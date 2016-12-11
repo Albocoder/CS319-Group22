@@ -50,7 +50,7 @@ public class LoginView extends JFrame implements Viewable{
         // Game's icon
         try {
         	/////// get image and resize it///////////////////////////////////////////////
-        	FileInputStream fis = new FileInputStream(new File("./img/gameWelcome.jpg"));
+        	FileInputStream fis = new FileInputStream(new File("./img/YS.png"));
         	gameIcon = ImageIO.read(fis);
         	Image dimg = gameIcon.getScaledInstance(387, 290,Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(dimg);

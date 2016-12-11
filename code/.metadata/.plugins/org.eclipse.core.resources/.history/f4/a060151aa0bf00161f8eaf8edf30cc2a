@@ -280,7 +280,7 @@ public class HomeView extends JFrame implements Viewable{
 		pack();
 		showView();
 		
-		
+		/*
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -308,7 +308,7 @@ public class HomeView extends JFrame implements Viewable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 
 	public void logout() {
