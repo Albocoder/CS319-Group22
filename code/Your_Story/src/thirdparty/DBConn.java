@@ -1,4 +1,4 @@
-package thirdparty;
+
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr

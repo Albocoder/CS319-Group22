@@ -1,4 +1,4 @@
-package thirdparty;
+
 
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class DBInter {
@@ -45,8 +47,8 @@ public class DBInter {
 	}
 
 	//for selections
-	public ResultSet selectStuff(String query) throws InterruptedException {
-		int timeout = 0;
+	public ResultSet selectStuff(String query) {
+            int timeout = 0;
 		Statement stat;
 		ResultSet rs = null;
 		try {
@@ -56,7 +58,11 @@ public class DBInter {
 			rs = stat.executeQuery(query);
 		} catch (SQLException e) {
 			if(e.getMessage().equalsIgnoreCase("terminating connection due to administrator command"))
-				Thread.sleep(300000);
+				try {
+                                    Thread.sleep(300000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(DBInter.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 			writeLog( "Selecting data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
 		}
 		return rs;
