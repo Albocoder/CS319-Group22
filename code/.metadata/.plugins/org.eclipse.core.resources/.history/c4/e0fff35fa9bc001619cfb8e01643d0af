@@ -1,9 +1,0 @@
-
-public interface Viewable {
-	ViewManager referrer = null;
-	//changed the method names because the show() method was overriding something else
-	public void terminateView();
-	public void hideView();
-	public void updateView();
-	public void showView();		
-}
