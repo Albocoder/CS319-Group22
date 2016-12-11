@@ -19,8 +19,12 @@ public class ChatConnection {
         return DBInterface.selectStringArray(CHAT_DATA, "body", "lobby", id);
     }
     public static String[] getMessages(int lobby, int lastMessage){
-        ResultSet r;
-        r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
+        ResultSet r = null;
+        try {
+			r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
         return DBInterface.resultSetToStringArray(r);
     }
     public static int sendMessage(String message, int lobby){

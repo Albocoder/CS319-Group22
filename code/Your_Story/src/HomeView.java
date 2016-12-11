@@ -6,7 +6,8 @@
  *==================================================================
  * Referrer: https://github.com/Albocoder/CS319-Group22
  *==================================================================
- * Changelog:
+ * Changelog: added some more classes to increase efficiency with 
+ * tradeoff of memory
  *==================================================================
  * Description:
  * This class is the homepage view that the user will see when 
@@ -40,7 +41,7 @@ public class HomeView extends JFrame implements Viewable{
 	//newly added classes
 	private ArrayList<JPanel> lobbies;
 	private JPanel lobbiesContainer;
-	private JPanel allTheThings;
+	private JPanel theRest;
 
 	public HomeView(ViewManager ref){
 		setTitle("Your Story - Home Page");
@@ -49,11 +50,11 @@ public class HomeView extends JFrame implements Viewable{
 		getContentPane().setBackground(new Color(0, 0, 0));
 		referrer = ref;
 		lobbies = new ArrayList<JPanel>();
-		
-		lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/9,1));
+
+		lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/50,1));
 		//lobbiesContainer.setPreferredSize(new Dimension());
 
-		for(int i = 0; i < 9; i++/*Lobby l:mainData.getLobbiesWaiting()*/){
+		for(int i = 0; i < 50; i++/*Lobby l:mainData.getLobbiesWaiting()*/){
 			JPanel emptyPanel = new JPanel();
 			Color c = new Color(r.nextInt(155),r.nextInt(155),r.nextInt(155));
 			emptyPanel.setBackground(c);
@@ -65,21 +66,19 @@ public class HomeView extends JFrame implements Viewable{
 			tmpLobby.add(emptyPanel, BorderLayout.SOUTH);
 			tmpLobby.add(emptyPanel, BorderLayout.EAST);
 			tmpLobby.add(emptyPanel, BorderLayout.WEST);
-			
+
 			//here add the specifics for each lobby
 			JPanel toFill = new JPanel(new BorderLayout());
-			JPanel toFillCenter = new JPanel(new GridLayout(3,1));
 			toFill.setBackground(c);
-			toFillCenter.setBackground(c);
-			
+
 			//adding the icon to the left
 			JLabel icon = new JLabel();
-			
+
 			try {
 				/////// get image and resize it///////////////////////////////////////////////
 				FileInputStream fis = new FileInputStream(new File("./img/castleBlack.jpg")/*get database image*/);
 				BufferedImage gameIcon = ImageIO.read(fis);
-				Image dimg = gameIcon.getScaledInstance(50, 50,Image.SCALE_SMOOTH);
+				Image dimg = gameIcon.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
 				ImageIcon imageIcon = new ImageIcon(dimg);
 				//////////////////////////////////////////////////////////////////////////////
 				icon.setIcon(imageIcon);
@@ -87,26 +86,28 @@ public class HomeView extends JFrame implements Viewable{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			toFill.add(icon,BorderLayout.WEST);
-			
-			
+
+
 			JLabel lobbyName = new JLabel("Best Lobby"/*l.getName()*/);
 			try {
-			    Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
-			    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")));
-			    lobbyName.setFont(customFont);
+				Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
+				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")));
+				lobbyName.setFont(customFont);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			lobbyName.setForeground(Color.WHITE);
 			lobbyName.setHorizontalAlignment(JLabel.CENTER);
+			lobbyName.setVerticalAlignment(JLabel.NORTH);
 			toFill.add(lobbyName,BorderLayout.NORTH);
 
 			JLabel lobbyQuota = new JLabel("Player(s): "+"4"/*l.getQuota()*/+"/"+"5"/*l.getSeats().size()*/);
 			lobbyQuota.setForeground(Color.WHITE);
 			lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
+			lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
 			toFill.add(lobbyQuota,BorderLayout.SOUTH);
 
 			JLabel storyTimeline = new JLabel("Timeline: "/*+l.getStory().getTimeline()*/);
@@ -115,17 +116,17 @@ public class HomeView extends JFrame implements Viewable{
 			toFill.add(storyTimeline,BorderLayout.CENTER);
 
 			tmpLobby.add(toFill, BorderLayout.CENTER);
-			
+
 			//adding the listeners for the components
 			//tmpLobby.addMouseListener(l);
-
 			lobbiesContainer.add(tmpLobby,BorderLayout.CENTER);
+
 			lobbies.add(tmpLobby);
 		}
-		
+
 		onWaitLobbies = new JScrollPane(lobbiesContainer);
 		onWaitLobbies.getVerticalScrollBar().setUnitIncrement(16);
-		
+
 		profilePic = new JLabel();
 		try {
 			/////// get image and resize it///////////////////////////////////////////////
@@ -140,14 +141,14 @@ public class HomeView extends JFrame implements Viewable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		
+
 		logoutButton = new JButton("Logout");
 		logoutButton.setBackground(Color.LIGHT_GRAY);
 		logoutButton.setOpaque(true);
 		logoutButton.setForeground(Color.red);
 		logoutButton.setFocusPainted(false);
 		logoutButton.setFont(new Font("Comic Sans MS",Font.BOLD,13));
-		
+
 		try {
 			/////// get image and resize it///////////////////////////////////////////////
 			FileInputStream fis = new FileInputStream(new File("./img/logout.png"));
@@ -158,14 +159,14 @@ public class HomeView extends JFrame implements Viewable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		
+
 		viewFinished = new JButton("Finished Games"); 
 		viewFinished.setBackground(Color.LIGHT_GRAY);
 		viewFinished.setOpaque(true);
 		viewFinished.setForeground(Color.red);
 		viewFinished.setFocusPainted(false);
 		viewFinished.setFont(new Font("Comic Sans MS",Font.BOLD,13));
-		
+
 		try {
 			/////// get image and resize it///////////////////////////////////////////////
 			FileInputStream fis = new FileInputStream(new File("./img/finished.png"));
@@ -176,19 +177,19 @@ public class HomeView extends JFrame implements Viewable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		
-		
+
+
 		onGoing = new JComboBox<String>();
 		onGoing.addItem("Ongoing Games");
 		for(int i = 0; i < 1; i++/*Lobby l:mainData.getPlayer().getOngoingGames()*/){
 			onGoing.addItem("Secret Lobby"/*l.getName()*/);
 		}
-		
+
 		onGoing.setBackground(Color.LIGHT_GRAY);
 		onGoing.setOpaque(true);
 		onGoing.setForeground(Color.red);
 		onGoing.setFont(new Font("Comic Sans MS",Font.BOLD,15));
-		
+
 		createLobby = new JButton("Create Lobby");
 		try {
 			/////// get image and resize it///////////////////////////////////////////////
@@ -204,79 +205,110 @@ public class HomeView extends JFrame implements Viewable{
 		createLobby.setOpaque(true);
 		createLobby.setForeground(Color.red);
 		createLobby.setFocusPainted(false);
-		
+
 		onlineUsers = new JLabel("        Online users: 286"/*+mainData.getOnlineUsers()/*remove 286*/);
 		onlineUsers.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
 		onlineUsers.setBackground(Color.BLACK);
 		onlineUsers.setForeground(Color.GREEN);
-		
+
 		//TODO- add listeners for the combobox and the buttons(especially finished games button)
 		// add all the things created above to one JPanel and add that JPanel to the JFrame
-		
-		allTheThings = new JPanel( new BorderLayout());// TODO - do this crap here 
+
+		JPanel allTheThings = new JPanel( new BorderLayout());// TODO - do this crap here 
 		allTheThings.setPreferredSize(new Dimension(550,600));
 		allTheThings.add(onWaitLobbies,BorderLayout.CENTER);
-		
-		JPanel theRest = new JPanel(new GridLayout(4,1));
+
+		theRest = new JPanel(new GridLayout(4,1));
 		JPanel nullOne = new JPanel();
 		nullOne.setBackground(Color.BLACK);
 		theRest.setBackground(Color.BLACK);
-		
+
 		theRest.add(profilePic);
-		
-		
+
+
 		JPanel finOngoing = new JPanel(new GridLayout(3,1));
 		JPanel finishedPan = new JPanel(new FlowLayout());
 		JPanel goingOn = new JPanel(new FlowLayout());
 		goingOn.setBackground(Color.BLACK);
 		finishedPan.setBackground(Color.BLACK);
-		
+
 		goingOn.add(onGoing);
 		finishedPan.add(viewFinished);
-		
+
 		finOngoing.add(finishedPan);
 		finOngoing.add(new JLabel());
 		finOngoing.add(goingOn);
-		
+
 		finOngoing.setBackground(Color.BLACK);
-		
+
 		theRest.add(finOngoing);
-		
+
 		//the pannel for Creating a game
 		JPanel logCreate = new JPanel(new GridLayout(3,1));
 		JPanel createPan = new JPanel(new FlowLayout());
 		createPan.add(createLobby);
 		createPan.setBackground(Color.BLACK);
-		
+
 		logCreate.add(new JLabel());
 		logCreate.add(new JLabel());
 		logCreate.add(createPan);
 		logCreate.setBackground(Color.BLACK);
-		
+
 		theRest.add(logCreate);
-		
+
 		JPanel usersPan = new JPanel(new GridLayout(4,1));
 		JPanel logoutPan = new JPanel(new BorderLayout());
 		logoutPan.setBackground(Color.BLACK);
 		usersPan.setBackground(Color.BLACK);
-		
+
 		logoutPan.add(logoutButton,BorderLayout.CENTER);
 		logoutPan.add(new JLabel("  "),BorderLayout.WEST);
 		logoutPan.add(new JLabel("  "),BorderLayout.EAST);
-		
+
 		usersPan.add(new JLabel());
 		usersPan.add(onlineUsers);
 		usersPan.add(logoutPan);
 		usersPan.add(new JLabel());
-		
-		
+
+
 		theRest.add(usersPan);
-		
+
 		allTheThings.add(theRest,BorderLayout.EAST);
 		add(allTheThings);
-		
+		lobbiesContainer.addMouseListener( new WaitingLobbiesMouseListener() );
+
 		pack();
 		showView();
+		
+		/*
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		((JLabel)((JPanel)((JPanel)(lobbiesContainer.getComponent(0))).getComponent(1)).getComponent(2)).setText("Player(s): 2/5");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try {
+			JLabel l = ((JLabel)((JPanel)allTheThings.getComponent(1)).getComponent(0));
+			/////// get image and resize it///////////////////////////////////////////////
+			FileInputStream fis = new FileInputStream(new File("./img/itsygoAlternate.jpg"));
+			BufferedImage gameIcon = ImageIO.read(fis);
+			Image dimg = gameIcon.getScaledInstance(200, 200,Image.SCALE_SMOOTH);
+			ImageIcon imageIcon = new ImageIcon(dimg);
+			//////////////////////////////////////////////////////////////////////////////
+			l.setIcon(imageIcon);
+			l.setBorder(BorderFactory.createLineBorder(
+					new Color(r.nextInt(155),r.nextInt(155),r.nextInt(155)), 5));
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		*/
 	}
 
 	public void logout() {
@@ -297,7 +329,6 @@ public class HomeView extends JFrame implements Viewable{
 	@Override
 	public void terminateView() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -308,6 +339,9 @@ public class HomeView extends JFrame implements Viewable{
 
 	@Override
 	public void updateView() {
+		//to access them and change if needed
+		//System.out.println(((JLabel)((JPanel)tmpLobby.getComponent(1)).getComponent(0)).getPreferredSize().getHeight());
+
 		// TODO Auto-generated method stub
 
 	}
@@ -316,5 +350,19 @@ public class HomeView extends JFrame implements Viewable{
 	public void showView() {
 		this.setVisible(true);
 	}
-
+	public class WaitingLobbiesMouseListener extends MouseAdapter{
+		@Override
+		public void mouseReleased(MouseEvent e){
+			JPanel clickedPanel = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(1);
+			JLabel lobbyIcon = (JLabel)(clickedPanel.getComponent(0));
+			JLabel lobbyTitle = (JLabel)(clickedPanel.getComponent(1));
+			JLabel lobbyPlayerCount = (JLabel)(clickedPanel.getComponent(2));
+			JLabel lobbyTimeline = (JLabel)(clickedPanel.getComponent(3));
+			//System.out.println(lobbyIcon.getIcon().getIconWidth());
+			//System.out.println(lobbyTitle.getText());
+			//System.out.println(lobbyPlayerCount.getText());
+			//System.out.println(lobbyTimeline.getText());
+			
+		}
+	}
 }
