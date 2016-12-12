@@ -24,35 +24,35 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class LoginView extends JFrame implements Viewable{
-	private JTextField username;
-	private JPasswordField password;
-	private JButton login;
-	private JButton register;
-	private JLabel icon;
-	private ViewManager referrer;
-	private long playerID;
-	JPanel contentPane;
-    
-	
-	public LoginView(ViewManager ref){
-		// add title and color to the background of the frame
-		getContentPane().setBackground(new Color(0, 0, 0));
-		setTitle("Your Story - Login");
-		
-		setDefaultCloseOperation (EXIT_ON_CLOSE);
+    private JTextField username;
+    private JPasswordField password;
+    private JButton login;
+    private JButton register;
+    private JLabel icon;
+    private ViewManager referrer;
+    private long playerID;
+    JPanel contentPane;
+
+
+    public LoginView(ViewManager ref){
+        // add title and color to the background of the frame
+        getContentPane().setBackground(new Color(0, 0, 0));
+        setTitle("Your Story - Login");
+
+        setDefaultCloseOperation (EXIT_ON_CLOSE);
         getContentPane().setLayout (null);
-        setSize(408, 480);
+        setSize(408, 500);
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         //Set up the game welcome image
         BufferedImage gameIcon = null;
         // Game's icon
         try {
-        	/////// get image and resize it///////////////////////////////////////////////
-        	FileInputStream fis = new FileInputStream(new File("./img/YS.png"));
-        	gameIcon = ImageIO.read(fis);
-        	Image dimg = gameIcon.getScaledInstance(387, 290,Image.SCALE_SMOOTH);
+            /////// get image and resize it///////////////////////////////////////////////
+            FileInputStream fis = new FileInputStream(new File("./img/YS.png"));
+            gameIcon = ImageIO.read(fis);
+            Image dimg = gameIcon.getScaledInstance(387, 290,Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(dimg);
             //////////////////////////////////////////////////////////////////////////////
             icon = new JLabel();
@@ -60,69 +60,90 @@ public class LoginView extends JFrame implements Viewable{
             icon.setIcon(imageIcon);
             add(icon);
         } catch (Exception e) {
-        	e.printStackTrace();
+                e.printStackTrace();
         } 
         ////////////////////////////////////////////////
-        
-        
+
+
         //username prompt label
         JLabel username_txt = new JLabel("Username");
         username_txt.setBounds(50,300,340,50);
         username_txt.setFont(new Font("SansSerif", Font.BOLD, 18));
         username_txt.setForeground(Color.WHITE);
         add(username_txt);
-        
+
         //password prompt label
         JLabel pasw_txt = new JLabel("Password");
         pasw_txt.setBounds(50,348,150,50);
         pasw_txt.setFont(new Font("SansSerif", Font.BOLD, 18));
         pasw_txt.setForeground(Color.WHITE);
         add(pasw_txt);
-            
+
         //password Field
         password = new JPasswordField();
         password.setBounds(200, 358, 150, 30);
         add(password);
-        
+
         //username text field
         username = new JTextField();
         username.setBounds(200, 310, 150, 30);
         add(username);
-            
+
         //login
         login = new JButton( "Login");
         login.setBounds(80, 420, 100, 30);
         //login.setIcon(new ImageIcon(loginIcon));
         login.setMargin(new Insets(1,1,1,1));
         add(login);
-        
+
         //register
         register = new JButton( "Register");
         register.setBounds(200, 420, 100, 30);
         add(register);
         
+        //adding listeners
+        login.addActionListener(new ButtonListener());
+        register.addActionListener(new ButtonListener());
+        
         showView(); 
-	}
-	
-	@Override
-	public void terminateView() {
-		//check this for nonlooping function
-		//referrer.hideLogin(true);
-	}
+    }
 
-	@Override
-	public void hideView() {
-		this.setVisible(false);
-	}
+    @Override
+    public void terminateView() {
+        //referrer.hideLogin(true);
+    }
 
-	@Override
-	public void updateView() {
-		//this should get new data!
-	}
+    @Override
+    public void hideView() {
+        this.setVisible(false);
+    }
 
-	@Override
-	public void showView() {
-		this.setVisible(true);
-	}
+    @Override
+    public void updateView() {/*nothing to update here*/}
 
+    @Override
+    public void showView() {
+            this.setVisible(true);
+    }
+    private class ButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource()==login){
+                System.out.println("Login function called!");
+                //if(playerID>0){
+                //hideView();
+                //referrer.showHomePage();}
+                //else{JOptionPane.createMessageDialogue(JOptionPane.ERROR_DIALOGUE,"username/password combination is wrong!")}
+            }
+            else{
+                System.out.println("Register function called");
+                String un = username.getText();
+                char[] pwChar = password.getPassword();
+                String pw = new String(pwChar);
+                //long uid = register(un,pw)
+                //hideView();
+                //referrer.showHomePage();}
+            }
+        }
+    }
 }
