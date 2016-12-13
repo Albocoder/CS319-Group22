@@ -61,10 +61,10 @@ public class DBInter {
 		} catch (SQLException e) {
 			if(e.getMessage().equalsIgnoreCase("terminating connection due to administrator command"))
 				try {
-                                    Thread.sleep(300000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(DBInter.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+					Thread.sleep(300000);
+				} catch (InterruptedException ex) {
+					Logger.getLogger(DBInter.class.getName()).log(Level.SEVERE, null, ex);
+				}
 			writeLog( "Selecting data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
 		}
 		return rs;
