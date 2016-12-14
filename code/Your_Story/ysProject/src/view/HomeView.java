@@ -1,4 +1,4 @@
-package mainPackage;
+package view;
 
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
@@ -34,11 +34,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.border.Border;
+import mainPackage.*;
 
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
-    private HomePage mainData;
+    //private HomePage mainData;
     private ViewManager referrer;
     private JScrollPane onWaitLobbies;
     private JLabel profilePic;
@@ -54,7 +55,7 @@ public class HomeView extends JFrame implements Viewable{
     private JPanel lobbiesContainer;
     private JPanel theRest;
     private long playerID;
-    private Player loggedInPlayer;
+    //private Player loggedInPlayer;
     
     //constants
     private final int PROFILE_SIZE = 230;
@@ -76,9 +77,9 @@ public class HomeView extends JFrame implements Viewable{
         lobbiesPanels = new ArrayList<JPanel>();
         //lobbies = new ArrayList<Lobby>();
         
-        Profile loggedInPlayerProfile = getPlayerProfile();
-        loggedInPlayer = getPlayer(loggedInPlayerProfile)
-        mainData = getMainData(loggedInPlayer)
+        //Profile loggedInPlayerProfile = getPlayerProfile();
+        //loggedInPlayer = getPlayer(loggedInPlayerProfile);
+        //mainData = getMainData(loggedInPlayer);
         
         lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/50,1));
         showWaitingLobbies();
@@ -294,6 +295,7 @@ public class HomeView extends JFrame implements Viewable{
         this.setVisible(true);
     }
     
+    /*
     //constuctural functions
     private Profile getPlayerProfile(){
         
@@ -306,6 +308,7 @@ public class HomeView extends JFrame implements Viewable{
     private HomePage getMainData(Player p){
         
     }
+    */
     
     // functions for the UI 
     private void logoutOnExitWithDialogue(){
