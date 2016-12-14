@@ -110,7 +110,9 @@ public class LoginView extends JFrame implements Viewable{
 
     @Override
     public void terminateView() {
-        //referrer.hideLogin(true);
+        username.setText("");
+        password.setText("");
+        hideView();
     }
 
     @Override
@@ -125,19 +127,36 @@ public class LoginView extends JFrame implements Viewable{
     public void showView() {
             this.setVisible(true);
     }
+    private void login(long uid){
+        //send a login query for that user id
+        //create player and profile objects and HomePage and pass it 
+        //to homepage to be created
+        //terminateView();
+        //referrer.showHomePage();
+    }
     private class ButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==login){
-                System.out.println("Login function called!");
-                //if(playerID>0){
-                //hideView();
-                //referrer.showHomePage();}
-                //else{JOptionPane.createMessageDialogue(JOptionPane.ERROR_DIALOGUE,"username/password combination is wrong!")}
+                String un = username.getText();
+                //checkAvailabilityOfUsername(un);
+                char[] pwChar = password.getPassword();
+                String pw = new String(pwChar);
+                
+                //System.out.println("Login function called!");
+                if ( false/*authenticate(un,pw)>*/ ){
+                    //login();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, 
+                        "Username/Password combination is wrong!",
+                        "Authentication Error!", JOptionPane.ERROR_MESSAGE,new ImageIcon("./img/authProblem.png"));
+                }
             }
             else{
                 System.out.println("Register function called");
                 String un = username.getText();
+                //checkAvailabilityOfUsername(un);
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
                 //long uid = register(un,pw)
