@@ -27,11 +27,15 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javax.swing.border.Border;
 
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
-    //private HomePage mainData;
+    private HomePage mainData;
     private ViewManager referrer;
     private JScrollPane onWaitLobbies;
     private JLabel profilePic;
@@ -46,6 +50,8 @@ public class HomeView extends JFrame implements Viewable{
     //private ArrayList<Lobby> lobbies;
     private JPanel lobbiesContainer;
     private JPanel theRest;
+    private long playerID;
+    private Player loggedInPlayer;
     
     //constants
     private final int PROFILE_SIZE = 230;
@@ -57,16 +63,20 @@ public class HomeView extends JFrame implements Viewable{
     private final String CREATE_IMG = "./img/create.png";
 
     @SuppressWarnings("Convert2Diamond")
-    public HomeView(ViewManager ref){
+    public HomeView(ViewManager ref,long uid){
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
         Random r = new Random();
         getContentPane().setBackground(new Color(0, 0, 0));
-        
-        
+        playerID = uid;
         referrer = ref;
         lobbiesPanels = new ArrayList<JPanel>();
         //lobbies = new ArrayList<Lobby>();
+        
+        Profile loggedInPlayerProfile = getPlayerProfile();
+        loggedInPlayer = getPlayer(loggedInPlayerProfile)
+        mainData = getMainData(loggedInPlayer)
+        
         lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/50,1));
         showWaitingLobbies();
         onWaitLobbies = new JScrollPane(lobbiesContainer);
@@ -211,9 +221,10 @@ public class HomeView extends JFrame implements Viewable{
 
         //add the big panel to the JFrame
         add(allTheThings);
-
+        updateView();
         pack();
         setVisible(true);
+        /*
         while(true){
         try {
                 Thread.sleep(2000);
@@ -228,20 +239,23 @@ public class HomeView extends JFrame implements Viewable{
         }
         showProfilePic();
         }
+        */
     }
 
     public void logout() {
         //destroying data
         //mainData.getPlayer().getProfile().logout()
         //mainData = null;
+        //referrer.hideLogin(true);
         //referrer.showLogin();
     }
     public void createLobby() {
-        
+        //show creationUI(loggedInPlayer)
+        //hide this!
     }
     public void joinLobby(/*Lobby aLobby   ******** uncomment when Lobby is created ***********/) {
         /*if(aLobby.getState() == Lobby.IN_GAME){
-            showOngoingGame(aLobby);
+            showOngoingGame(aLobby,loggedInPlayer);
         }
         
         */
@@ -260,15 +274,34 @@ public class HomeView extends JFrame implements Viewable{
     }
     @Override
     public void updateView() {
-        //mainData.update();
         //showProfilePic();
-        //showOngoing();
-        //showOnlineUsers();
-        //showWaitingLobbies();
+        ScheduledExecutorService lobbyexec = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService ongoingExec = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService onlinePlayersExec = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService profilePicExec = Executors.newSingleThreadScheduledExecutor();
+        
+        ///////////// TODO - Change the parameters
+        lobbyexec.scheduleAtFixedRate(new LobbyUpdater(),7,7,TimeUnit.SECONDS);
+        ongoingExec.scheduleAtFixedRate(new OngoingUpdater(),11,15,TimeUnit.MINUTES);
+        onlinePlayersExec.scheduleAtFixedRate(new OnlinePlayersUpdater(),17,17,TimeUnit.SECONDS);
+        profilePicExec.scheduleAtFixedRate(new ProfilePicUpdater(),10,15,TimeUnit.MINUTES);
     }
     @Override
     public void showView() {
         this.setVisible(true);
+    }
+    
+    //constuctural functions
+    private Profile getPlayerProfile(){
+        
+    }
+    
+    private Player getPlayer(Profile p){
+        
+    }
+    
+    private HomePage getMainData(Player p){
+        
     }
     
     // functions for the UI 
@@ -280,7 +313,7 @@ public class HomeView extends JFrame implements Viewable{
                 if (JOptionPane.showConfirmDialog(null, 
                     "Are you sure to exit the game?", "Really?! Leaving just now?", 
                     JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,new ImageIcon()) == JOptionPane.YES_OPTION){
+                    JOptionPane.QUESTION_MESSAGE,new ImageIcon("./img/leaving.png")) == JOptionPane.YES_OPTION){
                     terminateView();
                 }
             }
@@ -394,8 +427,27 @@ public class HomeView extends JFrame implements Viewable{
     
     //listener classes
     private class WaitingLobbiesMouseListener extends MouseAdapter{
+            Color c;
+            JPanel pressedPanel;
+            JPanel pressedPanel2;
+            JPanel pressedPanel3;
+            public void mousePressed(MouseEvent e){
+                pressedPanel = ((JPanel)e.getComponent().getComponentAt(e.getPoint()));
+                pressedPanel2 = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(0);
+                pressedPanel3 = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(1);
+                c = pressedPanel.getBackground();
+                Random r = new Random();
+                Color col = Color.WHITE;
+                pressedPanel.setBackground(col);
+                pressedPanel2.setBackground(col);
+                pressedPanel3.setBackground(col);
+            }
+            
             @Override
             public void mouseReleased(MouseEvent e){
+                pressedPanel.setBackground(c);
+                pressedPanel2.setBackground(c);
+                pressedPanel3.setBackground(c);
                 //JPanel clickedPanel = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(1);
                 //JLabel lobbyIcon = (JLabel)(clickedPanel.getComponent(0));
                 //JLabel lobbyTitle = (JLabel)(clickedPanel.getComponent(1));
@@ -407,25 +459,40 @@ public class HomeView extends JFrame implements Viewable{
                 //System.out.println(lobbyTimeline.getText());
                 /*
                 //this is the one we need the ones above are extensible features
-                joinLobby(
-                    mainData.getLobbiesWaiting().get(
-                        lobbiesPanels.indexOf( (JPanel) e.getComponent().getComponentAt( 
-                                e.getPoint()
+                if(lobbiesPanels.indexOf( (JPanel) 
+                        e.getComponent().getComponentAt(e.getPoint()))>-1){
+                    joinLobby(
+                        mainData.getLobbiesWaiting().get(lobbiesPanels
+                            .indexOf( (JPanel) 
+                                e.getComponent().getComponentAt(e.getPoint() ) 
                             )
                         )
-                    )
-                );
+                    );
+                }
                 */
+                
                 System.out.println(lobbiesPanels.indexOf( (JPanel) 
                         e.getComponent().getComponentAt(e.getPoint())));
             }
     }
     private class ProfilePicMouseListener extends MouseAdapter{
+        Border c;
         @Override
-            public void mouseReleased(MouseEvent e){
-                // TODO - showProfile thingy();
-                System.out.println("Showing the profile!");
-            }
+        public void mousePressed(MouseEvent e){
+            JLabel pressedPanel = ((JLabel)e.getComponent());
+            c = pressedPanel.getBorder();
+            Random r = new Random();
+            profilePic.setBorder(BorderFactory.createLineBorder(Color.WHITE
+                    ,BORDER_THICKNESS));
+        }
+            
+        @Override
+        public void mouseReleased(MouseEvent e){
+            JLabel pressedPanel = ((JLabel)e.getComponent());
+            pressedPanel.setBorder(c);
+            // TODO - showProfile thingy();
+            System.out.println("Showing the profile!");
+        }
     }
     private class FinishedGamesListener implements ActionListener{
         @Override
@@ -433,7 +500,7 @@ public class HomeView extends JFrame implements Viewable{
             System.out.println("Viewing finished games!");
             //viewing the finished games in some other thing 
             //maybe in the referrer have something about finished games
-            hideView();
+            //hideView();
         }
     }
     private class OngoingGamesItemListener implements ItemListener{
@@ -451,7 +518,7 @@ public class HomeView extends JFrame implements Viewable{
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Creating a lobby!");
-            hideView();
+            //hideView();
             //referrer.showCreateLobby();
         }
     }
@@ -459,8 +526,13 @@ public class HomeView extends JFrame implements Viewable{
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Logging out!");
-            hideView();
-            //referrer.showLogin();
+            if (JOptionPane.showConfirmDialog(null, 
+                "Are you sure to logout?", "Really?! Logging out just now?", 
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,new ImageIcon("./img/leaving.png")) == JOptionPane.YES_OPTION){
+                logout();
+            }
+            
         }
     }
     
@@ -469,6 +541,8 @@ public class HomeView extends JFrame implements Viewable{
         @Override
         public void run() {
             //update lobby data from mainData and call showWaitingLobbies()
+            showWaitingLobbies();
+            System.out.println("HomeView.LobbyUpdater.run()");
         }
     }
     private class OngoingUpdater implements Runnable {
@@ -476,6 +550,8 @@ public class HomeView extends JFrame implements Viewable{
         public void run() {
             //update data from mainData.getPlayer().getProfile()
             //and call showOngoing()
+            showOngoing();
+            System.out.println("HomeView.OngoingUpdater.run()");
         }
     }
     private class OnlinePlayersUpdater implements Runnable {
@@ -483,6 +559,8 @@ public class HomeView extends JFrame implements Viewable{
         public void run() {
             //update data from mainData
             //and call showOnlineUsers();
+            showOnlineUsers();
+            System.out.println("HomeView.OnlinePlayersUpdater.run()");
         }
     }
     private class ProfilePicUpdater implements Runnable{
@@ -490,6 +568,8 @@ public class HomeView extends JFrame implements Viewable{
         public void run(){
             //get new profile pic by update()-ing from 
             //mainData.getPlayer().getProfile() and call showProfilePic()
+            showProfilePic();
+            System.out.println("HomeView.ProfilePicUpdater.run()");
         }
     }
 }
