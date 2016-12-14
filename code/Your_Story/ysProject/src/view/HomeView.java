@@ -1,3 +1,5 @@
+package mainPackage;
+
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
@@ -30,6 +32,7 @@ import java.awt.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.border.Border;
 
 @SuppressWarnings("serial")

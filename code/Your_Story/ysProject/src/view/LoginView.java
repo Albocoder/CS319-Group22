@@ -1,3 +1,5 @@
+package view;
+
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
@@ -21,6 +23,7 @@ import java.awt.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 @SuppressWarnings("serial")
 public class LoginView extends JFrame implements Viewable{
