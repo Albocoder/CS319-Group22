@@ -15,7 +15,7 @@ public class Chat {
     
     private int lobby;
     private String username;
-    private int threshold;
+    private long threshold;
     
     public Chat(int lobby, String username){
         this.lobby = lobby;
@@ -32,10 +32,10 @@ public class Chat {
         return result;
     }
     private void updateThreshold(){
-        int[] temp = DBInterface.selectIntArray(ChatConnection.CHAT_DATA, "id", "lobby", lobby);
+        long[] temp = DBInterface.selectIntArray(ChatConnection.CHAT_DATA, "id", "lobby", lobby);
         threshold = temp[temp.length - 1];
     }
-    public int sendMessage(String message){
+    public long sendMessage(String message){
         message = username + ": " + message;
         return ChatConnection.sendMessage(message, lobby);
     }
