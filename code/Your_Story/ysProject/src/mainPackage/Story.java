@@ -20,6 +20,7 @@ public class Story {
         this.description = description ;
         this.timeline = timeline ;
         this.ID = ID; 
+        charList = new ArrayList<Character>();
     }
     
     public Story ()
