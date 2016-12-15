@@ -1,4 +1,5 @@
 package mainPackage;
+import java.util.ArrayList;
 
 
 
@@ -11,7 +12,7 @@ public class Story {
     private String description;
     private String timeline;
     private long ID;
-    private Character[] charList;
+    private ArrayList<Character> charList;
     
 
     public Story (String description, String timeline, long ID)
@@ -26,6 +27,7 @@ public class Story {
         this.description = "Sample" ;
         this.timeline = "Sample" ;
         this.ID = 0; 
+        charList = new ArrayList<Character>();
     }
     
     
@@ -33,7 +35,7 @@ public class Story {
     public String getDescription(){return description;} 
     public String getTimeline(){return timeline;} 
     public long getID(){return ID;} 
-    public Character[] getCharList(){return charList;}
+    public ArrayList<Character> getCharList(){return charList;}
     
     //setters
     public void setDescription(String description)
@@ -42,6 +44,9 @@ public class Story {
     {this.timeline = timeline;}
     public void setID(long storyID)
     {ID = storyID;}
-    public void setCharList(Character[] charList)
-    {System.arraycopy(charList, 0, this.charList,0, charList.length);}
+    public void setCharList(ArrayList<Character> charList)
+    {this.charList=charList;}
+    
+    
+    //methods
 }
