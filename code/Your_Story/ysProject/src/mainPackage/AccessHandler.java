@@ -2,7 +2,7 @@ package mainPackage;
 
 public class AccessHandler {
 	
-	public static int userID = -1;
+	public static long userID = -1;
 	public static String username = "";
 	
 	public static boolean accessGame(String username, String password, boolean newUser) {

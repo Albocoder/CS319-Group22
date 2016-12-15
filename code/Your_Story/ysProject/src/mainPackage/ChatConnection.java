@@ -17,10 +17,10 @@ public class ChatConnection {
     
     public final static String CHAT_DATA = "message";
     
-    public static String[] getMessages(int id){
+    public static String[] getMessages(long id){
         return DBInterface.selectStringArray(CHAT_DATA, "body", "lobby", id);
     }
-    public static String[] getMessages(int lobby, int lastMessage){
+    public static String[] getMessages(long lobby, long lastMessage){
         ResultSet r = null;
         r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
         return DBInterface.resultSetToStringArray(r);
@@ -28,7 +28,7 @@ public class ChatConnection {
     public static int sendMessage(String message, int lobby){
         message = DBInterface.escapeString(message);
         DBInterface.getConnection().executeStuff("INSERT INTO " + CHAT_DATA + "(body, lobby) VALUES('" + message + "', " + lobby + ")");
-        int[] temp = DBInterface.selectIntArray(CHAT_DATA, "id", "lobby", lobby);
+        long[] temp = DBInterface.selectIntArray(CHAT_DATA, "id", "lobby", lobby);
         return temp[temp.length - 1];
     }
     

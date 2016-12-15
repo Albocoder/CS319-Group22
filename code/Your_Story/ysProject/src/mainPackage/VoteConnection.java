@@ -13,25 +13,25 @@ public class VoteConnection {
     private final static String VOTING_DATA = "voting";
     private final static String VOTE_DATA = "vote";
     
-    public static int startVoting(int lobby, int type){
+    public static long startVoting(long lobby, int type){
         DBInterface.getConnection().executeStuff("INSERT INTO " + VOTING_DATA + "(lobby, type, target) VALUES(" + lobby + ", " + type + ", 0)");
-        int[] temp = DBInterface.selectIntArray(VOTING_DATA, "id", "lobby", lobby);
+        long[] temp = DBInterface.selectIntArray(VOTING_DATA, "id", "lobby", lobby);
         return temp[temp.length - 1];
     }
     
-    public static int startVoting(int lobby, int type, int target){
+    public static long startVoting(long lobby, int type, long target){
         DBInterface.getConnection().executeStuff("INSERT INTO " + VOTING_DATA + "(lobby, type, target) VALUES(" + lobby + ", " + type + ", " + target + ")");
-        int[] temp = DBInterface.selectIntArray(VOTING_DATA, "id", "lobby", lobby);
+        long[] temp = DBInterface.selectIntArray(VOTING_DATA, "id", "lobby", lobby);
         return temp[temp.length - 1];
     }
     
-    public static int sendVote(int voting, int vote){
+    public static long sendVote(long voting, int vote){
         DBInterface.getConnection().executeStuff("INSERT INTO " + VOTE_DATA + "(voting, value) VALUES(" + voting + ", " + vote + ")");
-        int[] temp = DBInterface.selectIntArray(VOTE_DATA, "id", "voting", voting);
+        long[] temp = DBInterface.selectIntArray(VOTE_DATA, "id", "voting", voting);
         return temp[temp.length - 1];
     }
-    public static boolean getResult(int voting){
-        int[] temp = DBInterface.selectIntArray(VOTE_DATA, "value", "voting", voting);
+    public static boolean getResult(long voting){
+        long[] temp = DBInterface.selectIntArray(VOTE_DATA, "value", "voting", voting);
         int counter = 0;
         for(int index = 0; index < temp.length; index++)
             counter += temp[index];

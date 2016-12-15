@@ -21,7 +21,7 @@ public class AccessConnection {
     
     public final static String AUTH_DATA = "user";
     
-    public static int record(String username, String password){
+    public static long record(String username, String password){
         if(!isAvailable(username))
             return -1;
         username = DBInterface.escapeString(username);
@@ -35,7 +35,7 @@ public class AccessConnection {
         return DBInterface.selectIntArray(AUTH_DATA, "id", "username", username).length == 0;
     }
 
-    public static int authenticate(String username, String password){
+    public static long authenticate(String username, String password){
         try {
             username = DBInterface.escapeString(username);
             password = DBInterface.escapeString(password);

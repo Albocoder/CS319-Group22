@@ -11,25 +11,25 @@ package mainPackage;
  */
 public class VotingHandler {
     
-    int lobby;
+    long lobby;
     
-    public VotingHandler(int lobby){
+    public VotingHandler(long lobby){
         this.lobby = lobby;
     }
     
-    public int startVoting(int type){
+    public long startVoting(long type){
         return VoteConnection.startVoting(lobby, type);
     }
     
-    public int startVoting(int type, int target){
+    public long startVoting(long type, long target){
         return VoteConnection.startVoting(lobby, type, target);
     }
     
-    public int sendVote(int voting, boolean vote){
+    public long sendVote(long voting, boolean vote){
         return VoteConnection.sendVote(voting, vote ? 1 : 0);
     }
     
-    public boolean getResult(int voting){
+    public boolean getResult(long voting){
         return VoteConnection.getResult(voting);
     }
 }
