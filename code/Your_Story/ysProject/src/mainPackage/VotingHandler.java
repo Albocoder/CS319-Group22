@@ -17,11 +17,11 @@ public class VotingHandler {
         this.lobby = lobby;
     }
     
-    public long startVoting(long type){
+    public long startVoting(int type){
         return VoteConnection.startVoting(lobby, type);
     }
     
-    public long startVoting(long type, long target){
+    public long startVoting(int type, long target){
         return VoteConnection.startVoting(lobby, type, target);
     }
     
