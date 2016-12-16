@@ -135,7 +135,7 @@ public class InGameView extends JPanel implements Viewable {
 		modified.add(s);
 		return modified;
 	}
-	
+	/*
 	public static void main (String [] args) {
 		JFrame frame = new JFrame();
 		frame.add(new InGameView());
@@ -145,7 +145,7 @@ public class InGameView extends JPanel implements Viewable {
 		frame.setSize(new Dimension(700, 400));
 		frame.setVisible(true);
 	}
-
+        */
 	@Override
 	public void terminateView() {
 		// TODO Auto-generated method stub
