@@ -64,62 +64,16 @@ public class Lobby {
      public void updateCharacter(Character aCharacter){}
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
-     public void addPlayer(Player aPlayer){}
+     public void addPlayer(/*Player aPlayer*/){}
      
      public void finishGame(){}
      
      public void updateView(){}
      
-     public void startVoting(int voteType, Player targetPlayer){}
+     public void startVoting(int voteType, /*Player*/Object targetPlayer){}
      
      public void startVoting(int voteType){}
      
      public void sendVote(int voteType, boolean vote){}
      
-     
-     
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ;
     }
-    
-   // public void updateQuota();
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
