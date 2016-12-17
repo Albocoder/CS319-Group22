@@ -48,12 +48,12 @@ public class ChatView extends JPanel {
 			MessageView mv = new MessageView(m);
 			BufferedImage img = mv.createImage();
 			if (m.senderName == username) {
-				g2.drawImage(img, null, getWidth() - img.getWidth() - 20, y);
+				g2.drawImage(img, null, getWidth() - img.getWidth() - 10, y);
 			} else {
 				g2.drawImage(img, null, 10, y);
 			}
 			y = y + 10 + img.getHeight();
 		}
-		setPreferredSize(new Dimension(400, y));
+		setPreferredSize(new Dimension(380, y));
 	}
 }

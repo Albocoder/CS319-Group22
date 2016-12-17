@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,6 +15,7 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 	private String typingString;
 	private boolean typingBarIsActive;
 	private boolean markerIsActive;
+	private HashMap<String, String> map;
 	private RoundRectangle2D messageTypingBar;
 	private int boxHeight;
 	private JComponent panel;
@@ -23,6 +25,7 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 		typingString = "";
 		typingBarIsActive = false;
 		markerIsActive = false;
+		map = new HashMap<String, String>();
 		boxHeight = 40;
 		this.panel = panel;
 		button = new JButton("Send");
@@ -103,7 +106,10 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 		return boxHeight;
 	}
 
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
 		if (typingBarIsActive) {
 			typingString += e.getKeyChar();
 			repaint();
@@ -133,9 +139,6 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyReleased(KeyEvent e) {}

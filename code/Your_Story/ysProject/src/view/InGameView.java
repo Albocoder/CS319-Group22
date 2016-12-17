@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import mainPackage.*;
 
-public class InGameView extends JPanel implements Viewable {
+public class InGameView extends JFrame implements Viewable {
 	
 	static Font font;
 	static int LINE_HEIGHT;
@@ -18,6 +18,8 @@ public class InGameView extends JPanel implements Viewable {
 	public InGameView(Lobby l, ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
+		
+		JPanel mainPanel = new JPanel();
 		
 		JScrollPane scrollPane = new JScrollPane(new ChatView());
 		MessageTypingBoxView mv = new MessageTypingBoxView(scrollPane);
@@ -29,9 +31,19 @@ public class InGameView extends JPanel implements Viewable {
 		JButton voteButton = new JButton("Vote");
 		JButton exitButton = new JButton("Exit");
 		
-		setLayout(new BorderLayout());
-		add(mv, BorderLayout.CENTER);
-		add(panel, BorderLayout.EAST);
+		add(mainPanel);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(700, 400));
+		setVisible(true);
+		addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent e) {
+				scrollPane.setSize(new Dimension(mv.getWidth(), mv.getHeight() - mv.getBoxHeight()));
+			}
+		});
+		
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(mv, BorderLayout.CENTER);
+		mainPanel.add(panel, BorderLayout.EAST);
 		
 		panel.setPreferredSize(new Dimension(300, 400));
 		panel.setLayout(new BorderLayout());
@@ -131,20 +143,24 @@ public class InGameView extends JPanel implements Viewable {
 					index = -1;
 				}
 				i = 0;	
-			}
+			} else if (s.charAt(i) == '\n') {
+				modified.add(s.substring(0, i));
+				s = s.substring(i + 1);
+				index = -1;
+				i = 0;
+			} 
 		}
 		modified.add(s);
 		return modified;
 	}
 	/*
 	public static void main (String [] args) {
-		JFrame frame = new JFrame();
-		frame.add(new InGameView());
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(700, 400));
-		frame.setSize(new Dimension(700, 400));
-		frame.setVisible(true);
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new InGameView();
+            }
+        });
 	}
         */
 	@Override
