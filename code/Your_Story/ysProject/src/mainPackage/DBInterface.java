@@ -9,11 +9,11 @@ import thirdparty.*;
 
 public class DBInterface {
 	private static String type = "mysql";
-        private static String adress = "sql7.freemysqlhosting.net";
+        private static String adress = "139.179.50.230";
         private static String port = "3306";
-        private static String database = "sql7148653";
-        private static String username = "sql7148653";
-        private static String password = "ajJvXQYVVE";
+        private static String database = "erindbs";
+        private static String username = "erinuser";
+        private static String password = "erinuser";
         
 	private static DBConn c = new DBConn(type, adress, port, database, username, password);
         private static Connection con = c.ConnectToDB();
