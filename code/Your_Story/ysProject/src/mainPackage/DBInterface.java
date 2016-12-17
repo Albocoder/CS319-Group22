@@ -27,6 +27,42 @@ public class DBInterface {
             term = term.replaceAll("'","''");
             return term;
         }
+        
+        public static Lobby[] resultSetToLobbyArray(ResultSet r){
+            try {
+                r.last();
+                int size = r.getRow();
+                Lobby[] result = new Lobby[size];
+                int index = 0;
+                Lobby l;
+                for(boolean go = r.first(); go; go = r.next()){
+                    l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null);
+                    result[index++] = l;
+                }
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+        
+        public static Story[] resultSetToStoryArray(ResultSet r){
+            try {
+                r.last();
+                int size = r.getRow();
+                Story[] result = new Story[size];
+                int index = 0;
+                Story s;
+                for(boolean go = r.first(); go; go = r.next()){
+                    s = new Story(r.getString("description"), r.getString("timeline"), r.getLong("id"));
+                    result[index++] = s;
+                }
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
 
         public static long[] resultSetToIntArray(ResultSet r){
             try {
