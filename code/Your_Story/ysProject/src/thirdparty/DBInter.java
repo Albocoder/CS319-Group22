@@ -1,12 +1,10 @@
 package thirdparty;
 
-
-
 /*==================================================================
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
  * Latest Changed date: Dec/08/2016
- * Version: 2.1.1
+ * Version: 2.3.1
  *==================================================================
  * Description:
  * This class is an interface to ease communication with DB
@@ -25,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 public class DBInter {
@@ -61,11 +61,13 @@ public class DBInter {
 		} catch (SQLException e) {
 			if(e.getMessage().equalsIgnoreCase("terminating connection due to administrator command"))
 				try {
-					Thread.sleep(300000);
+                                    Thread.sleep(300000);
 				} catch (InterruptedException ex) {
-					Logger.getLogger(DBInter.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(DBInter.class.getName()).log(Level.SEVERE, null, ex);
 				}
-			writeLog( "Selecting data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
+			//writeLog( "Selecting data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
+                        else
+                            serverError();
 		}
 		return rs;
 	}
@@ -93,16 +95,16 @@ public class DBInter {
 					try{
 						query += r.getString(colNames[i]).toString() + "\t|";
 					}
-					catch(Exception ex){
-						System.out.println("Error in loop: " + ex);
-						query +=  "NULL\t|";
+					catch(SQLException ex){
+						//System.out.println("Error in loop: " + ex);
+						//query +=  "NULL\t|";
 						continue;
 					}
 				}
-				System.out.println(query);
+				//System.out.println(query);
 			}
 		} catch (SQLException e) {
-			writeLog("Printing data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
+			//writeLog("Printing data ==> "+ e.getClass().getName()+": "+ e.getMessage() );
 		}
 	}
 	
@@ -126,9 +128,9 @@ public class DBInter {
 					try{
 						query += r.getString(colNames[i]).toString() + "\t|";
 					}
-					catch(Exception ex){
-						System.out.println("Error in writing: " + ex);
-						query +=  "NULL\t|";
+					catch(SQLException ex){
+						//System.out.println("Error in writing: " + ex);
+						//query +=  "NULL\t|";
 						continue;
 					}
 				}
@@ -136,9 +138,9 @@ public class DBInter {
 				writer.println(query);
 			}
 			writer.close();
-			System.out.println("Wrote to output.txt");
+			//System.out.println("Wrote to output.txt");
 		} catch (SQLException | FileNotFoundException | UnsupportedEncodingException e) {
-			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			//System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 		}
 	}
 	
@@ -150,11 +152,16 @@ public class DBInter {
 			stat.executeUpdate(query);
 			//c.commit();    //can change this to commit the change
 			stat.close();
-		} catch (Exception e) {
-			writeLog("Executing Query ==> \""+ query.substring(0,40) + "\"" 
-					+ e.getClass().getName()+": "+ e.getMessage() );
+		} catch (SQLException e) {
+                        serverError();
 			return false;
 		}
 		return true;
 	}
+        private void serverError(){
+            JOptionPane.showMessageDialog(null, 
+                "Well this is embarrasing! Server experienced and error!",
+                "Oops...", JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon("./img/serverError.png"));
+        }
 }
