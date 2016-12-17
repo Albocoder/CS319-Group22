@@ -17,9 +17,10 @@ import mainPackage.*;
 public class Tester {
 
 	public static void main(String[] args) {
-		// here we can test each class we create for consistency
-		//new HomeView(null,1);
-                System.out.println(AccessConnection.isAvailable("albocoder"));
+            // here we can test each class we create for consistency
+            //new HomeView(null,1);
+            new LoginView(null);
+            //System.out.println(AccessConnection.isAvailable("albocoder"));
 	}
 
 }

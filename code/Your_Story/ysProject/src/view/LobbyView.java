@@ -18,6 +18,7 @@ package view;
  * This class is the homepage view that the user will see when 
  * logged in.
  * */
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -48,15 +49,20 @@ public class LobbyView extends JFrame implements Viewable {
     //private ArrayList<Seat> seats;
     private Story theStory;
     //private Seat mySeat;
+    
+    //newly added
     private VotingHandler voter;
     private Lobby theLobby;
+    private JPanel seatsPanel;
+    
 
     public LobbyView(Lobby aLobby,ViewManager ref){
         referrer = ref;
         theLobby = aLobby;
-        //theStory = new Story(theLobby.getID());
+        //theStory = new Story(theLobby.getID()); //or whatever
         voter = new VotingHandler(theLobby.getID());
-        
+        theSeats = new JScrollPane();
+        seatsPanel = new JPanel(new GridLayout(/*theLobby.getSeats().size()*/50,1));
     }    
     
     public void startVote(int type) {

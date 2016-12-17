@@ -66,7 +66,7 @@ public class HomeView extends JFrame implements Viewable{
     private final String FINISHED_IMG = "./img/finished.png";
     private final String CREATE_IMG = "./img/create.png";
 
-    @SuppressWarnings("Convert2Diamond")
+    
     public HomeView(ViewManager ref,long uid){
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
@@ -74,7 +74,7 @@ public class HomeView extends JFrame implements Viewable{
         getContentPane().setBackground(new Color(0, 0, 0));
         playerID = uid;
         referrer = ref;
-        lobbiesPanels = new ArrayList<JPanel>();
+        lobbiesPanels = new ArrayList<>();
         //lobbies = new ArrayList<Lobby>();
         
         //Profile loggedInPlayerProfile = getPlayerProfile();

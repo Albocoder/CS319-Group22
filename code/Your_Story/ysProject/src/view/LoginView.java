@@ -20,10 +20,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.awt.*;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import mainPackage.*;
 
 @SuppressWarnings("serial")
 public class LoginView extends JFrame implements Viewable{
@@ -41,7 +43,6 @@ public class LoginView extends JFrame implements Viewable{
         // add title and color to the background of the frame
         getContentPane().setBackground(new Color(0, 0, 0));
         setTitle("Your Story - Login");
-
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         getContentPane().setLayout (null);
         setSize(408, 500);
@@ -120,6 +121,8 @@ public class LoginView extends JFrame implements Viewable{
 
     @Override
     public void hideView() {
+        username.setText("");
+        password.setText("");
         this.setVisible(false);
     }
 
@@ -130,41 +133,64 @@ public class LoginView extends JFrame implements Viewable{
     public void showView() {
             this.setVisible(true);
     }
-    private void login(long uid){
-        //send a login query for that user id
+    private void login(){
+        //send a login query for that user id (AccessHandler.userID;)
         //create player and profile objects and HomePage and pass it 
         //to homepage to be created
         //terminateView();
-        //referrer.showHomePage();
+        //referrer.showHomePage();}
     }
     private class ButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==login){
                 String un = username.getText();
-                //checkAvailabilityOfUsername(un);
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
-                
-                //System.out.println("Login function called!");
-                if ( false/*authenticate(un,pw)>*/ ){
-                    //login();
+                if ( AccessHandler.accessGame(un, pw,false) ){
+                    //clearing out things for high security.
+                    Arrays.fill(pwChar,'\0');
+                    pw = "";
+                    //calling garbage collector
+                    System.gc();
+                    username.setText("");
+                    password.setText("");
+                    //login here
+                    login();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, 
                         "Username/Password combination is wrong!",
-                        "Authentication Error!", JOptionPane.ERROR_MESSAGE,new ImageIcon("./img/authProblem.png"));
+                        "Authentication Error!", JOptionPane.ERROR_MESSAGE,
+                        new ImageIcon("./img/authProblem.png"));
                 }
             }
             else{
-                System.out.println("Register function called");
                 String un = username.getText();
-                //checkAvailabilityOfUsername(un);
+                if(AccessConnection.isAvailable(un)){
+                    JOptionPane.showMessageDialog(null, 
+                        "Uh this username is taken!",
+                        "Uhhh!!!", JOptionPane.ERROR_MESSAGE,
+                        new ImageIcon("./img/usernameTaken.png"));
+                    username.setText("");
+                }
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
-                //long uid = register(un,pw)
-                //hideView();
-                //referrer.showHomePage();}
+                if(true/*AccessHandler.accessGame(un,pw,true)*/){
+                    JOptionPane.showMessageDialog(null, 
+                        "Welcomeee <3. We are happier with you!!!",
+                        "Welcomeee!!!", JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon("./img/oneTimeGreeting.png"));
+                    //clearing out things for high security.
+                    Arrays.fill(pwChar,'\0');
+                    pw = "";
+                    //calling garbage collector
+                    System.gc();
+                    username.setText("");
+                    password.setText("");
+                    //login the same way 
+                    login();
+                }
             }
         }
     }
