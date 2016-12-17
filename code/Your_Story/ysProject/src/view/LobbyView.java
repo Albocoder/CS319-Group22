@@ -44,25 +44,29 @@ public class LobbyView extends JFrame implements Viewable {
     private JButton startVote;
     private JButton leaveLobby;
     private JComboBox kickPlayer;
-    //private ViewManager referrer;
+    private ViewManager referrer;
     //private ArrayList<Seat> seats;
     private Story theStory;
     //private Seat mySeat;
+    private VotingHandler voter;
+    private Lobby theLobby;
 
-    public LobbyView(/*Lobby aLobby*/){
+    public LobbyView(Lobby aLobby,ViewManager ref){
+        referrer = ref;
+        theLobby = aLobby;
+        //theStory = new Story(theLobby.getID());
+        voter = new VotingHandler(theLobby.getID());
         
     }    
     
     public void startVote(int type) {
-        if(true/*type == Lobby.VOTE_START*/){
-            //call the needed methods from the VotingHandler
+        if(type == Lobby.VOTE_START){
+            voter.startVoting(type);
         }
     }
 
     public void startKick(/*Player target*/) {
-        if(true/*type == Lobby.VOTE_KICK*/){
-            //call the needed methods from the VotingHandler
-        }
+        voter.startVoting(Lobby.VOTE_KICK,/*target*/null);
     }
 
     public void leaveLobby() {
@@ -82,6 +86,7 @@ public class LobbyView extends JFrame implements Viewable {
 
     @Override
     public void showView() {
+        this.setVisible(true);
     }
     
     private void logoutOnExitWithDialogue(){
