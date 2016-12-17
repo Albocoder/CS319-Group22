@@ -43,10 +43,18 @@ public class AccessConnection {
             r = DBInterface.getConnection().selectStuff("SELECT id FROM " + AUTH_DATA + " WHERE username = '" + username + "' AND password = '" + password + "'");
             if(!r.first())
                 return -1;
+            DBInterface.getConnection().executeStuff("UPDATE " + AUTH_DATA +
+                    " SET online = 1 WHERE username = '" + username +
+                    "'");
             return r.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(AccessConnection.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
+    }
+    
+    public static void logout(long player){
+        DBInterface.getConnection().executeStuff("UPDATE " + AUTH_DATA +
+                    " SET online = 0 WHERE id = " + player);
     }
 }
