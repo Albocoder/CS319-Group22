@@ -34,7 +34,6 @@ public class Seat {
         this.seatID = seatID;
         this.lobbyID = lobbyID;
         this.charID = charID;
-        
     }//
     
     public Seat(long seatID,long lobbyID,long charID, long playerID){
@@ -42,6 +41,7 @@ public class Seat {
         this.lobbyID = lobbyID;
         this.charID = charID;
         this.playerID = playerID;
+        player = new Player(playerID);
     }//
     
     
