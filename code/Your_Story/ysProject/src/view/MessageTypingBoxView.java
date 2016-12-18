@@ -40,7 +40,7 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				ChatConnection.sendMessage(typingString, (int)l.getID());
+				ChatConnection.sendMessage(typingString, (int)l.getID());
 				typingString = "";
 				repaint();
 				addNotify();

@@ -20,6 +20,7 @@ public class InGameView extends JFrame implements Viewable {
 	ChatView chat;
 	JPanel onlineUsers;
 	MessageTypingBoxView mv;
+	Lobby l;
 	
 	public InGameView(Lobby l, ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
@@ -27,6 +28,7 @@ public class InGameView extends JFrame implements Viewable {
 		
 		JPanel mainPanel = new JPanel();
 		
+		this.l = l;
 		chat = new ChatView(l);
 		scrollPane = new JScrollPane(chat);
 		mv = new MessageTypingBoxView(scrollPane, l);
@@ -75,8 +77,9 @@ public class InGameView extends JFrame implements Viewable {
 	
 	public BufferedImage createStoryImage() {
 		int width = 300;
-		String story = "This is for trial. There is Story Description here in real game...";
-		ArrayList<String> messageContent = InGameView.fitString(story, width);
+		Story s = l.getStory();
+		String storyString = s.getTimeline() + "\n" + s.getDescription();
+		ArrayList<String> messageContent = InGameView.fitString(storyString, width);
 		int height = LINE_HEIGHT * (messageContent.size());
 		
 		BufferedImage img = new BufferedImage(width + 1, height + 1, BufferedImage.TYPE_INT_ARGB);
@@ -93,16 +96,17 @@ public class InGameView extends JFrame implements Viewable {
 	}
 	
 	public BufferedImage createOnlineUsersImage() {
-		boolean[] userIsOnline = {true,true,false,true};
-		String[] username = {"alboCoder", "cevatBaris", "Kaxell", "karaali"};
-		int userNumber = 4;
-		String online = "Online Users";
+		ArrayList<Player> onlineUsers = LobbyConnection.getOnlineUsersOfLobby(l.getID());
+		ArrayList<Player> offlineUsers = LobbyConnection.getOfflineUsersOfLobby(l.getID());
+		int userNumber = onlineUsers.size() + offlineUsers.size();
+		String onlineUsersHeader = "Online Users";
 		Font headerFont = new Font("Tahoma", Font.BOLD, 24);
 		
 		FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
 		int height = userNumber * LINE_HEIGHT + 50;
 		int width = (int)(headerFont.getStringBounds(online, frc).getWidth()) + 20;
-		for (String s : username) {
+		for (Player p : onlineUsers) {
+			String name = p.
 			int length = (int)(font.getStringBounds(s, frc).getWidth());
 			if (length + 40 > width)
 				width = length + 40;
@@ -200,7 +204,7 @@ public class InGameView extends JFrame implements Viewable {
 		@Override
 		public void run() {
 			int height = chat.getPreferredHeight();
-			chat.repaint();
+			chat.fetchNewMessages();
 			if (height != chat.getPreferredHeight()) {
 				JScrollBar vertical = scrollPane.getVerticalScrollBar();
 				vertical.setValue(vertical.getMaximum());
