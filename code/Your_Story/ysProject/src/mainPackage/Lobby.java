@@ -26,13 +26,13 @@ public class Lobby {
     
     
     
-    public Lobby(String name,long ID, int quota, int state, ArrayList<Long> voteID,Story story){
+    public Lobby(String name,long ID, int quota, int state, ArrayList<Long> voteID,long storyID){
         this.name = name;
         this.ID = ID;
         this.quota = quota;
         this.state = state;
         this.voteID = voteID;
-        this.story = story;
+        this.story = new Story(storyID);
     }
      public Lobby(){
         this.name = "Sample";
@@ -40,7 +40,7 @@ public class Lobby {
         this.quota = 10;
         this.state = 00;
         this.voteID = new ArrayList<Long>();
-        this.story = new Story();
+     //   this.story = story;
     }
      
      
