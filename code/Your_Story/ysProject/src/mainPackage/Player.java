@@ -17,7 +17,7 @@ public class Player {
     private long playerID;
     private Profile profile; 
     
-    public Player(long ID){
+    public Player(long ID){//
         playerID = ID;
         profile = new Profile(ID);
     }
