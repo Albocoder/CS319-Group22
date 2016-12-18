@@ -12,7 +12,7 @@ public class Story {
     private String description;
     private String timeline;
     private long ID;
-    private ArrayList<Character> charList;
+    private ArrayList<Character> charList; // Every story has at least 2 characters
     
 
     public Story (String description, String timeline, long ID)
@@ -22,6 +22,14 @@ public class Story {
         this.ID = ID; 
         charList = new ArrayList<Character>();
     }
+    
+     public Story (long ID)
+    {
+        //This constructor will take the story from database depending on the 
+        //ID
+      
+    }
+    
     
     public Story ()
     {

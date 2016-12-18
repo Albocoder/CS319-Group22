@@ -15,6 +15,7 @@ public class Lobby {
     private int quota;
     private int state;
     private ArrayList<Long> voteID;
+    private Story story;
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
@@ -25,12 +26,13 @@ public class Lobby {
     
     
     
-    public Lobby(String name,long ID, int quota, int state, ArrayList<Long> voteID){
+    public Lobby(String name,long ID, int quota, int state, ArrayList<Long> voteID,Story story){
         this.name = name;
         this.ID = ID;
         this.quota = quota;
         this.state = state;
         this.voteID = voteID;
+        this.story = story;
     }
      public Lobby(){
         this.name = "Sample";
@@ -38,6 +40,7 @@ public class Lobby {
         this.quota = 10;
         this.state = 00;
         this.voteID = new ArrayList<Long>();
+        this.story = new Story();
     }
      
      
@@ -47,16 +50,17 @@ public class Lobby {
      public int getQuota(){return quota;}
      public int getState(){return state;}
      public ArrayList<Long> getVoteID() {return voteID;}
+     public Story getStory() {return story;}
      
     //setters 
-     public void setName(String name){this.name = name;}
-     public void setID(long ID){this.ID = ID;}
-     public void setQuota(int quota){this.quota = quota;}
-     public void setState(int state){this.state = state;}
-     public void setVoteID(ArrayList<Long> voteID){this.voteID = voteID;}
+     public void setName(String name) {this.name = name;}
+     public void setID(long ID) {this.ID = ID;}
+     public void setQuota(int quota) {this.quota = quota;}
+     public void setState(int state) {this.state = state;}
+     public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
+     public void setStory(Story story) {this.story = story;}
      
-     
-     
+    
      //other methods 
     
      public void updateQuota(){}
@@ -64,7 +68,7 @@ public class Lobby {
      public void updateCharacter(Character aCharacter){}
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
-     public void addPlayer(/*Player aPlayer*/){}
+     public void addPlayer(Player aPlayer){}
      
      public void finishGame(){}
      
