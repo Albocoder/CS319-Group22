@@ -16,6 +16,8 @@ public class Lobby {
     private int state;
     private ArrayList<Long> voteID;
     private Story story;
+    private ArrayList<Seat> seats;
+    
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
