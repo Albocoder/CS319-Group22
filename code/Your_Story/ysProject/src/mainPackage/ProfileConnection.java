@@ -25,6 +25,7 @@ public class ProfileConnection {
         long userID = profile.getID();
         long profileID = DBInterface.selectIntArray(PROFILE_DATA, "id", "user", userID)[0];
         profile.setName(DBInterface.selectString(PLAYER_DATA, "username", userID));
+        profile.setFinishedGames(getFinishedGames(userID));
         profile.setDescription(DBInterface.selectString(PROFILE_DATA, "description", profileID));
         return true;
     }
