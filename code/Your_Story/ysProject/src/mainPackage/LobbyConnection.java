@@ -41,8 +41,7 @@ public class LobbyConnection {
         return DBInterface.selectIntArray(PLAYER_DATA, "id", "online", 1).length;
     }
     
-    //Needs Player Class To Fully Implement
-    public static void getOnlineUsersOfLobby(long lobby){
+    public static Player[] getOnlineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
                 ".* FROM " + PLAYER_DATA +
                 " INNER JOIN " + SEAT_DATA +
@@ -51,6 +50,7 @@ public class LobbyConnection {
                 ".user = " + SEAT_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
+        return DBInterface.resultSetToPlayerArray(r);
     }
     
     public static Story[] getStories(long player){
