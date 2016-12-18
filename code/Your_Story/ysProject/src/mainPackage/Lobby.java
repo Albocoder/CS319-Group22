@@ -19,6 +19,7 @@ public class Lobby {
     private ArrayList<Seat> seats;
     private VotingHandler votingHandler;
     private Chat chat;
+    private ArrayList<Character> charList;
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
@@ -38,6 +39,8 @@ public class Lobby {
         this.story = LobbyConnection.getStory(storyID);
         chat = new Chat(ID, AccessHandler.userID);
         votingHandler = new VotingHandler(ID);
+        charList = LobbyConnection.getCharacters(ID);
+        
         
     }
     
@@ -66,6 +69,7 @@ public class Lobby {
      public Story getStory() {return story;}
      public ArrayList<Seat> getSeats() {return seats;}
      public Chat getChat() {return chat;}
+     public ArrayList<Character> getChars(){return charList;}
      
     //setters 
      public void setName(String name) {this.name = name;}
@@ -76,12 +80,16 @@ public class Lobby {
      public void setStory(Story story) {this.story = story;}
      public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
      public void setChat(Chat chat) {this.chat = chat;}
+     public void setCharList(ArrayList<Character> charList){this.charList = charList;}
     
      //other methods 
     
      public void updateQuota(){
          quota = LobbyConnection.getQuota(ID);
      }
+     public void updateChars(){
+             charList = LobbyConnection.getCharacters(ID);
+    }
           
      
      
