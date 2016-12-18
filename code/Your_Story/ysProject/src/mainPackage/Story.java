@@ -12,7 +12,7 @@ public class Story {
     private String description;
     private String timeline;
     private long ID;
-    private ArrayList<Character> charList;
+    private ArrayList<Character> charList; // Every story has at least 2 characters
     
 
     public Story (String description, String timeline, long ID)
