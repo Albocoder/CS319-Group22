@@ -23,6 +23,14 @@ public class Story {
         charList = new ArrayList<Character>();
     }
     
+     public Story (long ID)
+    {
+        //This constructor will take the story from database depending on the 
+        //ID
+      
+    }
+    
+    
     public Story ()
     {
         this.description = "Sample" ;
