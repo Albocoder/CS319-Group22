@@ -18,7 +18,7 @@ public class Profile {
     private String description;
     private ArrayList<Lobby> finishedGames;
     private boolean isYours;
-    private long ID;
+    private long ID;//
     
     /*public Profile( String name, BufferedImage photo, String description, boolean isYours){
         this.name = name;
