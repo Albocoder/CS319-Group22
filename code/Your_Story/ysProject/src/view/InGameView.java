@@ -74,6 +74,7 @@ public class InGameView extends JFrame implements Viewable {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(0);
+		updateView();
 	}
 	
 	public BufferedImage createStoryImage() {
@@ -127,10 +128,10 @@ public class InGameView extends JFrame implements Viewable {
 		for (int i = 0; i < offlineUsers.size(); i++) {
 			String name = offlineUsers.get(i).getProfile().getName();
 			g.setColor(Color.RED);
-			int exHeight = LINE_HEIGHT * (onlineUsers.size() - 1);
+			int exHeight = LINE_HEIGHT * onlineUsers.size();
 			g.fillOval(30, i * LINE_HEIGHT + 55 + exHeight, 5, 5);
 			g.setColor(Color.BLACK);
-			g.drawString(name, 40, (i + 1) * LINE_HEIGHT + 40);
+			g.drawString(name, 40, (i + 1) * LINE_HEIGHT + 40 + exHeight);
 		}
 		return img;
 	}
@@ -164,15 +165,6 @@ public class InGameView extends JFrame implements Viewable {
 		}
 		modified.add(s);
 		return modified;
-	}
-
-	public static void main (String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new InGameView(LobbyConnection.getLobby(9), null);
-            }
-        });
 	}
 	
 	@Override
@@ -215,9 +207,21 @@ public class InGameView extends JFrame implements Viewable {
 	private class OnlineUsersUpdater implements Runnable {
 		@Override
 		public void run() {
-			onlineUsers.removeAll();
-			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
-					SwingConstants.CENTER));
+//			onlineUsers.removeAll();
+//			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
+//					SwingConstants.CENTER));
+			onlineUsers.repaint();
 		}
+	}
+	
+	public static void main (String [] args) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	AccessHandler.username = "e3";
+            	AccessHandler.userID = 6;
+                new InGameView(LobbyConnection.getLobby(9), null);
+            }
+        });
 	}
 }

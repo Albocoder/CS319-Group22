@@ -29,7 +29,7 @@ public class MessageView {
 		        RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		if (m.senderName.equals(AccessHandler.username)) {
-			g.setColor(Color.BLUE);
+			g.setColor(new Color(135, 206, 250));
 		} else {
 			g.setColor(Color.WHITE);
 		}
