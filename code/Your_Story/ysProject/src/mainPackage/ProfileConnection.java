@@ -6,6 +6,8 @@
 package mainPackage;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -33,7 +35,7 @@ public class ProfileConnection {
         return true;
     }
     
-    public static Lobby[] getFinishedGames(long player){
+    public static ArrayList<Lobby> getFinishedGames(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
                 ".quota - COUNT(b.id) AS quota FROM " + LOBBY_DATA +
@@ -46,7 +48,7 @@ public class ProfileConnection {
                 ".story = " + STORY_DATA +
                 ".id GROUP BY " + LOBBY_DATA + ".id HAVING " + LOBBY_DATA +
                 ".state = 2");
-        return DBInterface.resultSetToLobbyArray(r);
+        return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
 }

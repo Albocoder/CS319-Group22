@@ -1,6 +1,8 @@
 package mainPackage;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 import thirdparty.*;
 
 /*
@@ -17,13 +19,13 @@ public class ChatConnection {
     
     public final static String CHAT_DATA = "message";
     
-    public static String[] getMessages(long id){
-        return DBInterface.selectStringArray(CHAT_DATA, "body", "lobby", id);
+    public static ArrayList<String> getMessages(long id){
+        return new ArrayList<String>(Arrays.asList(DBInterface.selectStringArray(CHAT_DATA, "body", "lobby", id)));
     }
-    public static String[] getMessages(long lobby, long lastMessage){
-        ResultSet r = null;
+    public static ArrayList<String> getMessages(long lobby, long lastMessage){
+        ResultSet r;
         r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
-        return DBInterface.resultSetToStringArray(r);
+        return new ArrayList<String>(Arrays.asList(DBInterface.resultSetToStringArray(r)));
     }
     public static long sendMessage(String message, int lobby){
         message = DBInterface.escapeString(message);

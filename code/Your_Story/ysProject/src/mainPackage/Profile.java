@@ -68,12 +68,15 @@ public class Profile {
     
     
     public void retrieveData(){
+        ProfileConnection.updateProfileInClient(this);
     //Retrieves the data of profile. This will sync the variables of object
     //with the data in the database, therefore before showing a profile to the users, this method will
     //make it certain that the updated data will be showed to the user.
+    
     }
     
     public void updateData(){
+        ProfileConnection.updateProfileInDatabase(this);
     //Updates the data of profile page in database with current values. This
     //is the opposite of the retrieveData method, so this one will sync the data in the database with
     //the current values of variables in an Profile object.
