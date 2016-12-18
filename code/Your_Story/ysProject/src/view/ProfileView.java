@@ -15,7 +15,10 @@ import javax.swing.event.*;
 
 public class ProfileView extends JFrame implements Viewable {
 	
+	ViewManager referrer;
+	
 	public ProfileView(ViewManager ref) {
+		referrer = ref;
 		add(new ProfilePanel());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(700, 400));
@@ -67,8 +70,7 @@ public class ProfileView extends JFrame implements Viewable {
 			JPanel textFields = new JPanel();
 			JPanel buttons = new JPanel();
 			JLabel picture = new JLabel();
-			JTextField name = new JTextField();
-			JTextField lastname = new JTextField();
+			JTextField username = new JTextField();
 			JTextField bio = new JTextField();
 			JButton edit = new JButton("Edit");
 			JButton exit = new JButton("Exit");
@@ -94,54 +96,29 @@ public class ProfileView extends JFrame implements Viewable {
 			picturePanel.add(textFields, BorderLayout.CENTER);
 			
 			textFields.setLayout(null);
-			textFields.add(name);
-			textFields.add(lastname);
+			textFields.add(username);
 			
 			picture.setIcon(new ImageIcon(createProfileImage(150, 150)));
 			
-			name.setBounds(10, 50, 160, 30);
-			name.setForeground(Color.gray);
-			name.setText("First Name Here..");
-			name.setEditable(editable);
+			username.setBounds(10, 70, 160, 30);
+			username.setForeground(Color.gray);
+			username.setText("Username Here..");
+			username.setEditable(editable);
 			FocusListener nameFocusListener = new FocusListener() {
 				boolean focused = false;
 				@Override
 				public void focusGained(FocusEvent e) {
 					if (!focused) {
-						name.setForeground(Color.black);
-						name.setText("");
+						username.setForeground(Color.black);
+						username.setText("");
 					}
 					focused = true;
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
-					if (name.getText().trim().equals("")) {
-						name.setForeground(Color.gray);
-						name.setText("First Name Here..");
-						focused = false;
-					}
-				}
-			};
-			
-			lastname.setBounds(10, 90, 160, 30);
-			lastname.setForeground(Color.gray);
-			lastname.setText("Last Name Here..");
-			lastname.setEditable(editable);
-			FocusListener lastnameFocusListener = new FocusListener() {
-				boolean focused = false;
-				@Override
-				public void focusGained(FocusEvent e) {
-					if (!focused) {
-						lastname.setForeground(Color.black);
-						lastname.setText("");
-					}
-					focused = true;
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					if (lastname.getText().trim().equals("")) {
-						lastname.setForeground(Color.gray);
-						lastname.setText("Last Name Here..");
+					if (username.getText().trim().equals("")) {
+						username.setForeground(Color.gray);
+						username.setText("Username Here..");
 						focused = false;
 					}
 				}
@@ -152,20 +129,18 @@ public class ProfileView extends JFrame implements Viewable {
 			edit.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (e.getSource().toString().equals("Edit")) {
+					if (((JButton) e.getSource()).getText().equals("Edit")) {
 						editable = true;
-						name.setEditable(editable);
-						lastname.setEditable(editable);
-						name.addFocusListener(nameFocusListener);
-						lastname.addFocusListener(lastnameFocusListener);
-						((JButton) e.getSource()).setName("Save");
-					} else if (e.getSource().toString().equals("Save")) {
+						username.setEditable(editable);
+						username.addFocusListener(nameFocusListener);
+						((JButton) e.getSource()).setText("Save");
+					} else if (((JButton) e.getSource()).getText().equals("Save")) {
 						editable = false;
-						name.setEditable(editable);
-						lastname.setEditable(editable);
-						name.removeFocusListener(nameFocusListener);
-						lastname.removeFocusListener(lastnameFocusListener);
-						((JButton) e.getSource()).setName("Save");
+						username.setEditable(editable);
+						username.removeFocusListener(nameFocusListener);
+						((JButton) e.getSource()).setText("Edit");
+					} else if (((JButton) e.getSource()).getText().equals("Exit")) {
+						referrer.showHomePage(null);
 					}
 				}
 			});

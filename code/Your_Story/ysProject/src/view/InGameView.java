@@ -47,7 +47,8 @@ public class InGameView extends JFrame implements Viewable {
 		setVisible(true);
 		addComponentListener(new ComponentAdapter(){
 			public void componentResized(ComponentEvent e) {
-				scrollPane.setSize(new Dimension(mv.getWidth(), mv.getHeight() - mv.getBoxHeight()));
+				scrollPane.setSize(new Dimension(mv.getWidth(), 
+								mv.getHeight() - mv.getBoxHeight()));
 			}
 		});
 		
@@ -104,13 +105,7 @@ public class InGameView extends JFrame implements Viewable {
 		
 		FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
 		int height = userNumber * LINE_HEIGHT + 50;
-		int width = (int)(headerFont.getStringBounds(online, frc).getWidth()) + 20;
-		for (Player p : onlineUsers) {
-			String name = p.
-			int length = (int)(font.getStringBounds(s, frc).getWidth());
-			if (length + 40 > width)
-				width = length + 40;
-		}
+		int width = (int)(headerFont.getStringBounds(onlineUsersHeader, frc).getWidth()) + 20;
 		
 		BufferedImage img = new BufferedImage(width + 1, height + 1, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) img.createGraphics();
@@ -120,17 +115,21 @@ public class InGameView extends JFrame implements Viewable {
 		g.drawRect(0, 0, width, height);
 		g.setFont(headerFont);
 		g.setColor(Color.DARK_GRAY);
-		g.drawString(online, 10, 30);
+		g.drawString(onlineUsersHeader, 10, 30);
 		g.setFont(font);
-		for (int i = 0; i < userNumber; i++) {
-			if (userIsOnline[i]) {
-				g.setColor(Color.GREEN);
-			} else {
-				g.setColor(Color.RED);
-			}
+		for (int i = 0; i < onlineUsers.size(); i++) {
+			String name = onlineUsers.get(i).getProfile().getName();
+			g.setColor(Color.GREEN);
 			g.fillOval(30, i * LINE_HEIGHT + 55, 5, 5);
 			g.setColor(Color.BLACK);
-			g.drawString(username[i], 40, (i + 1) * LINE_HEIGHT + 40);
+			g.drawString(name, 40, (i + 1) * LINE_HEIGHT + 40);
+		}
+		for (int i = 0; i < offlineUsers.size(); i++) {
+			String name = offlineUsers.get(i).getProfile().getName();
+			g.setColor(Color.RED);
+			g.fillOval(30, i * LINE_HEIGHT + 55, 5, 5);
+			g.setColor(Color.BLACK);
+			g.drawString(name, 40, (i + 1) * LINE_HEIGHT + 40);
 		}
 		return img;
 	}
@@ -170,7 +169,8 @@ public class InGameView extends JFrame implements Viewable {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new InGameView(null, null);
+            	System.out.println("Girdi");
+                new InGameView(LobbyConnection.getLobby(9), null);
             }
         });
 	}
