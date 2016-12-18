@@ -30,7 +30,8 @@ public class LobbyConnection {
     public static ArrayList<Lobby> getOngoingGamesOfPlayer(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
-                ".quota - COUNT(b.id) AS quota FROM " + LOBBY_DATA +
+                ".quota - COUNT(b.id) AS quota, " + STORY_DATA +
+                ".id AS storyid FROM " + LOBBY_DATA +
                 " INNER JOIN " + SEAT_DATA +
                 " a ON a.lobby = " + LOBBY_DATA + 
                 ".id AND a.user = " + player + " LEFT JOIN " + SEAT_DATA +
@@ -53,7 +54,8 @@ public class LobbyConnection {
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA + 
                 ".quota - COUNT(" + SEAT_DATA +
-                ".id) AS quota FROM " + LOBBY_DATA +
+                ".id) AS quota, " + STORY_DATA +
+                ".id AS storyid FROM " + LOBBY_DATA +
                 " LEFT JOIN " + SEAT_DATA + 
                 " ON " + SEAT_DATA +
                 ".lobby = " + LOBBY_DATA +
@@ -86,7 +88,8 @@ public class LobbyConnection {
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA + 
                 ".quota - COUNT(" + SEAT_DATA +
-                ".id) AS quota FROM " + LOBBY_DATA +
+                ".id) AS quota, " + STORY_DATA +
+                ".id AS storyid FROM " + LOBBY_DATA +
                 " LEFT JOIN " + SEAT_DATA + 
                 " ON " + SEAT_DATA +
                 ".lobby = " + LOBBY_DATA +
