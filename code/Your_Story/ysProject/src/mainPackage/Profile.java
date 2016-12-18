@@ -30,7 +30,7 @@ public class Profile {
     }*/
     public Profile(long ID){
         this.ID = ID;
-        isYours = this.ID == HomePage.getPlayer().getPlayerID();
+        isYours = this.ID == AccessHandler.userID;
         retrieveData();
     }
     

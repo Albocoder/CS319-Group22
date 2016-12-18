@@ -137,6 +137,7 @@ public class LoginView extends JFrame implements Viewable{
         //it has public license 
         Loader l = new Loader();
         l.dispose();
+        System.out.println(AccessHandler.userID);
         referrer.showHomePage(new HomePage(AccessHandler.userID));
         hideView();
     }
