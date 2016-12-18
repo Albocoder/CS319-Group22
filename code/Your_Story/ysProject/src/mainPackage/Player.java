@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -41,11 +42,11 @@ public class Player {
     }
     
     public Profile getProfile(){
-  //  Returns profile of the user. This profile object will include all
-//information about that user, name, photo and the descritipion.
+    //Returns profile of the user. This profile object will include all
+    //information about that user, name, photo and the descritipion.
     return null;}
     
-    public void updateProfile(String name, Image photo, String description){
+    public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
     //information about that user, name, photo and the descritipion.
     }
