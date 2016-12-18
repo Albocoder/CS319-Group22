@@ -16,8 +16,7 @@ public class Character {
     private String name;
     private long charID;
     private boolean isTaken;
-   
-    BufferedImage image = null;
+    BufferedImage photo = null;
    
 
     //read image file
@@ -47,6 +46,7 @@ public class Character {
     public String getName(){return name;} 
     public long getCharID(){return charID;} 
     public boolean getIsTaken(){return isTaken;}
+    public BufferedImage getPhoto(){return photo;}
     
     //setters
     public void setDescription(String description)
@@ -57,6 +57,8 @@ public class Character {
     {this.charID = charID;}
     public void setIsTaken(boolean isTaken)
     {this.isTaken = isTaken;}   
+    public void setPhoto (BufferedImage photo)
+    {this.photo = photo;}
     
     
     
