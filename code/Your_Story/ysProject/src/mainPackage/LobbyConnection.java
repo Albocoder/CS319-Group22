@@ -129,7 +129,7 @@ public class LobbyConnection {
                 " INNER JOIN " + SEAT_DATA +
                 " ON " + PLAYER_DATA +
                 ".online = 1 AND " + SEAT_DATA +
-                ".user = " + SEAT_DATA +
+                ".user = " + PLAYER_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
@@ -141,7 +141,7 @@ public class LobbyConnection {
                 " INNER JOIN " + SEAT_DATA +
                 " ON " + PLAYER_DATA +
                 ".online = 0 AND " + SEAT_DATA +
-                ".user = " + SEAT_DATA +
+                ".user = " + PLAYER_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));

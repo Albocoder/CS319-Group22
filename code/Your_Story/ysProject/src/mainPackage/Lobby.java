@@ -35,7 +35,7 @@ public class Lobby {
         this.quota = quota;
         this.state = state;
         this.voteID = voteID;
-        this.story = new Story(storyID);
+        this.story = LobbyConnection.getStory(storyID);;
         votingHandler = new VotingHandler(ID);
         
     }
