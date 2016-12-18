@@ -18,7 +18,7 @@ public class Lobby {
     private Story story;
     private ArrayList<Seat> seats;
     private VotingHandler votingHandler;
-    
+    private Chat chat;
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
@@ -35,7 +35,8 @@ public class Lobby {
         this.quota = quota;
         this.state = state;
         this.voteID = voteID;
-        this.story = LobbyConnection.getStory(storyID);;
+        this.story = LobbyConnection.getStory(storyID);
+        chat = new Chat(ID, AccessHandler.userID);
         votingHandler = new VotingHandler(ID);
         
     }
@@ -64,6 +65,7 @@ public class Lobby {
      public ArrayList<Long> getVoteID() {return voteID;}
      public Story getStory() {return story;}
      public ArrayList<Seat> getSeats() {return seats;}
+     public Chat getChat() {return chat;}
      
     //setters 
      public void setName(String name) {this.name = name;}
@@ -73,6 +75,7 @@ public class Lobby {
      public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
      public void setStory(Story story) {this.story = story;}
      public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
+     public void setChat(Chat chat) {this.chat = chat;}
     
      //other methods 
     

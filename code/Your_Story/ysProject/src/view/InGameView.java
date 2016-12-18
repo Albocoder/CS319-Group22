@@ -207,9 +207,10 @@ public class InGameView extends JFrame implements Viewable {
 	private class OnlineUsersUpdater implements Runnable {
 		@Override
 		public void run() {
-			onlineUsers.removeAll();
-			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
-					SwingConstants.CENTER));
+//			onlineUsers.removeAll();
+//			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
+//					SwingConstants.CENTER));
+			onlineUsers.repaint();
 		}
 	}
 	
@@ -217,7 +218,8 @@ public class InGameView extends JFrame implements Viewable {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-            	AccessHandler.username = "ali";
+            	AccessHandler.username = "e3";
+            	AccessHandler.userID = 6;
                 new InGameView(LobbyConnection.getLobby(9), null);
             }
         });
