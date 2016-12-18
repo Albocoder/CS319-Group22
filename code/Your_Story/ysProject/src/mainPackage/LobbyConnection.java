@@ -27,6 +27,22 @@ public class LobbyConnection {
     private static final String VOTING_DATA = "vote";
     private static final String CHARACTER_DATA = "charac";
     
+    public static ArrayList<Lobby> getOngoingGamesOfPlayer(long player){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
+                ".*, " + STORY_DATA +
+                ".quota - COUNT(b.id) AS quota FROM " + LOBBY_DATA +
+                " INNER JOIN " + SEAT_DATA +
+                " a ON a.lobby = " + LOBBY_DATA + 
+                ".id AND a.user = " + player + " LEFT JOIN " + SEAT_DATA +
+                " b ON b.lobby = " + LOBBY_DATA +
+                ".id AND b.user IS NOT NULL LEFT JOIN " + STORY_DATA +
+                " ON " + LOBBY_DATA +
+                ".story = " + STORY_DATA +
+                ".id GROUP BY " + LOBBY_DATA + ".id HAVING " + LOBBY_DATA +
+                ".state = 1");
+        return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
+    }
+    
     public static Seat getSeat(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
                 " WHERE id = " + id);
