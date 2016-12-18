@@ -530,7 +530,6 @@ public class HomeView extends JFrame implements Viewable{
         public void run() {
             //update lobby data from mainData and call showWaitingLobbies()
             showWaitingLobbies();
-            System.out.println("HomeView.LobbyUpdater.run()");
         }
     }
     private class OngoingUpdater implements Runnable {
@@ -539,7 +538,6 @@ public class HomeView extends JFrame implements Viewable{
             //update data from mainData.getPlayer().getProfile()
             //and call showOngoing()
             showOngoing();
-            System.out.println("HomeView.OngoingUpdater.run()");
         }
     }
     private class OnlinePlayersUpdater implements Runnable {
@@ -548,7 +546,6 @@ public class HomeView extends JFrame implements Viewable{
             //update data from mainData
             //and call showOnlineUsers();
             showOnlineUsers();
-            System.out.println("HomeView.OnlinePlayersUpdater.run()");
         }
     }
     private class ProfilePicUpdater implements Runnable{
@@ -557,7 +554,6 @@ public class HomeView extends JFrame implements Viewable{
             //get new profile pic by update()-ing from 
             //mainData.getPlayer().getProfile() and call showProfilePic()
             showProfilePic();
-            System.out.println("HomeView.ProfilePicUpdater.run()");
         }
     }
 }
