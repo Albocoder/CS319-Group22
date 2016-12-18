@@ -27,6 +27,7 @@ public class Story {
     {
         //This constructor will take the story from database depending on the 
         //ID
+        
       
     }
     

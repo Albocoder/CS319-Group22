@@ -30,6 +30,7 @@ public class AccessHandler {
         userID = AccessConnection.record(username, password);
         if (userID == -1) 
                 return false;
+        AccessConnection.authenticate(username, password);
         AccessHandler.username = username;
         return true;
     }

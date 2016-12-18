@@ -21,10 +21,34 @@ public class LobbyConnection {
     private static final String SEAT_DATA = "seat";
     private static final String STORY_DATA = "story";
     
+    public static Story getStory(long storyID){
+        return new Story(DBInterface.selectString(STORY_DATA, "description", storyID),
+        DBInterface.selectString(STORY_DATA, "timeline", storyID), storyID);
+    }
+    
+    public static Lobby[] getWaitingLobbies(){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
+                ".*, " + STORY_DATA + 
+                ".quota - COUNT(" + SEAT_DATA +
+                ".id) AS quota FROM " + LOBBY_DATA +
+                " LEFT JOIN " + SEAT_DATA + 
+                " ON " + SEAT_DATA +
+                ".lobby = " + LOBBY_DATA +
+                ".id AND " + SEAT_DATA +
+                ".user IS NOT NULL INNER JOIN " + STORY_DATA +
+                " ON " + LOBBY_DATA +
+                ".story = " + STORY_DATA +
+                ".ID WHERE " + LOBBY_DATA +
+                ".state = 0 GROUP BY " + LOBBY_DATA + 
+                ".id HAVING quota > 0");
+        return DBInterface.resultSetToLobbyArray(r);
+    }
+    
     public static Lobby[] getLobbies(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
-                ".quota - COUNT(b.id) AS quota FROM " + LOBBY_DATA +
+                ".quota - COUNT(b.id) AS quota, " + STORY_DATA +
+                ".id AS storyid FROM " + LOBBY_DATA +
                 " INNER JOIN " + SEAT_DATA +
                 " a ON a.lobby = " + LOBBY_DATA + 
                 ".id AND a.user = " + player + " LEFT JOIN " + SEAT_DATA +
