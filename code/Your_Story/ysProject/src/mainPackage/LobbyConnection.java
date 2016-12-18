@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Asus
@@ -25,10 +27,38 @@ public class LobbyConnection {
     private static final String VOTING_DATA = "vote";
     private static final String CHARACTER_DATA = "charac";
     
-    public static Seat[] getSeats(long lobbyID){
+    public static Seat getSeat(long id){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
+                " WHERE id = " + id);
+        return DBInterface.resultSetToSeatArray(r)[0];
+    }
+    
+    public static Lobby getLobby(long id){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
+                ".*, " + STORY_DATA + 
+                ".quota - COUNT(" + SEAT_DATA +
+                ".id) AS quota FROM " + LOBBY_DATA +
+                " LEFT JOIN " + SEAT_DATA + 
+                " ON " + SEAT_DATA +
+                ".lobby = " + LOBBY_DATA +
+                ".id AND " + SEAT_DATA +
+                ".user IS NOT NULL INNER JOIN " + STORY_DATA +
+                " ON " + LOBBY_DATA +
+                ".story = " + STORY_DATA +
+                ".ID WHERE " + LOBBY_DATA +
+                ".id = " + id + " GROUP BY " + LOBBY_DATA + 
+                ".id HAVING quota > 0");
+        return DBInterface.resultSetToLobbyArray(r)[0];
+    }
+    
+    public static Player getPlayer(long id){
+        return new Player(id);
+    }
+    
+    public static ArrayList<Seat> getSeats(long lobbyID){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
                 " WHERE lobby = " + lobbyID);
-        return DBInterface.resultSetToSeatArray(r);
+        return new ArrayList<Seat>(Arrays.asList(DBInterface.resultSetToSeatArray(r)));
     }
     
     public static Story getStory(long storyID){
@@ -36,7 +66,7 @@ public class LobbyConnection {
         DBInterface.selectString(STORY_DATA, "timeline", storyID), storyID);
     }
     
-    public static Lobby[] getWaitingLobbies(){
+    public static ArrayList<Lobby> getWaitingLobbies(){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA + 
                 ".quota - COUNT(" + SEAT_DATA +
@@ -51,10 +81,10 @@ public class LobbyConnection {
                 ".ID WHERE " + LOBBY_DATA +
                 ".state = 0 GROUP BY " + LOBBY_DATA + 
                 ".id HAVING quota > 0");
-        return DBInterface.resultSetToLobbyArray(r);
+        return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
-    public static Lobby[] getLobbies(long player){
+    public static ArrayList<Lobby> getLobbies(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
                 ".quota - COUNT(b.id) AS quota, " + STORY_DATA +
@@ -67,14 +97,14 @@ public class LobbyConnection {
                 " ON " + LOBBY_DATA +
                 ".story = " + STORY_DATA +
                 ".id GROUP BY " + LOBBY_DATA + ".id");
-        return DBInterface.resultSetToLobbyArray(r);
+        return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
     public static int getOnlineUsers(){
         return DBInterface.selectIntArray(PLAYER_DATA, "id", "online", 1).length;
     }
     
-    public static Player[] getOnlineUsersOfLobby(long lobby){
+    public static ArrayList<Player> getOnlineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
                 ".* FROM " + PLAYER_DATA +
                 " INNER JOIN " + SEAT_DATA +
@@ -83,15 +113,15 @@ public class LobbyConnection {
                 ".user = " + SEAT_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
-        return DBInterface.resultSetToPlayerArray(r);
+        return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
     }
     
-    public static Story[] getStories(long player){
+    public static ArrayList<Story> getStories(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + STORY_DATA +
                 ".* FROM " + STORY_DATA + 
                 " INNER JOIN " + PLAYER_DATA +
                 " ON " + PLAYER_DATA + ".id = " + player);
-        return DBInterface.resultSetToStoryArray(r);
+        return new ArrayList<Story>(Arrays.asList(DBInterface.resultSetToStoryArray(r)));
     }
     
     public static long createLobby(String name, long story){

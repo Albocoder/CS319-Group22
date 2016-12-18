@@ -1,4 +1,6 @@
 package mainPackage;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /*
@@ -21,13 +23,13 @@ public class Chat {
         this.lobby = lobby;
         this.username = username;
     }
-    public String[] getMessages(){
-        String[] result = ChatConnection.getMessages(lobby);
+    public ArrayList<String> getMessages(){
+        ArrayList<String> result = ChatConnection.getMessages(lobby);
         updateThreshold();
         return result;
     }
-    public String[] getNewMessages(){
-        String result[] = ChatConnection.getMessages(lobby, threshold);
+    public ArrayList<String> getNewMessages(){
+        ArrayList<String> result = ChatConnection.getMessages(lobby, threshold);
         updateThreshold();
         return result;
     }
