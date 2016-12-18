@@ -15,28 +15,23 @@ package view;
  * the constructor
  *==================================================================
  * Description:
- * This class is the homepage view that the user will see when 
- * logged in.
+ * This class is the lobby view for a lobby that is waiting
  * */
-import java.awt.GridLayout;
-import java.awt.event.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import static javax.swing.WindowConstants.*;
+import javax.swing.border.EtchedBorder;
 import view.*;
 import mainPackage.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author black-knight
- */
 public class LobbyView extends JFrame implements Viewable {
     
     private JScrollPane theSeats;
@@ -54,6 +49,12 @@ public class LobbyView extends JFrame implements Viewable {
     private VotingHandler voter;
     private Lobby theLobby;
     private JPanel seatsPanel;
+    private ArrayList<JPanel> seats;
+    
+    private final int PROFILE_SIZE = 230;
+    private final int COLOR_COLD_RAND = 155;
+    private final int COLOR_RAND = 255;
+    private final int BORDER_THICKNESS = 5;
     
 
     public LobbyView(Lobby aLobby,ViewManager ref){
@@ -93,6 +94,81 @@ public class LobbyView extends JFrame implements Viewable {
     @Override
     public void showView() {
         this.setVisible(true);
+    }
+    
+    private void showWaitingLobbies(){
+        theSeats.removeAll();
+        seats.removeAll(seats);
+        Random r = new Random();
+        for(int i = 0; i < 50; i++/*Seat s:*/){
+            JPanel emptyPanel = new JPanel();
+            Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
+            emptyPanel.setBackground(c);
+            JPanel tmpLobby = new JPanel(new BorderLayout());
+            tmpLobby.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+            tmpLobby.setBackground(c);
+            //this sets up a padding from the border to the components
+            tmpLobby.add(emptyPanel, BorderLayout.NORTH);
+            tmpLobby.add(emptyPanel, BorderLayout.SOUTH);
+            tmpLobby.add(emptyPanel, BorderLayout.EAST);
+            tmpLobby.add(emptyPanel, BorderLayout.WEST);
+
+            //here add the specifics for each lobby
+            JPanel toFill = new JPanel(new BorderLayout());
+            toFill.setBackground(c);
+
+            //adding the icon to the left
+            JLabel icon = new JLabel();
+
+            try {
+                    /////// get image and resize it///////////////////////////////////////////////
+                    FileInputStream fis = new FileInputStream(new File("./img/castleBlack.jpg")/*get database image*/);
+                    BufferedImage gameIcon = ImageIO.read(fis);
+                    Image dimg = gameIcon.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(dimg);
+                    //////////////////////////////////////////////////////////////////////////////
+                    icon.setIcon(imageIcon);
+                    icon.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+            } catch (Exception e) {
+                    e.printStackTrace();
+            }
+
+            toFill.add(icon,BorderLayout.WEST);
+
+            JLabel lobbyName = new JLabel("Best Lobby"/*l.getName()*/);
+            try {
+                    Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")));
+                    lobbyName.setFont(customFont);
+            } catch (Exception e) {
+                    e.printStackTrace();
+            }
+            lobbyName.setForeground(Color.WHITE);
+            lobbyName.setHorizontalAlignment(JLabel.CENTER);
+            lobbyName.setVerticalAlignment(JLabel.NORTH);
+            toFill.add(lobbyName,BorderLayout.NORTH);
+
+            JLabel lobbyQuota = new JLabel("Player(s): "+"4"/*l.getQuota()*/+"/"+"5"/*l.getSeats().size()*/);
+            lobbyQuota.setForeground(Color.WHITE);
+            lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
+            lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
+            toFill.add(lobbyQuota,BorderLayout.SOUTH);
+
+            JLabel storyTimeline = new JLabel("Timeline: "/*+l.getStory().getTimeline()*/);
+            storyTimeline.setForeground(Color.WHITE);
+            storyTimeline.setHorizontalAlignment(JLabel.LEFT);
+            toFill.add(storyTimeline,BorderLayout.CENTER);
+
+            tmpLobby.add(toFill, BorderLayout.CENTER);
+
+            //adding the listeners for the components
+            //tmpLobby.addMouseListener(l);
+            theSeats.add(tmpLobby,BorderLayout.CENTER);
+            //lobbies.add(l);
+            seats.add(tmpLobby);
+        }
+        theSeats.updateUI();
     }
     
     private void logoutOnExitWithDialogue(){

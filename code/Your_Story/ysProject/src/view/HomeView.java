@@ -259,8 +259,11 @@ public class HomeView extends JFrame implements Viewable{
         //hide this!
     }
     public void joinLobby(Lobby aLobby){
-        if(aLobby.getState() == Lobby.LOBBY_INGAME){
-            //showOngoingGame(aLobby,loggedInPlayer);
+        if(aLobby.getState() == Lobby.LOBBY_WAITING){
+            //referrer.showOngoingGame(aLobby,loggedInPlayer);
+        }
+        else{
+            
         }
     }
 
