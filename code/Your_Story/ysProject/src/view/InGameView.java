@@ -6,14 +6,20 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.concurrent.*;
 
 import javax.swing.*;
+
 import mainPackage.*;
 
 public class InGameView extends JFrame implements Viewable {
 	
 	static Font font;
 	static int LINE_HEIGHT;
+	JScrollPane scrollPane;
+	ChatView chat;
+	JPanel onlineUsers;
+	MessageTypingBoxView mv;
 	
 	public InGameView(Lobby l, ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
@@ -21,17 +27,19 @@ public class InGameView extends JFrame implements Viewable {
 		
 		JPanel mainPanel = new JPanel();
 		
-		JScrollPane scrollPane = new JScrollPane(new ChatView());
-		MessageTypingBoxView mv = new MessageTypingBoxView(scrollPane);
+		chat = new ChatView(l);
+		scrollPane = new JScrollPane(chat);
+		mv = new MessageTypingBoxView(scrollPane, l);
 		
 		JPanel panel = new JPanel();
-		JPanel onlineUsers = new JPanel();
+		onlineUsers = new JPanel();
 		JPanel story = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JButton voteButton = new JButton("Vote");
 		JButton exitButton = new JButton("Exit");
 		
 		add(mainPanel);
+		addMouseListener(mv);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(700, 400));
 		setVisible(true);
@@ -154,19 +162,19 @@ public class InGameView extends JFrame implements Viewable {
 		return modified;
 	}
 
-//	public static void main (String [] args) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new InGameView(null);
-//            }
-//        });
-//	}
+	public static void main (String [] args) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new InGameView(null, null);
+            }
+        });
+	}
 	
 	@Override
 	public void terminateView() {
-		// TODO Auto-generated method stub
-		
+		AccessHandler.logOut();
+        System.exit(0);
 	}
 
 	@Override
@@ -176,12 +184,36 @@ public class InGameView extends JFrame implements Viewable {
 
 	@Override
 	public void updateView() {
-		// TODO Auto-generated method stub
-		
+		ScheduledExecutorService chatExec = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService onlineUsersExec = Executors.newSingleThreadScheduledExecutor();
+        
+        chatExec.scheduleAtFixedRate(new ChatUpdater(),5,5,TimeUnit.SECONDS);
+        onlineUsersExec.scheduleAtFixedRate(new OnlineUsersUpdater(),23,23,TimeUnit.SECONDS);
 	}
 
 	@Override
 	public void showView() {
 		setVisible(true);
+	}
+	
+	private class ChatUpdater implements Runnable {
+		@Override
+		public void run() {
+			int height = chat.getPreferredHeight();
+			chat.repaint();
+			if (height != chat.getPreferredHeight()) {
+				JScrollBar vertical = scrollPane.getVerticalScrollBar();
+				vertical.setValue(vertical.getMaximum());
+			}
+		}
+	}
+	
+	private class OnlineUsersUpdater implements Runnable {
+		@Override
+		public void run() {
+			onlineUsers.removeAll();
+			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
+					SwingConstants.CENTER));
+		}
 	}
 }

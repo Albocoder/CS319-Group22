@@ -12,11 +12,14 @@ public class ChatView extends JPanel {
 	private ArrayList<Message> messages;
 	static int FINAL_WIDTH;
 	static String username = "karaali"; // for trial
+	private int height;
+	private Lobby lobby;
 	
-	public ChatView() {
+	public ChatView(Lobby l) {
+		lobby = l;
 		FINAL_WIDTH = 300;
 		messages = new ArrayList<Message>();
-		// these messages are for trial
+//		ChatConnection.getMessages(l.getID());
 		messages.add(new Message("alboCoder", "Prince", "Im gonna kill you."));
 		messages.add(new Message("kaxell", "King", "You know, if I dont let you kill, you cant."));
 		messages.add(new Message("cevatBaris", "Knight", "Yeah, he s right, even you cant touch me."));
@@ -37,7 +40,7 @@ public class ChatView extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int y = 10;
+		height = 10;
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
@@ -47,13 +50,17 @@ public class ChatView extends JPanel {
 		for (Message m : messages) {
 			MessageView mv = new MessageView(m);
 			BufferedImage img = mv.createImage();
-			if (m.senderName == username) {
-				g2.drawImage(img, null, getWidth() - img.getWidth() - 10, y);
+			if (m.senderName == username/*AccessHandler.username*/) {
+				g2.drawImage(img, null, getWidth() - img.getWidth() - 10, height);
 			} else {
-				g2.drawImage(img, null, 10, y);
+				g2.drawImage(img, null, 10, height);
 			}
-			y = y + 10 + img.getHeight();
+			height = height + 10 + img.getHeight();
 		}
-		setPreferredSize(new Dimension(380, y));
+		setPreferredSize(new Dimension(380, height));
+	}
+	
+	public int getPreferredHeight() {
+		return height;
 	}
 }

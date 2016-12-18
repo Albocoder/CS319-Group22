@@ -10,22 +10,22 @@ import java.util.TimerTask;
 
 import javax.swing.*;
 
-public class MessageTypingBoxView extends JPanel implements MouseListener, KeyListener {
+import mainPackage.*;
+
+public class MessageTypingBoxView extends JPanel implements KeyListener, MouseListener {
 	
 	private String typingString;
 	private boolean typingBarIsActive;
 	private boolean markerIsActive;
-	private HashMap<String, String> map;
 	private RoundRectangle2D messageTypingBar;
 	private int boxHeight;
 	private JComponent panel;
 	private JButton button;
 	
-	public MessageTypingBoxView(JComponent panel) {
+	public MessageTypingBoxView(JComponent panel, Lobby l) {
 		typingString = "";
 		typingBarIsActive = false;
 		markerIsActive = false;
-		map = new HashMap<String, String>();
 		boxHeight = 40;
 		this.panel = panel;
 		button = new JButton("Send");
@@ -37,10 +37,18 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 		
 		add(button);
 		button.setLayout(null);
-		// sending function should be added to button
+		button.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				ChatConnection.sendMessage(typingString, (int)l.getID());
+				typingString = "";
+				repaint();
+				addNotify();
+			}
+		});
 		
-		addMouseListener(this);
 		addKeyListener(this);
+		addMouseListener(this);
 	}
 	
 	public void addNotify() {
@@ -102,6 +110,14 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 		return typingBarIsActive;
 	}
 	
+	public void setTypingBarIsActive(boolean b) {
+		typingBarIsActive = b;
+	}
+	
+	public RoundRectangle2D getMessageTypingBar() {
+		return messageTypingBar;
+	}
+	
 	public int getBoxHeight() {
 		return boxHeight;
 	}
@@ -117,13 +133,19 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 	}
 
 	@Override
+	public void keyReleased(KeyEvent e) {}
+	
+	@Override
 	public void mouseClicked(MouseEvent e) {
+//		System.out.println(e.getX() + ", " + e.getY());
 		if (messageTypingBar.contains(new Point(e.getX(), e.getY()))) {
-			if (!typingBarIsActive)
+			addNotify();
+			if (!typingBarIsActive) {
 				activateMarker();
-			typingBarIsActive = true;
+			}
+			setTypingBarIsActive(true);
 		} else {
-			typingBarIsActive = false;
+			setTypingBarIsActive(false);
 			repaint();
 		}
 	}
@@ -139,7 +161,4 @@ public class MessageTypingBoxView extends JPanel implements MouseListener, KeyLi
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
-	@Override
-	public void keyReleased(KeyEvent e) {}
 }
