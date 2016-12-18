@@ -18,11 +18,11 @@ public class Seat {
     private Player player;
         
     public Seat(){
-    ID = 00;
-    timer = 0;
-    isOccupied = false;
-    vote = false;
-    player = null;
+        ID = 00;
+        timer = 0;
+        isOccupied = false;
+        vote = false;
+        player = null;
     }
     
     //getters / setters
@@ -32,10 +32,14 @@ public class Seat {
     public boolean getIsOccupied(){return isOccupied;}
     public long getID(){return ID;}
     
-    public void setVote(boolean vote){this.vote = vote;}
-    public void setTimer(int timer){this.timer = timer;}
-    public void setIsOccupied(boolean isOccupied){this.isOccupied = isOccupied;}
-    public void setID(){this.ID = ID;}
+    public void setVote(boolean vote)
+    {this.vote = vote;}
+    public void setTimer(int timer)
+    {this.timer = timer;}
+    public void setIsOccupied(boolean isOccupied)
+    {this.isOccupied = isOccupied;}
+    public void setID(int ID)
+    {this.ID = ID;}
     
     //other methods 
     public void chooseChar(Character aChar){}
