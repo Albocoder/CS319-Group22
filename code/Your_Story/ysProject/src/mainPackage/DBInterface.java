@@ -3,17 +3,20 @@ package mainPackage;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import thirdparty.*;
 
 public class DBInterface {
-	private static String type = "mysql";
-        private static String adress = "sql7.freemysqlhosting.net";
-        private static String port = "3306";
-        private static String database = "sql7149730";
-        private static String username = "sql7149730";
-        private static String password = "g55vGMRzBq";
+	private static final String type = "mysql";
+        private static final String adress = "sql7.freemysqlhosting.net";
+        private static final String port = "3306";
+        private static final String database = "sql7149730";
+        private static final String username = "sql7149730";
+        private static final String password = "g55vGMRzBq";
+        
+        private static final String VOTING_DATA = "voting";
         
 	private static DBConn c = new DBConn(type, adress, port, database, username, password);
         private static Connection con = c.ConnectToDB();
@@ -26,6 +29,26 @@ public class DBInterface {
         public static String escapeString(String term){
             term = term.replaceAll("'","''");
             return term;
+        }
+        
+        public static Seat[] resultSetToSeatArray(ResultSet r){
+            try {
+                r.last();
+                int size = r.getRow();
+                Seat[] result = new Seat[size];
+                int index = 0;
+                Seat s;
+                for(boolean go = r.first(); go; go = r.next()){
+                    s = new Seat(r.getLong("id"), r.getLong("lobby"), r.getLong("charac"));
+                    if(r.getLong("user") > 0)
+                        s.addPlayer(r.getByte("user"));
+                    result[index++] = s;
+                }
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
         }
         
         public static Player[] resultSetToPlayerArray(ResultSet r){
@@ -55,6 +78,12 @@ public class DBInterface {
                 Lobby l;
                 for(boolean go = r.first(); go; go = r.next()){
                     l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null, r.getLong("storyid"));
+                    long[] votings = DBInterface.selectIntArray(VOTING_DATA, "id", "lobby", l.getID());
+                    ArrayList<Long> temp = new ArrayList<Long>();
+                    for(int i = 0; i < votings.length; i++){
+                        temp.add(new Long(votings[i]));
+                    }
+                    l.setVoteID(temp);
                     result[index++] = l;
                 }
                 return result;

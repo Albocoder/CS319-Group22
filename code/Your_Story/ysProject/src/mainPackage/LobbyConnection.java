@@ -7,6 +7,8 @@ package mainPackage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +22,14 @@ public class LobbyConnection {
     private static final String PLAYER_DATA = "user";
     private static final String SEAT_DATA = "seat";
     private static final String STORY_DATA = "story";
+    private static final String VOTING_DATA = "vote";
+    private static final String CHARACTER_DATA = "charac";
+    
+    public static Seat[] getSeats(long lobbyID){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
+                " WHERE lobby = " + lobbyID);
+        return DBInterface.resultSetToSeatArray(r);
+    }
     
     public static Story getStory(long storyID){
         return new Story(DBInterface.selectString(STORY_DATA, "description", storyID),
@@ -58,7 +68,6 @@ public class LobbyConnection {
                 ".story = " + STORY_DATA +
                 ".id GROUP BY " + LOBBY_DATA + ".id");
         return DBInterface.resultSetToLobbyArray(r);
-        
     }
     
     public static int getOnlineUsers(){
@@ -74,7 +83,7 @@ public class LobbyConnection {
                 ".user = " + SEAT_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
-        return /*DBInterface.resultSetToPlayerArray(r);*/null;
+        return DBInterface.resultSetToPlayerArray(r);
     }
     
     public static Story[] getStories(long player){
