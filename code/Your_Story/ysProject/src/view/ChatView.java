@@ -19,21 +19,6 @@ public class ChatView extends JPanel {
 		lobby = l;
 		FINAL_WIDTH = 300;
 		messages = ChatConnection.getMessages(l.getID());
-//		messages.add(new Message("alboCoder", "Prince", "Im gonna kill you."));
-//		messages.add(new Message("kaxell", "King", "You know, if I dont let you kill, you cant."));
-//		messages.add(new Message("cevatBaris", "Knight", "Yeah, he s right, even you cant touch me."));
-//		messages.add(new Message("karaali", "Executioner", "But I can ahahahahhah."));
-//		messages.add(new Message("alboCoder", "Prince", "You fucked the game."));
-//		messages.add(new Message("karaali", "Executioner", "Cause Im the fucker. THUG LIFE B)_"));
-//		messages.add(new Message("alboCoder", "Prince", "Thanks for this fucking game, "
-//				+ "we are gonna kick you ahahahahahahahahahahah. You are fucked now"));
-//		messages.add(new Message("cevatBaris", "Knight", "Yeah, he s right, even you cant touch me."));
-//		messages.add(new Message("karaali", "Executioner", "But I can ahahahahhah."));
-//		messages.add(new Message("alboCoder", "Prince", "You fucked the game."));
-//		messages.add(new Message("karaali", "Executioner", "Cause Im the fucker. THUG LIFE B)_"));
-//		messages.add(new Message("alboCoder", "Prince", "Thanks for this fucking game, "
-//				+ "we are gonna kick you ahahahahahahahahahahah. You are fucked now"));
-		// fetch messages from db
 		setBackground(Color.LIGHT_GRAY);
 	}
 	
@@ -49,7 +34,7 @@ public class ChatView extends JPanel {
 		for (Message m : messages) {
 			MessageView mv = new MessageView(m);
 			BufferedImage img = mv.createImage();
-			if (m.senderName == AccessHandler.username) {
+			if (m.senderName.equals(AccessHandler.username)) {
 				g2.drawImage(img, null, getWidth() - img.getWidth() - 10, height);
 			} else {
 				g2.drawImage(img, null, 10, height);

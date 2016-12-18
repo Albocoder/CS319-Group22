@@ -127,7 +127,8 @@ public class InGameView extends JFrame implements Viewable {
 		for (int i = 0; i < offlineUsers.size(); i++) {
 			String name = offlineUsers.get(i).getProfile().getName();
 			g.setColor(Color.RED);
-			g.fillOval(30, i * LINE_HEIGHT + 55, 5, 5);
+			int exHeight = LINE_HEIGHT * (onlineUsers.size() - 1);
+			g.fillOval(30, i * LINE_HEIGHT + 55 + exHeight, 5, 5);
 			g.setColor(Color.BLACK);
 			g.drawString(name, 40, (i + 1) * LINE_HEIGHT + 40);
 		}
@@ -165,15 +166,14 @@ public class InGameView extends JFrame implements Viewable {
 		return modified;
 	}
 
-//	public static void main (String [] args) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//            	System.out.println("Girdi");
-//                new InGameView(LobbyConnection.getLobby(9), null);
-//            }
-//        });
-//	}
+	public static void main (String [] args) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new InGameView(LobbyConnection.getLobby(9), null);
+            }
+        });
+	}
 	
 	@Override
 	public void terminateView() {

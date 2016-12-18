@@ -5,6 +5,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 import mainPackage.*;
 
 public class MessageView {
@@ -27,7 +28,7 @@ public class MessageView {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		if (m.senderName == AccessHandler.username) {
+		if (m.senderName.equals(AccessHandler.username)) {
 			g.setColor(Color.BLUE);
 		} else {
 			g.setColor(Color.WHITE);
