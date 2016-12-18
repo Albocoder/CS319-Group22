@@ -83,8 +83,9 @@ public class HomeView extends JFrame implements Viewable{
         mainData = data;
         lobbiesPanels = new ArrayList<>();
         //lobbies = new ArrayList<Lobby>();
+        lobbiesContainer = new JPanel(new GridLayout(
+                mainData.getLobbiesWaiting().size(),1));
         
-        lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/50,1));
         showWaitingLobbies();
         onWaitLobbies = new JScrollPane(lobbiesContainer);
         onWaitLobbies.getVerticalScrollBar().setUnitIncrement(16);
@@ -125,7 +126,7 @@ public class HomeView extends JFrame implements Viewable{
             //////////////////////////////////////////////////////////////////////////////
             viewFinished.setIcon(imageIcon);
         } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
         onGoing = new JComboBox<String>();
@@ -318,18 +319,18 @@ public class HomeView extends JFrame implements Viewable{
         //return the name of that lobby as string 
         while( onGoing.getItemCount() > 1)
             onGoing.removeItemAt(1);
-        for(int i = 0; i < 4; i++/*Lobby l:mainData.getPlayer().getOngoingGames()*/)
-            onGoing.addItem("Secret Lobby "+i/*l*/);
+        for(Lobby l:mainData.getPlayer().getOngoingGames())
+            onGoing.addItem(l.toString());
     }
     private void showOnlineUsers(){
-        onlineUsers.setText("        "+"Online users: "
-                +286/*+mainData.getOnlineUsers()/*remove 286*/);
+        onlineUsers.setText("        "+"Online users: "+
+                mainData.getOnlineUsers());
     }
     private void showWaitingLobbies(){
         lobbiesContainer.removeAll();
         lobbiesPanels.removeAll(lobbiesPanels);
         Random r = new Random();
-        for(int i = 0; i < 50; i++/*Lobby l:mainData.getLobbiesWaiting()*/){
+        for(Lobby l:mainData.getLobbiesWaiting()){
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -515,7 +516,7 @@ public class HomeView extends JFrame implements Viewable{
     private class LobbyUpdater implements Runnable {
         @Override
         public void run() {
-            //update lobby data from mainData and call showWaitingLobbies()
+            mainData.updateLobbiesWaiting();
             showWaitingLobbies();
         }
     }
@@ -524,14 +525,13 @@ public class HomeView extends JFrame implements Viewable{
         public void run() {
             //update data from mainData.getPlayer().getProfile()
             //and call showOngoing()
+            HomePage.getPlayer().updateOngoingGames();
             showOngoing();
         }
     }
     private class OnlinePlayersUpdater implements Runnable {
         @Override
         public void run() {
-            //update data from mainData
-            //and call showOnlineUsers();
             showOnlineUsers();
         }
     }

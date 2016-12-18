@@ -16,10 +16,12 @@ public class Player {
     
     private long playerID;
     private Profile profile; 
+    private ArrayList<Lobby> ongoing;
     
     public Player(long ID){////
         playerID = ID;
         profile = new Profile(ID);
+        updateOngoingGames();
     }
     
     //getters / setters
@@ -54,8 +56,6 @@ public class Player {
         
     }
   
-
-    
     public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
     //information about that user, name, photo and the descritipion.
@@ -66,15 +66,12 @@ public class Player {
     }
     
     public ArrayList<Lobby> getOngoingGames(){ 
-        
-    return null;}
+        return ongoing;
+    }
+    
+    public void updateOngoingGames(){ 
+        ongoing = LobbyConnection.getOngoingGamesOfPlayer(playerID);
+    }
     //Returns the ongoing games of player via database
     //classes.
-    
-    
-    
-    
-    
-   
-    
 }

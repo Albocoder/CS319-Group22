@@ -105,4 +105,8 @@ public class Lobby {
      public void sendVote(long id, boolean vote){
         votingHandler.sendVote(id, vote);
      }
+    @Override
+    public String toString(){
+        return name;
     }
+}
