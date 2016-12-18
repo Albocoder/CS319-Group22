@@ -8,13 +8,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import mainPackage.*;
 
 public class InGameView extends JPanel implements Viewable {
 	
 	static Font font;
 	static int LINE_HEIGHT;
 	
-	public InGameView() {
+	public InGameView(Lobby l, ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		

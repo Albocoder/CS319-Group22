@@ -31,25 +31,32 @@ public class ViewManager {
 
     public ViewManager(){
         hiddenViews = new ArrayList<Viewable>();
+        showLogin();
     }
 
     public void showLogin() {
         //show login and destroy the rest
-        login = new LoginView(this);
+        if(login == null)
+            login = new LoginView(this);
         hideHomePage(true);
         hideOngoingGame(true);
-        hideProfile(true);
         hideLobby(true);
-        hideHomePage(true);
     }
 
     public void showHomePage(/*HomePage*/Object playersHome) {
-        homepage = new HomeView(this,playersHome);
+        if(homepage == null)
+            homepage = new HomeView(this,playersHome);
+        hideLogin(false);
+        hideOngoingGame(false);
+        hideLobby(false);
     }
 
     public void showLobby(Lobby aLobby) {
-        // TODO - implement ViewManager.showLobby
-        throw new UnsupportedOperationException();
+        if(lobby == null)
+            lobby = new LobbyView(aLobby,this);
+        hideLogin(false);
+        hideOngoingGame(false);
+        hideHomePage(false);
     }
 
     //public void showProfile(Profile aProfile) {
@@ -58,7 +65,11 @@ public class ViewManager {
     //}
 
     public void showOngoingGame(Lobby aLobby) {
-        throw new UnsupportedOperationException();
+        if(ingame == null)
+            ingame = new InGameView(aLobby,this);
+        hideLogin(false);
+        hideLobby(false);
+        hideHomePage(false);
     }
 
     public void showCreateLobby(){
@@ -66,7 +77,8 @@ public class ViewManager {
     }
 
     public void showLastHidden() {
-        throw new UnsupportedOperationException();
+        if(hiddenViews.size()>=1)
+            hiddenViews.remove(0).showView();
     }
 
     public void update(Viewable v) {
@@ -75,6 +87,8 @@ public class ViewManager {
     }
 
     public void hideLogin(boolean terminate) {
+        if(login == null)
+            return;
         login.setVisible(false);
         if(terminate)
             login = null;
@@ -83,13 +97,23 @@ public class ViewManager {
     }
 
     public void hideHomePage(boolean terminate) {
-        // TODO - implement ViewManager.hideHomePage
-        throw new UnsupportedOperationException();
+        if(homepage == null)
+            return;
+        homepage.setVisible(false);
+        if(terminate)
+            homepage = null;
+        else
+            hiddenViews.add(homepage);
     }
 
     public void hideLobby(boolean terminate) {
-        // TODO - implement ViewManager.hideLobby
-        throw new UnsupportedOperationException();
+        if(lobby == null)
+            return;
+        lobby.setVisible(false);
+        if(terminate)
+            lobby = null;
+        else
+            hiddenViews.add(lobby);
     }
 
     public void hideProfile(boolean terminate) {
@@ -98,8 +122,13 @@ public class ViewManager {
     }
 
     public void hideOngoingGame(boolean terminate) {
-        // TODO - implement ViewManager.hideOngoingGame
-        throw new UnsupportedOperationException();
+        if(ingame == null)
+            return;
+        ingame.setVisible(false);
+        if(terminate)
+            ingame = null;
+        else
+            hiddenViews.add(ingame);
     }
     
     public void hideCreateLobby(){

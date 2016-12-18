@@ -50,7 +50,7 @@ public class LobbyConnection {
                 ".user = " + SEAT_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
-        return DBInterface.resultSetToPlayerArray(r);
+        return /*DBInterface.resultSetToPlayerArray(r);*/null;
     }
     
     public static Story[] getStories(long player){

@@ -36,8 +36,8 @@ public class DBInterface {
                 int index = 0;
                 Lobby l;
                 for(boolean go = r.first(); go; go = r.next()){
-                    l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null);
-                    result[index++] = l;
+                    //l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null);
+                    //result[index++] = l;
                 }
                 return result;
             } catch (SQLException ex) {

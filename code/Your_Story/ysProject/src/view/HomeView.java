@@ -250,30 +250,27 @@ public class HomeView extends JFrame implements Viewable{
         //destroying data
         //mainData.getPlayer().getProfile().logout()
         //mainData = null;
-        //referrer.hideLogin(true);
-        //referrer.showLogin();
+        referrer.hideLogin(true);
+        AccessHandler.logOut();
+        referrer.showLogin();
     }
     public void createLobby() {
         //show creationUI(loggedInPlayer)
         //hide this!
     }
-    public void joinLobby(/*Lobby aLobby   ******** uncomment when Lobby is created ***********/) {
-        /*if(aLobby.getState() == Lobby.IN_GAME){
-            showOngoingGame(aLobby,loggedInPlayer);
+    public void joinLobby(Lobby aLobby){
+        if(aLobby.getState() == Lobby.LOBBY_INGAME){
+            //showOngoingGame(aLobby,loggedInPlayer);
         }
-        
-        */
     }
 
     @Override
     public void terminateView() {
-        // TODO Auto-generated method stub
-        logout();
+        AccessHandler.logOut();
         System.exit(0);
     }
     @Override
     public void hideView() {
-        // TODO Auto-generated method stub
         this.setVisible(false);
     }
     @Override
@@ -302,7 +299,7 @@ public class HomeView extends JFrame implements Viewable{
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(null, 
-                    "Are you sure to exit the game?", "Really?! Leaving just now?", 
+                    "Are you sure you want to exit the game?", "Really?! Leaving just now?", 
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,new ImageIcon("./img/leaving.png")) == JOptionPane.YES_OPTION){
                     terminateView();
@@ -518,7 +515,7 @@ public class HomeView extends JFrame implements Viewable{
         public void actionPerformed(ActionEvent e) {
             System.out.println("Logging out!");
             if (JOptionPane.showConfirmDialog(null, 
-                "Are you sure to logout?", "Really?! Logging out just now?", 
+                "Are you sure you want to logout?", "Really?! Logging out just now?", 
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,new ImageIcon("./img/leaving.png")) == JOptionPane.YES_OPTION){
                 logout();

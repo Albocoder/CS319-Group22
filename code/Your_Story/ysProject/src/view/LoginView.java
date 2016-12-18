@@ -43,6 +43,7 @@ public class LoginView extends JFrame implements Viewable{
         // add title and color to the background of the frame
         getContentPane().setBackground(new Color(0, 0, 0));
         setTitle("Your Story - Login");
+        referrer = ref;
         setDefaultCloseOperation (EXIT_ON_CLOSE);
         getContentPane().setLayout (null);
         setSize(408, 500);
@@ -132,20 +133,13 @@ public class LoginView extends JFrame implements Viewable{
         this.setVisible(true);
     }
     private void login(){
-        //PlayerConnection.setOnline(AccessHandler.userID, true);
         //loading created with http://www.ajaxload.info/
         //it has public license 
         Loader l = new Loader();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //Profile profile = new Profile(AccessHandler.userID);
-        //Player p = new Player(profile);
+        //Player p = new Player(AccessHandler.userID);
         //HomePage hp = new HomePage(p);
         l.dispose();
-        //referrer.showHomePage(hp);
+        referrer.showHomePage(null);
         hideView();
     }
     private class ButtonListener implements ActionListener{
@@ -175,7 +169,7 @@ public class LoginView extends JFrame implements Viewable{
             }
             else{
                 String un = username.getText();
-                if(AccessConnection.isAvailable(un)){
+                if(!AccessConnection.isAvailable(un)){
                     JOptionPane.showMessageDialog(null, 
                         "Uh this username is taken!",
                         "Uhhh!!!", JOptionPane.ERROR_MESSAGE,
@@ -184,7 +178,7 @@ public class LoginView extends JFrame implements Viewable{
                 }
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
-                if(true/*AccessHandler.accessGame(un,pw,true)*/){
+                if(AccessHandler.accessGame(un,pw,true)){
                     JOptionPane.showMessageDialog(null, 
                         "Welcomeee <3. We are happier with you!!!",
                         "Welcomeee!!!", JOptionPane.PLAIN_MESSAGE,

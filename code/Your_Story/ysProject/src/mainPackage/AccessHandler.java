@@ -13,6 +13,7 @@ public class AccessHandler {
     }
 
     public static void logOut() {
+        AccessConnection.logout(userID);
         userID = -1;
         username = "";
     }

@@ -19,10 +19,11 @@ public class Tester {
 	public static void main(String[] args) throws InterruptedException {
             // here we can test each class we create for consistency
             //new HomeView(null,1);
-            //new LoginView(null);
+            //new LoginView(new ViewManager());
+            ViewManager vm = new ViewManager();
             //Gif provided for free from: 
-            Loader l = new Loader();
-            Thread.sleep(5000);
+            //Loader l = new Loader();
+            //Thread.sleep(5000);
             //l.dispose();
             //System.out.println(AccessConnection.isAvailable("albocoder"));
 	}
