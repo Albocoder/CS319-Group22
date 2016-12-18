@@ -15,20 +15,34 @@ public class Seat {
     private int timer;
     private boolean isOccupied;
     private long seatID;
-    private Player player;
+    private long playerID;
     private long lobbyID;
+    private long charID;
+    
     
     public Seat(){
         seatID = 00;
         timer = 0;
         isOccupied = false;
         vote = false;
-        player = null;
+        playerID= 0;
+        charID= 0;
+        
     }
-    public Seat(long seatID,long lobbyID){
+    public Seat(long seatID,long lobbyID,long charID){
         this.seatID = seatID;
         this.lobbyID = lobbyID;
+        this.charID = charID;
     }//
+    
+    public Seat(long seatID,long lobbyID,long charID, long playerID){
+        this.seatID = seatID;
+        this.lobbyID = lobbyID;
+        this.charID = charID;
+        this.playerID = playerID;
+    }//
+    
+    
     
     //getters / setters
     
@@ -36,7 +50,7 @@ public class Seat {
     public int getTimer(){return timer;}
     public boolean getIsOccupied(){return isOccupied;}
     public long getSeatID(){return seatID;}
-    public Player getPlayer(){return player;}
+    public long getPlayerID(){return playerID;}
     public long getLobbyID(){return lobbyID;}
     
     public void setVote(boolean vote)
@@ -47,8 +61,8 @@ public class Seat {
     {this.isOccupied = isOccupied;}
     public void setSeatID(int seatID)
     {this.seatID = seatID;}
-    public void setPlayer(Player player) 
-    {this.player = player;}
+    public void setPlayerID(long playerID) 
+    {this.playerID = playerID;}
     public void setLobbyID(long lobbyID)
     {this.lobbyID = lobbyID;}
     
@@ -69,14 +83,14 @@ public class Seat {
     timer = 120; //Depending on how the countdown is done. 
     }
     
-    public void addPlayer(Player player){
-    this.player = player;
+    public void addPlayer(long playerID){
+    this.playerID = playerID;
     isOccupied = true;
     }
    
     public void removePlayer(){
     if (isOccupied){
-        player = null;
+        playerID = 0;
         isOccupied = false;
         }
     }
