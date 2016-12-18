@@ -30,7 +30,7 @@ public class Profile {
     }*/
     public Profile(long ID){
         this.ID = ID;
-        isYours = this.ID == AccessHandler.userID;
+        //isYours = this.ID == HomePage.getPlayer().getPlayerID();
         retrieveData();
     }
     
@@ -42,6 +42,9 @@ public class Profile {
     public String getDescription(){return description;}
     public ArrayList<Lobby> getFinishedGames(){return finishedGames;}
     public boolean getIsYours(){return isYours;}
+    public long getID(){
+        return ID;
+    }
    
     public void setName(String name){
         this.name = name;
