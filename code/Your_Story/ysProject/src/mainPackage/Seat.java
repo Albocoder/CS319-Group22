@@ -31,6 +31,7 @@ public class Seat {
     public int getTimer(){return timer;}
     public boolean getIsOccupied(){return isOccupied;}
     public long getID(){return ID;}
+    public Player getPlayer(){return player;}
     
     public void setVote(boolean vote)
     {this.vote = vote;}
@@ -40,6 +41,7 @@ public class Seat {
     {this.isOccupied = isOccupied;}
     public void setID(int ID)
     {this.ID = ID;}
+    public void setPlayer(Player player) {this.player = player;}
     
     //other methods 
     public void chooseChar(Character aChar){}
