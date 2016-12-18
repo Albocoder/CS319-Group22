@@ -17,7 +17,7 @@ public class ProfileConnection {
     
     private static final String LOBBY_DATA = "lobby";
     private static final String PLAYER_DATA = "user";
-    private static final String PROFILE_DATA = "user";
+    private static final String PROFILE_DATA = "profile";
     private static final String SEAT_DATA = "seat";
     private static final String STORY_DATA = "story";
     
