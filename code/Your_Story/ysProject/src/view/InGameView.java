@@ -165,15 +165,6 @@ public class InGameView extends JFrame implements Viewable {
 		modified.add(s);
 		return modified;
 	}
-
-	public static void main (String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new InGameView(LobbyConnection.getLobby(9), null);
-            }
-        });
-	}
 	
 	@Override
 	public void terminateView() {
@@ -219,5 +210,14 @@ public class InGameView extends JFrame implements Viewable {
 			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
 					SwingConstants.CENTER));
 		}
+	}
+	
+	public static void main (String [] args) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new InGameView(LobbyConnection.getLobby(9), null);
+            }
+        });
 	}
 }
