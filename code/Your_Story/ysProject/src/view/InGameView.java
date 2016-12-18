@@ -165,15 +165,15 @@ public class InGameView extends JFrame implements Viewable {
 		return modified;
 	}
 
-	public static void main (String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            	System.out.println("Girdi");
-                new InGameView(LobbyConnection.getLobby(9), null);
-            }
-        });
-	}
+//	public static void main (String [] args) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//            	System.out.println("Girdi");
+//                new InGameView(LobbyConnection.getLobby(9), null);
+//            }
+//        });
+//	}
 	
 	@Override
 	public void terminateView() {
