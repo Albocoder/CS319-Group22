@@ -20,6 +20,7 @@ import thirdparty.*;
 public class AccessConnection {
     
     public final static String AUTH_DATA = "user";
+    public final static String PROFILE_DATA = "profile";
     
     public static long record(String username, String password){
         if(!isAvailable(username))
@@ -28,7 +29,9 @@ public class AccessConnection {
         password = DBInterface.escapeString(password);
         if(!DBInterface.getConnection().executeStuff("INSERT INTO " + AUTH_DATA + "(username, password) VALUES('" + username + "', '" + password + "')"))
             return -1;
-        return DBInterface.selectIntArray(AUTH_DATA, "id", "username", username)[0];
+        long id = DBInterface.selectIntArray(AUTH_DATA, "id", "username", username)[0];
+        DBInterface.getConnection().executeStuff("INSERT INTO " + PROFILE_DATA + "(user, description) VALUES(" + id + ", '')");
+        return id;
     }
 
     public static boolean isAvailable(String username){
