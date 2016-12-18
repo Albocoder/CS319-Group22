@@ -16,6 +16,8 @@ public class Lobby {
     private int state;
     private ArrayList<Long> voteID;
     private Story story;
+    private ArrayList<Seat> seats;
+    
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
@@ -51,6 +53,7 @@ public class Lobby {
      public int getState(){return state;}
      public ArrayList<Long> getVoteID() {return voteID;}
      public Story getStory() {return story;}
+     public ArrayList<Seat> getSeats() {return seats;}
      
     //setters 
      public void setName(String name) {this.name = name;}
@@ -59,7 +62,7 @@ public class Lobby {
      public void setState(int state) {this.state = state;}
      public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
      public void setStory(Story story) {this.story = story;}
-     
+     public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
     
      //other methods 
     
@@ -74,7 +77,7 @@ public class Lobby {
      
      public void updateView(){}
      
-     public void startVoting(int voteType, /*Player*/Object targetPlayer){}
+     public void startVoting(int voteType, Player targetPlayer){}    
      
      public void startVoting(int voteType){}
      
