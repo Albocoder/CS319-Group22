@@ -15,9 +15,7 @@ public class InGameView extends JFrame implements Viewable {
 	static Font font;
 	static int LINE_HEIGHT;
 	
-	public InGameView(Lobby l, ViewManager ref) { }
-	
-	public InGameView(ViewManager ref) {
+	public InGameView(Lobby l, ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		
