@@ -135,6 +135,18 @@ public class LobbyConnection {
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
     }
     
+    public static ArrayList<Player> getOfflineUsersOfLobby(long lobby){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
+                ".* FROM " + PLAYER_DATA +
+                " INNER JOIN " + SEAT_DATA +
+                " ON " + PLAYER_DATA +
+                ".online = 0 AND " + SEAT_DATA +
+                ".user = " + SEAT_DATA +
+                ".id AND " + SEAT_DATA +
+                ".lobby = " + lobby);
+        return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
+    }
+    
     public static ArrayList<Story> getStories(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + STORY_DATA +
                 ".* FROM " + STORY_DATA + 
