@@ -28,9 +28,9 @@ public class Profile {
         finishedGames = new ArrayList<Lobby>();
     
     }*/
-    public Profile(long ID,boolean isYours){
+    public Profile(long ID){
         this.ID = ID;
-        this.isYours = isYours;
+        isYours = this.ID == HomePage.getPlayer().getPlayerID();
         retrieveData();
     }
     

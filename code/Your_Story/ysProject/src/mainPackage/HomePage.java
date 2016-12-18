@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * */
 
 public class HomePage {
-    private Player myPlayer;
+    private static Player myPlayer;
     private ArrayList<Lobby> lobbiesWaiting;
     
     public HomePage(long id){
@@ -24,7 +24,7 @@ public class HomePage {
         lobbiesWaiting = LobbyConnection.getWaitingLobbies();
         myPlayer.getProfile().getIsYours();
     }
-    public Player getPlayer(){
+    public static Player getPlayer(){
         return myPlayer;
     }
     public ArrayList<Lobby> getLobbiesWaiting(){
