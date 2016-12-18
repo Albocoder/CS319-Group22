@@ -17,6 +17,7 @@ public class Lobby {
     private ArrayList<Long> voteID;
     private Story story;
     private ArrayList<Seat> seats;
+    private VotingHandler votingHandler;
     
     
     //Other Variables
@@ -35,6 +36,7 @@ public class Lobby {
         this.state = state;
         this.voteID = voteID;
         this.story = new Story(storyID);
+        votingHandler = new VotingHandler(ID);
     }
      public Lobby(){
         this.name = "Sample";
@@ -66,21 +68,35 @@ public class Lobby {
     
      //other methods 
     
-     public void updateQuota(){}
+     public void updateQuota(){
+         quota = LobbyConnection.getQuota(ID);
+     }
      
-     public void updateCharacter(Character aCharacter){}
+     public void updateCharacter(Character aCharacter){
+         
+     }
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
-     public void addPlayer(Player aPlayer){}
+     public void addPlayer(Player aPlayer){
+         LobbyConnection.addPlayerToLobby(aPlayer.getPlayerID(), ID);
+     }
      
-     public void finishGame(){}
+     public void finishGame(){
+         setState(2);
+     }
      
      public void updateView(){}
      
-     public void startVoting(int voteType, Player targetPlayer){}    
+     public void startVoting(int voteType, Player targetPlayer){
+         long id = votingHandler.startVoting(voteType, targetPlayer);
+         voteID.add(id);
+     }    
      
-     public void startVoting(int voteType){}
+     public void startVoting(int voteType){
+         votingHandler.startVoting(voteType);
+     }
      
-     public void sendVote(int voteType, boolean vote){}
-     
+     public void sendVote(long id, boolean vote){
+        votingHandler.sendVote(id, vote);
+     }
     }

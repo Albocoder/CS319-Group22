@@ -18,14 +18,52 @@ import thirdparty.*;
 public class ChatConnection {
     
     public final static String CHAT_DATA = "message";
+    private final static String PLAYER_DATA = "user";
+    private final static String SEAT_DATA = "seat";
+    private final static String CHARACTER_DATA = "charac";
     
-    public static ArrayList<String> getMessages(long id){
-        return new ArrayList<String>(Arrays.asList(DBInterface.selectStringArray(CHAT_DATA, "body", "lobby", id)));
+    public static ArrayList<Message> getMessages(long id){
+        ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
+                ".body AS body, " + CHARACTER_DATA +
+                ".name AS charac, " + PLAYER_DATA +
+                ".username AS user FROM " + CHAT_DATA +
+                " LEFT JOIN " + PLAYER_DATA +
+                " ON " + PLAYER_DATA +
+                ".id = " + CHAT_DATA +
+                ".user LEFT JOIN " + SEAT_DATA +
+                " ON " + SEAT_DATA +
+                ".user = " + CHAT_DATA +
+                ".user AND " + SEAT_DATA +
+                ".lobby = " + CHAT_DATA +
+                ".lobby LEFT JOIN " + CHARACTER_DATA +
+                " ON " + SEAT_DATA +
+                ".charac = " + CHARACTER_DATA +
+                ".id WHERE " + CHAT_DATA +
+                ".lobby = 9 GROUP BY " + CHAT_DATA +
+                ".id");
+        return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
-    public static ArrayList<String> getMessages(long lobby, long lastMessage){
-        ResultSet r;
-        r = DBInterface.getConnection().selectStuff("SELECT body FROM " + CHAT_DATA + " WHERE lobby = " + lobby + " AND id > " + lastMessage);
-        return new ArrayList<String>(Arrays.asList(DBInterface.resultSetToStringArray(r)));
+    public static ArrayList<Message> getMessages(long lobby, long lastMessage){
+        ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
+                ".body AS body, " + CHARACTER_DATA +
+                ".name AS charac, " + PLAYER_DATA +
+                ".username AS user FROM " + CHAT_DATA +
+                " LEFT JOIN " + PLAYER_DATA +
+                " ON " + PLAYER_DATA +
+                ".id = " + CHAT_DATA +
+                ".user LEFT JOIN " + SEAT_DATA +
+                " ON " + SEAT_DATA +
+                ".user = " + CHAT_DATA +
+                ".user AND " + SEAT_DATA +
+                ".lobby = " + CHAT_DATA +
+                ".lobby LEFT JOIN " + CHARACTER_DATA +
+                " ON " + SEAT_DATA +
+                ".charac = " + CHARACTER_DATA +
+                ".id WHERE " + CHAT_DATA +
+                ".lobby = 9 AND " + CHAT_DATA +
+                ".id > " + lastMessage + " GROUP BY " + CHAT_DATA +
+                ".id");
+        return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
     public static long sendMessage(String message, int lobby){
         message = DBInterface.escapeString(message);

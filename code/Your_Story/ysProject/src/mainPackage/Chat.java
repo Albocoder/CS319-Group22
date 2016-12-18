@@ -23,13 +23,13 @@ public class Chat {
         this.lobby = lobby;
         this.username = username;
     }
-    public ArrayList<String> getMessages(){
-        ArrayList<String> result = ChatConnection.getMessages(lobby);
+    public ArrayList<Message> getMessages(){
+        ArrayList<Message> result = ChatConnection.getMessages(lobby);
         updateThreshold();
         return result;
     }
-    public ArrayList<String> getNewMessages(){
-        ArrayList<String> result = ChatConnection.getMessages(lobby, threshold);
+    public ArrayList<Message> getNewMessages(){
+        ArrayList<Message> result = ChatConnection.getMessages(lobby, threshold);
         updateThreshold();
         return result;
     }
