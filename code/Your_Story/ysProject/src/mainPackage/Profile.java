@@ -85,9 +85,15 @@ public class Profile {
         return new Player(ID);
     }
     
-    public ArrayList<Lobby> viewUnfinishedGames(){
+    public ArrayList<Lobby> viewFinishedGames(){
     //Returns unfinished games of player that profile belongs to
     return ProfileConnection.getFinishedGames(ID);
     }
+    
+    public ArrayList<Lobby> viewUnfinishedGames(){
+    //Returns unfinished games of player that profile belongs to
+    return LobbyConnection.getOngoingGamesOfPlayer(ID);
+    }
+    
     
 }
