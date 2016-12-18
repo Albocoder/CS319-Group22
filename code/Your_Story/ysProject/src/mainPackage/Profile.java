@@ -18,7 +18,7 @@ public class Profile {
     private String description;
     private ArrayList<Lobby> finishedGames;
     private boolean isYours;
-    private long ID;//
+    private long ID;
     
     /*public Profile( String name, BufferedImage photo, String description, boolean isYours){
         this.name = name;
@@ -48,24 +48,24 @@ public class Profile {
    
     public void setName(String name){
         this.name = name;
-        updateData();
+        //updateData();
     }
     public void setImage(BufferedImage photo){
         this.photo = photo;
-        updateData();
+        //updateData();
     }
         
     public void setDescription(String description){
         this.description = description;
-        updateData();
+        //updateData();
     }
     public void setFinishedGames(ArrayList<Lobby> finishedGames){
         this.finishedGames = finishedGames;
-        updateData();
+        //updateData();
     }
     public void setIsYours(boolean isYours){
         this.isYours = isYours;
-        updateData();
+        //updateData();
     }
     
     public void retrieveData(){
@@ -78,7 +78,6 @@ public class Profile {
     
     public void updateData(){//
         ProfileConnection.updateProfileInDatabase(this);
-
     }
     
     public Player createPlayer (long ID, boolean isYours){

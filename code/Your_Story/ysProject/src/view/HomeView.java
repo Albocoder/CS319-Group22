@@ -41,6 +41,9 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.border.Border;
 import mainPackage.*;
 
+//HomePage.getPlayer().getProfile().setDescription("1234");
+//HomePage.getPlayer().getProfile().updateData();
+
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
