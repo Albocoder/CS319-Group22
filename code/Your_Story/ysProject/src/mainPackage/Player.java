@@ -24,9 +24,10 @@ public class Player {
     
     //getters / setters
     public long getPlayerID(){return playerID;}
-    
+    public Profile getProfile(){return profile;}
+        
     public void setPlayerID(long ID){playerID = ID;}
-    
+    public void setProfile(Profile profile){this.profile = profile;}
     //other methods 
     
     public Lobby createLobby (Story story){
@@ -43,17 +44,19 @@ public class Player {
     return false;
     }
     
-    public Profile getProfile(){
-    //Returns profile of the user. This profile object will include all
-    //information about that user, name, photo and the descritipion.
-    return null;}
+
     
     public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
     //information about that user, name, photo and the descritipion.
+        profile.setDescription(description);
+        profile.setImage(photo);
+        profile.setName(name);
+        profile.updateData();
     }
     
     public ArrayList<Lobby> getOngoingGames(){ 
+        
     return null;}
     //Returns the ongoing games of player via database
     //classes.
