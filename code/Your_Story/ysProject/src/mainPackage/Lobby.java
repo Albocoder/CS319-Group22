@@ -37,7 +37,15 @@ public class Lobby {
         this.voteID = voteID;
         this.story = new Story(storyID);
         votingHandler = new VotingHandler(ID);
+        
     }
+    
+    //public Lobby(long ID, long storyID){
+      //  this.ID = ID;
+       // this.story = new Story(storyID);
+    //}
+            
+            
      public Lobby(){
         this.name = "Sample";
         this.ID = 0;
@@ -71,10 +79,8 @@ public class Lobby {
      public void updateQuota(){
          quota = LobbyConnection.getQuota(ID);
      }
+          
      
-     public void updateCharacter(Character aCharacter){
-         
-     }
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
      public void addPlayer(Player aPlayer){
