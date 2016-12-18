@@ -43,6 +43,7 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 				ChatConnection.sendMessage(typingString, (int)l.getID(), AccessHandler.userID);
 				typingString = "";
 				repaint();
+//				panel.repaint();
 				addNotify();
 			}
 		});

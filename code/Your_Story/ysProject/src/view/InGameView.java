@@ -74,6 +74,7 @@ public class InGameView extends JFrame implements Viewable {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(0);
+		updateView();
 	}
 	
 	public BufferedImage createStoryImage() {
