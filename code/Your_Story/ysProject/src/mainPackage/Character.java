@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 /**
  *
  * @author kaxell
- * Things to consider: Images. How do we really store them?  
+ * Things to consider:
  */
 
 
