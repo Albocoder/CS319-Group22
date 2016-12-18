@@ -26,7 +26,7 @@ public class Seat {
     }
     public Seat(long ID){
         this.ID = ID;
-    }
+    }//
     
     //getters / setters
     
