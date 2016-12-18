@@ -52,6 +52,8 @@ public class Seat {
     public long getSeatID(){return seatID;}
     public long getPlayerID(){return playerID;}
     public long getLobbyID(){return lobbyID;}
+    public long getCharID(){return charID;}
+    
     
     public void setVote(boolean vote)
     {this.vote = vote;}
@@ -65,6 +67,8 @@ public class Seat {
     {this.playerID = playerID;}
     public void setLobbyID(long lobbyID)
     {this.lobbyID = lobbyID;}
+    public void setCharID(long charID)
+    {this.charID = charID;}
     
     //other methods 
     public void chooseChar(Character aChar){}
