@@ -60,7 +60,7 @@ public class LobbyView extends JFrame implements Viewable {
     public LobbyView(Lobby aLobby,ViewManager ref){
         referrer = ref;
         theLobby = aLobby;
-        //theStory = new Story(theLobby.getID()); //or whatever
+        theStory = new Story(theLobby.getID());
         voter = new VotingHandler(theLobby.getID());
         theSeats = new JScrollPane();
         //seatsPanel = new JPanel(new GridLayout(/*theLobby.getSeats().size()*/50.2,1));
@@ -72,8 +72,8 @@ public class LobbyView extends JFrame implements Viewable {
         }
     }
 
-    public void startKick(/*Player target*/) {
-        voter.startVoting(Lobby.VOTE_KICK,/*target*/null);
+    public void startKick(Seat target) {
+        voter.startVoting(Lobby.VOTE_KICK,null/*target.getPlayer()*/);
     }
 
     public void leaveLobby() {
@@ -89,6 +89,7 @@ public class LobbyView extends JFrame implements Viewable {
 
     @Override
     public void updateView() {
+        
     }
 
     @Override
@@ -100,7 +101,8 @@ public class LobbyView extends JFrame implements Viewable {
         theSeats.removeAll();
         seats.removeAll(seats);
         Random r = new Random();
-        for(int i = 0; i < 50; i++/*Seat s:*/){
+        
+        for(Seat s:theLobby.getSeats()){
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -122,7 +124,7 @@ public class LobbyView extends JFrame implements Viewable {
 
             try {
                     /////// get image and resize it///////////////////////////////////////////////
-                    FileInputStream fis = new FileInputStream(new File("./img/castleBlack.jpg")/*get database image*/);
+                    FileInputStream fis = new FileInputStream(new File("./img/itsygoAlternate.jpg")/*get database image*/);
                     BufferedImage gameIcon = ImageIO.read(fis);
                     Image dimg = gameIcon.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
                     ImageIcon imageIcon = new ImageIcon(dimg);

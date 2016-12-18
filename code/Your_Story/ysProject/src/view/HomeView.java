@@ -228,28 +228,9 @@ public class HomeView extends JFrame implements Viewable{
         updateView();
         pack();
         setVisible(true);
-        /*
-        while(true){
-        try {
-                Thread.sleep(2000);
-        } catch (InterruptedException e) {
-                e.printStackTrace();
-        }
-        showWaitingLobbies();
-        try {
-                Thread.sleep(2000);
-        } catch (InterruptedException e) {
-                e.printStackTrace();
-        }
-        showProfilePic();
-        }
-        */
     }
 
     public void logout() {
-        //destroying data
-        //mainData.getPlayer().getProfile().logout()
-        //mainData = null;
         referrer.hideLogin(true);
         AccessHandler.logOut();
         referrer.showLogin();
