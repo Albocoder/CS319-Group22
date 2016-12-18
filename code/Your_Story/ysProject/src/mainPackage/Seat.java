@@ -41,7 +41,8 @@ public class Seat {
     {this.isOccupied = isOccupied;}
     public void setID(int ID)
     {this.ID = ID;}
-    public void setPlayer(Player player) {this.player = player;}
+    public void setPlayer(Player player) 
+    {this.player = player;}
     
     //other methods 
     public void chooseChar(Character aChar){}
