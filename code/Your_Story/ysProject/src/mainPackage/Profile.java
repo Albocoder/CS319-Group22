@@ -72,7 +72,7 @@ public class Profile {
     
     }
     
-    public void updateData(){
+    public void updateData(){//
         ProfileConnection.updateProfileInDatabase(this);
 
     }
