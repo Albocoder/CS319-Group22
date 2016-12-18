@@ -16,28 +16,26 @@ package view;
  * the views.
  * */
 import java.util.*;
+import mainPackage.*;
 
 public class ViewManager {
-    /*
     //////// we forgot these too in the design ///////////////////
     private ArrayList<Viewable> hiddenViews;
     private LoginView login;
     private LobbyView lobby;
     private HomeView homepage;
     private InGameView ingame;
-    private LobbyCreatorView lobbycreator;
-    private ProfileView profile;
+    //private LobbyCreatorView lobbycreator;
+    //private ProfileView profile;
     //////////////////////////////////////////////////////////////
 
     public ViewManager(){
         hiddenViews = new ArrayList<Viewable>();
-        login = new LoginView(this);
-        login.setVisible(true);
     }
 
     public void showLogin() {
         //show login and destroy the rest
-        login.showView();
+        login = new LoginView(this);
         hideHomePage(true);
         hideOngoingGame(true);
         hideProfile(true);
@@ -45,9 +43,8 @@ public class ViewManager {
         hideHomePage(true);
     }
 
-    public void showHomePage(HomePage playersHome) {
-        // TODO - implement ViewManager.showHomePage
-        throw new UnsupportedOperationException();
+    public void showHomePage(/*HomePage*/Object playersHome) {
+        homepage = new HomeView(this,playersHome);
     }
 
     public void showLobby(Lobby aLobby) {
@@ -55,23 +52,20 @@ public class ViewManager {
         throw new UnsupportedOperationException();
     }
 
-    public void showProfile(Profile aProfile) {
+    //public void showProfile(Profile aProfile) {
         // TODO - implement ViewManager.showProfile
-        throw new UnsupportedOperationException();
-    }
+    //    throw new UnsupportedOperationException();
+    //}
 
     public void showOngoingGame(Lobby aLobby) {
-        // TODO - implement ViewManager.showOngoingGame
         throw new UnsupportedOperationException();
     }
 
     public void showCreateLobby(){
-        // TODO - implement ViewManager.showOngoingGame
         throw new UnsupportedOperationException();
     }
 
     public void showLastHidden() {
-        // TODO - implement ViewManager.showLastHidden
         throw new UnsupportedOperationException();
     }
 
@@ -81,8 +75,11 @@ public class ViewManager {
     }
 
     public void hideLogin(boolean terminate) {
-        // TODO - implement ViewManager.hideLogin
-        throw new UnsupportedOperationException();
+        login.setVisible(false);
+        if(terminate)
+            login = null;
+        else
+            hiddenViews.add(login);
     }
 
     public void hideHomePage(boolean terminate) {
@@ -109,5 +106,4 @@ public class ViewManager {
         // TODO - implement ViewManager.showOngoingGame
         throw new UnsupportedOperationException();
     }
-*/
 }

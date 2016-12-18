@@ -62,7 +62,7 @@ public class LobbyView extends JFrame implements Viewable {
         //theStory = new Story(theLobby.getID()); //or whatever
         voter = new VotingHandler(theLobby.getID());
         theSeats = new JScrollPane();
-        seatsPanel = new JPanel(new GridLayout(/*theLobby.getSeats().size()*/50,1));
+        //seatsPanel = new JPanel(new GridLayout(/*theLobby.getSeats().size()*/50.2,1));
     }    
     
     public void startVote(int type) {

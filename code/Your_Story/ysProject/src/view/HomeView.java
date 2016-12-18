@@ -17,6 +17,11 @@ package view;
  * Description:
  * This class is the homepage view that the user will see when 
  * logged in.
+ *==================================================================
+ *TODO:
+ *  Add the Homepage implementation and all the information
+ *  gathering from online database
+ *
  * */
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -39,7 +44,7 @@ import mainPackage.*;
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
-    //private HomePage mainData;
+    private /*HomePage*/ Object mainData;
     private ViewManager referrer;
     private JScrollPane onWaitLobbies;
     private JLabel profilePic;
@@ -54,7 +59,6 @@ public class HomeView extends JFrame implements Viewable{
     //private ArrayList<Lobby> lobbies;
     private JPanel lobbiesContainer;
     private JPanel theRest;
-    private long playerID;
     //private Player loggedInPlayer;
     
     //constants
@@ -67,19 +71,15 @@ public class HomeView extends JFrame implements Viewable{
     private final String CREATE_IMG = "./img/create.png";
 
     
-    public HomeView(ViewManager ref,long uid){
+    public HomeView(ViewManager ref,/*HomePage*/Object data){
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
         Random r = new Random();
         getContentPane().setBackground(new Color(0, 0, 0));
-        playerID = uid;
         referrer = ref;
+        mainData = data;
         lobbiesPanels = new ArrayList<>();
         //lobbies = new ArrayList<Lobby>();
-        
-        //Profile loggedInPlayerProfile = getPlayerProfile();
-        //loggedInPlayer = getPlayer(loggedInPlayerProfile);
-        //mainData = getMainData(loggedInPlayer);
         
         lobbiesContainer = new JPanel(new GridLayout(/*mainData.getLobbiesWaiting().size()*/50,1));
         showWaitingLobbies();
@@ -294,21 +294,6 @@ public class HomeView extends JFrame implements Viewable{
     public void showView() {
         this.setVisible(true);
     }
-    
-    /*
-    //constuctural functions
-    private Profile getPlayerProfile(){
-        
-    }
-    
-    private Player getPlayer(Profile p){
-        
-    }
-    
-    private HomePage getMainData(Player p){
-        
-    }
-    */
     
     // functions for the UI 
     private void logoutOnExitWithDialogue(){

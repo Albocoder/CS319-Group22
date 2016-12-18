@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -119,8 +121,6 @@ public class LoginView extends JFrame implements Viewable{
 
     @Override
     public void hideView() {
-        username.setText("");
-        password.setText("");
         this.setVisible(false);
     }
 
@@ -129,14 +129,24 @@ public class LoginView extends JFrame implements Viewable{
 
     @Override
     public void showView() {
-            this.setVisible(true);
+        this.setVisible(true);
     }
     private void login(){
-        //send a login query for that user id (AccessHandler.userID;)
-        //create player and profile objects and HomePage and pass it 
-        //to homepage to be created
-        //terminateView();
-        //referrer.showHomePage();}
+        //PlayerConnection.setOnline(AccessHandler.userID, true);
+        //loading created with http://www.ajaxload.info/
+        //it has public license 
+        Loader l = new Loader();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Profile profile = new Profile(AccessHandler.userID);
+        //Player p = new Player(profile);
+        //HomePage hp = new HomePage(p);
+        l.dispose();
+        //referrer.showHomePage(hp);
+        hideView();
     }
     private class ButtonListener implements ActionListener{
         @Override
@@ -145,7 +155,7 @@ public class LoginView extends JFrame implements Viewable{
                 String un = username.getText();
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
-                if ( AccessHandler.accessGame(un, pw,false) ){
+                if (AccessHandler.accessGame(un, pw,false)){
                     //clearing out things for high security.
                     Arrays.fill(pwChar,'\0');
                     pw = "";
