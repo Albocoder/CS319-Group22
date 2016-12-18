@@ -15,7 +15,9 @@ public class InGameView extends JFrame implements Viewable {
 	static Font font;
 	static int LINE_HEIGHT;
 	
-	public InGameView(Lobby l, ViewManager ref) {
+	public InGameView(Lobby l, ViewManager ref) { }
+	
+	public InGameView(ViewManager ref) {
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		
@@ -153,16 +155,16 @@ public class InGameView extends JFrame implements Viewable {
 		modified.add(s);
 		return modified;
 	}
-	/*
-	public static void main (String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new InGameView();
-            }
-        });
-	}
-        */
+
+//	public static void main (String [] args) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new InGameView(null);
+//            }
+//        });
+//	}
+	
 	@Override
 	public void terminateView() {
 		// TODO Auto-generated method stub
@@ -171,8 +173,7 @@ public class InGameView extends JFrame implements Viewable {
 
 	@Override
 	public void hideView() {
-		// TODO Auto-generated method stub
-		
+		setVisible(false);
 	}
 
 	@Override
@@ -183,7 +184,6 @@ public class InGameView extends JFrame implements Viewable {
 
 	@Override
 	public void showView() {
-		// TODO Auto-generated method stub
-		
+		setVisible(true);
 	}
 }
