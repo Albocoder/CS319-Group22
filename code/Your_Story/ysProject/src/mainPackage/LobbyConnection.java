@@ -65,7 +65,7 @@ public class LobbyConnection {
                 ".story = " + STORY_DATA +
                 ".ID WHERE " + LOBBY_DATA +
                 ".id = " + id + " GROUP BY " + LOBBY_DATA + 
-                ".id HAVING quota > 0");
+                ".id");
         return DBInterface.resultSetToLobbyArray(r)[0];
     }
     
@@ -233,5 +233,20 @@ public class LobbyConnection {
             Logger.getLogger(LobbyConnection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public static ArrayList<Character> getCharacters(long lobby){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
+                ".*, COUNT(" + SEAT_DATA +
+                ".id) AS occupied FROM " + CHARACTER_DATA +
+                " LEFT JOIN " + SEAT_DATA +
+                " ON " + SEAT_DATA +
+                ".charac = " + CHARACTER_DATA +
+                ".id INNER JOIN " + LOBBY_DATA +
+                " ON " + LOBBY_DATA +
+                ".story = " + CHARACTER_DATA +
+                ".story AND " + LOBBY_DATA + 
+                ".id = 9 GROUP BY " + CHARACTER_DATA +".id");
+        return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
 }
