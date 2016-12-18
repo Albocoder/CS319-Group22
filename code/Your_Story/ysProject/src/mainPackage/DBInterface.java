@@ -28,6 +28,24 @@ public class DBInterface {
             return term;
         }
         
+        public static Player[] resultSetToPlayerArray(ResultSet r){
+            try {
+                r.last();
+                int size = r.getRow();
+                Player[] result = new Player[size];
+                int index = 0;
+                Player p;
+                for(boolean go = r.first(); go; go = r.next()){
+                    p = new Player(r.getLong("id"));
+                    result[index++] = p;
+                }
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+        
         public static Lobby[] resultSetToLobbyArray(ResultSet r){
             try {
                 r.last();
@@ -36,7 +54,7 @@ public class DBInterface {
                 int index = 0;
                 Lobby l;
                 for(boolean go = r.first(); go; go = r.next()){
-                    l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null);
+                    l = new Lobby(r.getString("name"), r.getLong("id"), r.getInt("quota"), r.getInt("state"), null, r.getLong("storyid"));
                     result[index++] = l;
                 }
                 return result;
