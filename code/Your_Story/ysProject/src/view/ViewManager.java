@@ -144,4 +144,8 @@ public class ViewManager {
         // TODO - implement ViewManager.showOngoingGame
         throw new UnsupportedOperationException();
     }
+
+    void showOngoingGame(Lobby aLobby, ViewManager referrer) {
+        ingame = new InGameView(aLobby,referrer);
+    }
 }

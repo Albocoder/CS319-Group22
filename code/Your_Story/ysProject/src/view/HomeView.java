@@ -217,6 +217,7 @@ public class HomeView extends JFrame implements Viewable{
         profilePic.addMouseListener(new ProfilePicMouseListener());
         viewFinished.addActionListener(new FinishedGamesListener());
         onGoing.addItemListener(new OngoingGamesItemListener());
+        onGoing.addActionListener(new OngoingActionListener());
         createLobby.addActionListener(new CreateLobbyListener());
         logoutButton.addActionListener(new LogoutListener());
 
@@ -244,12 +245,13 @@ public class HomeView extends JFrame implements Viewable{
         //hide this!
     }
     public void joinLobby(Lobby aLobby){
-        if(aLobby.getState() == Lobby.LOBBY_WAITING){
+        referrer.showOngoingGame(aLobby,referrer);
+        /*if(aLobby.getState() == Lobby.LOBBY_WAITING){
             //referrer.showOngoingGame(aLobby,loggedInPlayer);
         }
         else{
             
-        }
+        }*/
     }
 
     @Override
@@ -541,6 +543,14 @@ public class HomeView extends JFrame implements Viewable{
             //get new profile pic by update()-ing from 
             //mainData.getPlayer().getProfile() and call showProfilePic()
             showProfilePic();
+        }
+    }
+    private class OngoingActionListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            System.out.println("Selected: " + onGoing.getSelectedItem());
+            System.out.println(", Position: " + onGoing.getSelectedIndex());
+            joinLobby(HomePage.getPlayer().getOngoingGames().get(onGoing.getSelectedIndex()-1));
         }
     }
 }
