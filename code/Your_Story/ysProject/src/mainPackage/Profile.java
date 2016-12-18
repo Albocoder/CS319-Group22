@@ -18,16 +18,22 @@ public class Profile {
     private String description;
     private ArrayList<Lobby> finishedGames;
     private boolean isYours;
+    private long ID;
     
-    public Profile( String name, BufferedImage photo, String description, boolean isYours){
+    /*public Profile( String name, BufferedImage photo, String description, boolean isYours){
         this.name = name;
         this.photo = photo;
         this.description = description;
         this.isYours = isYours;
         finishedGames = new ArrayList<Lobby>();
     
+    }*/
+    public Profile(long ID){
+        this.ID = ID;
+        retrieveData();
     }
     
+       
     //getters / setters 
     
     public String getName(){return name;}
@@ -36,11 +42,27 @@ public class Profile {
     public ArrayList<Lobby> getFinishedGames(){return finishedGames;}
     public boolean getIsYours(){return isYours;}
    
-    public void setName(String name){this.name = name;}
-    public void setImage(BufferedImage photo){this.photo = photo;}
-    public void setDescription(String description){this.description = description;}
-    public void setFinishedGames(ArrayList<Lobby> finishedGames) {this.finishedGames = finishedGames;}
-    public void setIsYours(boolean isYours){this.isYours = isYours;}
+    public void setName(String name){
+        this.name = name;
+        updateData();
+    }
+    public void setImage(BufferedImage photo){
+        this.photo = photo;
+        updateData();
+    }
+        
+    public void setDescription(String description){
+        this.description = description;
+        updateData();
+    }
+    public void setFinishedGames(ArrayList<Lobby> finishedGames){
+        this.finishedGames = finishedGames;
+        updateData();
+    }
+    public void setIsYours(boolean isYours){
+        this.isYours = isYours;
+        updateData();
+    }
     
     
     
@@ -58,7 +80,7 @@ public class Profile {
     
     }
     
-    public Player createPlayer (int ID, boolean isYours){return null;}
+    public Player createPlayer (long ID, boolean isYours){return null;}
             /*Creates a player object with given values.
 This will be useful method when getting new player information comes from the database, by
 this method an new player instance will be created with given unique ID. The other information
