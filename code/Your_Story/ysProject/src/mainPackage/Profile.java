@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package mainPackage;
-
+import java.awt.image.BufferedImage; 
 import java.util.ArrayList;
 
 /**
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class Profile {
  
     private String name;
-    private Image photo;
+    private BufferedImage photo;
     private String description;
     private ArrayList<Lobby> finishedGames;
     private boolean isYours;
     
-    public Profile( String name, Image photo, String Description, boolean isYours){
+    public Profile( String name, BufferedImage photo, String description, boolean isYours){
         this.name = name;
         this.photo = photo;
         this.description = description;
@@ -31,13 +31,13 @@ public class Profile {
     //getters / setters 
     
     public String getName(){return name;}
-    public Image getImage(){return photo;}
+    public BufferedImage getImage(){return photo;}
     public String getDescription(){return description;}
     public ArrayList<Lobby> getFinishedGames(){return finishedGames;}
     public boolean getIsYours(){return isYours;}
    
     public void setName(String name){this.name = name;}
-    public void setImage(Image photo){this.image = image;}
+    public void setImage(BufferedImage photo){this.photo = photo;}
     public void setDescription(String description){this.description = description;}
     public void setFinishedGames(ArrayList<Lobby> finishedGames) {this.finishedGames = finishedGames;}
     public void setIsYours(boolean isYours){this.isYours = isYours;}
