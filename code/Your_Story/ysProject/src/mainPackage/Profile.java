@@ -28,8 +28,9 @@ public class Profile {
         finishedGames = new ArrayList<Lobby>();
     
     }*/
-    public Profile(long ID){
+    public Profile(long ID,boolean isYours){
         this.ID = ID;
+        this.isYours = isYours;
         retrieveData();
     }
     

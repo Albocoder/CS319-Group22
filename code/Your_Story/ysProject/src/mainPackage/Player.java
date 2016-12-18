@@ -17,9 +17,9 @@ public class Player {
     private long playerID;
     private Profile profile; 
     
-    public Player(long ID){////
+    public Player(long ID,boolean isYours){////
         playerID = ID;
-        profile = new Profile(ID);
+        profile = new Profile(ID,isYours);
     }
     
     //getters / setters

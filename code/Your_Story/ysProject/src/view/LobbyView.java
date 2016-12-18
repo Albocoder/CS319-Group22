@@ -33,7 +33,6 @@ import view.*;
 import mainPackage.*;
 
 public class LobbyView extends JFrame implements Viewable {
-    
     private JScrollPane theSeats;
     private JLabel storyDesc;
     private JLabel timeLeft;
@@ -51,7 +50,6 @@ public class LobbyView extends JFrame implements Viewable {
     private JPanel seatsPanel;
     private ArrayList<JPanel> seats;
     
-    private final int PROFILE_SIZE = 230;
     private final int COLOR_COLD_RAND = 155;
     private final int COLOR_RAND = 255;
     private final int BORDER_THICKNESS = 5;
@@ -62,8 +60,14 @@ public class LobbyView extends JFrame implements Viewable {
         theLobby = aLobby;
         theStory = new Story(theLobby.getID());
         voter = new VotingHandler(theLobby.getID());
-        theSeats = new JScrollPane();
-        //seatsPanel = new JPanel(new GridLayout(/*theLobby.getSeats().size()*/50.2,1));
+        
+        showSeatsWaiting();
+        theSeats = new JScrollPane(seatsPanel);
+        
+        
+        storyDesc = new JLabel(theLobby.getStory().getDescription());
+        
+        showFreeCharacters();
     }    
     
     public void startVote(int type) {
@@ -97,12 +101,24 @@ public class LobbyView extends JFrame implements Viewable {
         this.setVisible(true);
     }
     
-    private void showWaitingLobbies(){
+    private void showFreeCharacters(){
+        
+    }
+    
+    private void showSeatsWaiting(){
         theSeats.removeAll();
         seats.removeAll(seats);
         Random r = new Random();
+        int numberOfSeatsOccupied = 0;
         
         for(Seat s:theLobby.getSeats()){
+            if(s.getIsOccupied())
+                numberOfSeatsOccupied++;
+        }
+        seatsPanel = new JPanel(new GridLayout(numberOfSeatsOccupied,1));
+        for(Seat s:theLobby.getSeats()){
+            if(!s.getIsOccupied())
+                continue;
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -123,51 +139,46 @@ public class LobbyView extends JFrame implements Viewable {
             JLabel icon = new JLabel();
 
             try {
-                    /////// get image and resize it///////////////////////////////////////////////
-                    FileInputStream fis = new FileInputStream(new File("./img/itsygoAlternate.jpg")/*get database image*/);
-                    BufferedImage gameIcon = ImageIO.read(fis);
-                    Image dimg = gameIcon.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
-                    ImageIcon imageIcon = new ImageIcon(dimg);
-                    //////////////////////////////////////////////////////////////////////////////
-                    icon.setIcon(imageIcon);
-                    icon.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+                BufferedImage playerImg = s.getPlayer().getProfile().getImage();
+                Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(dimg);
+                icon.setIcon(imageIcon);
+                icon.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
             } catch (Exception e) {
                     e.printStackTrace();
             }
 
             toFill.add(icon,BorderLayout.WEST);
 
-            JLabel lobbyName = new JLabel("Best Lobby"/*l.getName()*/);
+            JLabel plName = new JLabel(s.getPlayer().getProfile().getName());
             try {
-                    Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
-                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")));
-                    lobbyName.setFont(customFont);
-            } catch (Exception e) {
-                    e.printStackTrace();
-            }
-            lobbyName.setForeground(Color.WHITE);
-            lobbyName.setHorizontalAlignment(JLabel.CENTER);
-            lobbyName.setVerticalAlignment(JLabel.NORTH);
-            toFill.add(lobbyName,BorderLayout.NORTH);
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")));
+                plName.setFont(customFont);
+            } catch (Exception e){/* do nothing */}
+            plName.setForeground(Color.WHITE);
+            plName.setHorizontalAlignment(JLabel.CENTER);
+            plName.setVerticalAlignment(JLabel.NORTH);
+            toFill.add(plName,BorderLayout.NORTH);
 
-            JLabel lobbyQuota = new JLabel("Player(s): "+"4"/*l.getQuota()*/+"/"+"5"/*l.getSeats().size()*/);
+            /*
+            //Maybe useless
+            JLabel lobbyQuota = new JLabel(" ");
             lobbyQuota.setForeground(Color.WHITE);
             lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
-
-            JLabel storyTimeline = new JLabel("Timeline: "/*+l.getStory().getTimeline()*/);
+            */
+            
+            JLabel storyTimeline = new JLabel("Selected: "+s.getCharacter().getName());
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
 
             tmpLobby.add(toFill, BorderLayout.CENTER);
-
-            //adding the listeners for the components
-            //tmpLobby.addMouseListener(l);
-            theSeats.add(tmpLobby,BorderLayout.CENTER);
             //lobbies.add(l);
+            seatsPanel.add(tmpLobby);
             seats.add(tmpLobby);
         }
         theSeats.updateUI();

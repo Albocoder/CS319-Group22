@@ -45,7 +45,7 @@ public class ViewManager {
         hideLobby(true);
     }
 
-    public void showHomePage(/*HomePage*/Object playersHome) {
+    public void showHomePage(HomePage playersHome) {
         if(homepage == null && playersHome != null)
             homepage = new HomeView(this,playersHome);
         else if(homepage!=null)

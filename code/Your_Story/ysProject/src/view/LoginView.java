@@ -136,10 +136,8 @@ public class LoginView extends JFrame implements Viewable{
         //loading created with http://www.ajaxload.info/
         //it has public license 
         Loader l = new Loader();
-        //Player p = new Player(AccessHandler.userID);
-        //HomePage hp = new HomePage(p);
         l.dispose();
-        referrer.showHomePage(null);
+        referrer.showHomePage(new HomePage(AccessHandler.userID));
         hideView();
     }
     private class ButtonListener implements ActionListener{

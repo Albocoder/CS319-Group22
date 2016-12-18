@@ -44,7 +44,7 @@ import mainPackage.*;
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
-    private /*HomePage*/ Object mainData;
+    private HomePage mainData;
     private ViewManager referrer;
     private JScrollPane onWaitLobbies;
     private JLabel profilePic;
@@ -71,7 +71,7 @@ public class HomeView extends JFrame implements Viewable{
     private final String CREATE_IMG = "./img/create.png";
 
     
-    public HomeView(ViewManager ref,/*HomePage*/Object data){
+    public HomeView(ViewManager ref,HomePage data){
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
         Random r = new Random();
