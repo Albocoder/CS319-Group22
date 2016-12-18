@@ -31,6 +31,7 @@ public class Player {
     //other methods 
     
     public Lobby createLobby (Story story){
+        
     //Creates a lobby with given story. It will get the data
     //given by user interface and create the lobby in the database via database connection classes.
     return null;
@@ -43,8 +44,6 @@ public class Player {
     //the state that still let new players to join.
     return false;
     }
-    
-
     
     public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
