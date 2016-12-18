@@ -28,7 +28,7 @@ public class Seat {
         vote = false;
         playerID= 0;
         charID= 0;
-        
+        //
     }
     public Seat(long seatID,long lobbyID,long charID){
         this.seatID = seatID;
@@ -98,6 +98,7 @@ public class Seat {
     if (isOccupied){
         playerID = 0;
         isOccupied = false;
+        player = null;
         }
     }
     
