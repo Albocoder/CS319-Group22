@@ -24,6 +24,9 @@ public class Seat {
         vote = false;
         player = null;
     }
+    public Seat(long ID){
+        this.ID = ID;
+    }//
     
     //getters / setters
     
