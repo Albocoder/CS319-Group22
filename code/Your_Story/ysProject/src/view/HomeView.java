@@ -284,7 +284,7 @@ public class HomeView extends JFrame implements Viewable{
     
     // functions for the UI 
     private void logoutOnExitWithDialogue(){
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {

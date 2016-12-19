@@ -45,7 +45,6 @@ public class InGameView extends JFrame implements Viewable {
 		
 		add(mainPanel);
 		addMouseListener(mv);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(700, 400));
 		setVisible(true);
 		addComponentListener(new ComponentAdapter(){
@@ -231,7 +230,7 @@ public class InGameView extends JFrame implements Viewable {
             });
 	}
     private void logoutOnExitWithDialogue(){
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {

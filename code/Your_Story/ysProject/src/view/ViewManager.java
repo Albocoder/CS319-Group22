@@ -82,12 +82,14 @@ public class ViewManager {
     
     //we forgot showProfile 
     public void showProfile(Profile p){
-        if(profile == null)
+        if(p != null)
             profile = new ProfileView(p,this);
-        else if(profile != null)
-            profile.setVisible(true);
-        else
-            throw new UnsupportedOperationException();
+        else{
+            if(profile != null)
+                profile.setVisible(true);
+            else
+                throw new NullPointerException("Can't set Visible the null");
+        }
         hideLogin(false);
         hideOngoingGame(false);
         hideHomePage(false);
@@ -96,12 +98,14 @@ public class ViewManager {
     }
 
     public void showOngoingGame(Lobby aLobby) {
-        if(ingame == null && aLobby != null)
+        if(aLobby != null)
             ingame = new InGameView(aLobby,this);
-        else if(ingame != null)
-            ingame.setVisible(true);
-        else
-            throw new UnsupportedOperationException();
+        else{
+            if(ingame != null)
+                ingame.setVisible(true);
+            else
+                throw new NullPointerException("Can't set Visible the null");
+        }
         hideLogin(false);
         hideLobby(false);
         hideHomePage(false);
