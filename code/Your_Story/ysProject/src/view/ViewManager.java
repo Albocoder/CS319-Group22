@@ -26,7 +26,7 @@ public class ViewManager {
     private HomeView homepage;
     private InGameView ingame;
     //private LobbyCreatorView lobbycreator;
-    //private ProfileView profile;
+    private ProfileView profile;
     //////////////////////////////////////////////////////////////
 
     public ViewManager(){
@@ -35,6 +35,7 @@ public class ViewManager {
     }
 
     public void showLogin() {
+        hiddenViews = new ArrayList<Viewable>();
         //show login and destroy the rest
         if(login == null)
             login = new LoginView(this);
@@ -43,30 +44,55 @@ public class ViewManager {
         hideHomePage(true);
         hideOngoingGame(true);
         hideLobby(true);
+        hideProfile(true);
+        hideCreateLobby(true);
     }
 
     public void showHomePage(HomePage playersHome) {
-        if(homepage == null && playersHome != null)
-            homepage = new HomeView(this,playersHome);
-        else if(homepage!=null)
-            homepage.setVisible(true);
-        else
-            throw new UnsupportedOperationException();
+        if(playersHome != null)
+            homepage = new HomeView(playersHome,this);
+        else{
+            if(homepage != null)
+                homepage.setVisible(true);
+            else
+                throw new NullPointerException("Can't set Visible the null");
+        }
         hideLogin(false);
         hideOngoingGame(false);
         hideLobby(false);
+        hideProfile(false);
+        hideCreateLobby(false);
     }
 
     public void showLobby(Lobby aLobby) {
-        if(lobby == null && aLobby != null)
+        if(aLobby != null)
             lobby = new LobbyView(aLobby,this);
-        else if(lobby != null)
-            lobby.setVisible(true);
+        else{
+            if(lobby != null)
+                lobby.setVisible(true);
+            else
+                throw new NullPointerException("Can't set Visible the null");
+        }
+        hideLogin(false);
+        hideOngoingGame(false);
+        hideHomePage(false);
+        hideProfile(false);
+        hideCreateLobby(false);
+    }
+    
+    //we forgot showProfile 
+    public void showProfile(Profile p){
+        if(profile == null)
+            profile = new ProfileView(p,this);
+        else if(profile != null)
+            profile.setVisible(true);
         else
             throw new UnsupportedOperationException();
         hideLogin(false);
         hideOngoingGame(false);
         hideHomePage(false);
+        hideLobby(false);
+        hideCreateLobby(false);
     }
 
     public void showOngoingGame(Lobby aLobby) {
@@ -79,10 +105,12 @@ public class ViewManager {
         hideLogin(false);
         hideLobby(false);
         hideHomePage(false);
+        hideProfile(false);
+        hideCreateLobby(false);
     }
 
     public void showCreateLobby(){
-        throw new UnsupportedOperationException();
+        //TODO
     }
 
     public void showLastHidden() {
@@ -90,9 +118,14 @@ public class ViewManager {
             hiddenViews.remove(hiddenViews.size()-1).showView();
     }
 
-    public void update(Viewable v) {
+    public void updateAll() {
         // TODO - implement ViewManager.update
-        throw new UnsupportedOperationException();
+        profile.updateView();
+        login.updateView();
+        lobby.updateView();
+        homepage.updateView();
+        ingame.updateView();
+        //lobbycreator.updateView();
     }
 
     public void hideLogin(boolean terminate) {
@@ -127,7 +160,6 @@ public class ViewManager {
 
     public void hideProfile(boolean terminate) {
         // TODO - implement ViewManager.hideProfile
-        throw new UnsupportedOperationException();
     }
 
     public void hideOngoingGame(boolean terminate) {
@@ -140,12 +172,7 @@ public class ViewManager {
             hiddenViews.add(ingame);
     }
     
-    public void hideCreateLobby(){
-        // TODO - implement ViewManager.showOngoingGame
-        throw new UnsupportedOperationException();
-    }
-
-    void showOngoingGame(Lobby aLobby, ViewManager referrer) {
-        ingame = new InGameView(aLobby,referrer);
+    public void hideCreateLobby(boolean terminate){
+        //TODO
     }
 }

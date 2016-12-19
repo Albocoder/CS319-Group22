@@ -231,11 +231,12 @@ public class InGameView extends JFrame implements Viewable {
             });
 	}
     private void logoutOnExitWithDialogue(){
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 terminateView();
+                System.out.println("sdfsdfsd");
             }
         });
     }

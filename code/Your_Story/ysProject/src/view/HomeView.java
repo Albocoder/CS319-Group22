@@ -74,7 +74,7 @@ public class HomeView extends JFrame implements Viewable{
     private final String CREATE_IMG = "./img/create.png";
 
     
-    public HomeView(ViewManager ref,HomePage data){
+    public HomeView(HomePage data,ViewManager ref){
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
         Random r = new Random();
@@ -246,7 +246,7 @@ public class HomeView extends JFrame implements Viewable{
     }
     public void joinLobby(Lobby aLobby){
         //referrer.showOngoingGame(aLobby,referrer);
-        if(aLobby.getState() == Lobby.LOBBY_WAITING){
+        if(aLobby.getState() == Lobby.LOBBY_INGAME){
             referrer.showOngoingGame(aLobby);
         }
         else{
@@ -446,9 +446,6 @@ public class HomeView extends JFrame implements Viewable{
                         )
                     );
                 }
-                
-                System.out.println(lobbiesPanels.indexOf( (JPanel) 
-                        e.getComponent().getComponentAt(e.getPoint())));
             }
     }
     private class ProfilePicMouseListener extends MouseAdapter{
@@ -467,7 +464,7 @@ public class HomeView extends JFrame implements Viewable{
             JLabel pressedPanel = ((JLabel)e.getComponent());
             pressedPanel.setBorder(c);
             // TODO - showProfile thingy();
-            System.out.println("Showing the profile!");
+            
         }
     }
     private class FinishedGamesListener implements ActionListener{

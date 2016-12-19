@@ -59,12 +59,13 @@ public class LobbyView extends JFrame implements Viewable {
     
 
     public LobbyView(Lobby aLobby,ViewManager ref){
+        if (aLobby == null)
+            throw new NullPointerException("Lobby object is nul can't get data");
         logoutOnExitWithDialogue();
         referrer = ref;
         theLobby = aLobby;
         theStory = new Story(theLobby.getID());
         voter = new VotingHandler(theLobby.getID());
-        
         showSeatsWaiting();
         theSeats = new JScrollPane(seatsPanel);
         
@@ -90,6 +91,8 @@ public class LobbyView extends JFrame implements Viewable {
     public void leaveLobby() {
        //do something to leave mySeat
     }
+    
+    public Lobby getLobby(){return theLobby;}
     
     private long joinSeat(){
         // do something to add yourself to the seat and update the seat table

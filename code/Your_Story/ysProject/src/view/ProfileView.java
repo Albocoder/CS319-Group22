@@ -15,9 +15,11 @@ import javax.swing.event.*;
 
 public class ProfileView extends JFrame implements Viewable {
 	
-	ViewManager referrer;
+	private ViewManager referrer;
+        private Profile theProfile;
 	
-	public ProfileView(ViewManager ref) {
+	public ProfileView(Profile toShow,ViewManager ref) {
+                theProfile = toShow;
 		referrer = ref;
 		add(new ProfilePanel());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
