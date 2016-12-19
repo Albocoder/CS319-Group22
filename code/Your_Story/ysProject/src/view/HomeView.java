@@ -216,7 +216,7 @@ public class HomeView extends JFrame implements Viewable{
         lobbiesContainer.addMouseListener( new WaitingLobbiesMouseListener() );
         profilePic.addMouseListener(new ProfilePicMouseListener());
         viewFinished.addActionListener(new FinishedGamesListener());
-        onGoing.addItemListener(new OngoingGamesItemListener());
+        //onGoing.addItemListener(new OngoingGamesItemListener());
         onGoing.addActionListener(new OngoingActionListener());
         createLobby.addActionListener(new CreateLobbyListener());
         logoutButton.addActionListener(new LogoutListener());
@@ -245,13 +245,13 @@ public class HomeView extends JFrame implements Viewable{
         //hide this!
     }
     public void joinLobby(Lobby aLobby){
-        referrer.showOngoingGame(aLobby,referrer);
-        /*if(aLobby.getState() == Lobby.LOBBY_WAITING){
-            //referrer.showOngoingGame(aLobby,loggedInPlayer);
+        //referrer.showOngoingGame(aLobby,referrer);
+        if(aLobby.getState() == Lobby.LOBBY_WAITING){
+            referrer.showOngoingGame(aLobby);
         }
         else{
-            
-        }*/
+            referrer.showLobby(aLobby);
+        }
     }
 
     @Override
@@ -317,12 +317,10 @@ public class HomeView extends JFrame implements Viewable{
         }
     }
     private void showOngoing(){
-        //TODO - override the tostring method of the lobby class so that it can 
-        //return the name of that lobby as string 
         while( onGoing.getItemCount() > 1)
             onGoing.removeItemAt(1);
         for(Lobby l:mainData.getPlayer().getOngoingGames())
-            onGoing.addItem(l.toString());
+            onGoing.addItem(l.getName());
     }
     private void showOnlineUsers(){
         onlineUsers.setText("        "+"Online users: "+
@@ -367,7 +365,7 @@ public class HomeView extends JFrame implements Viewable{
 
             toFill.add(icon,BorderLayout.WEST);
 
-            JLabel lobbyName = new JLabel("Best Lobby"/*l.getName()*/);
+            JLabel lobbyName = new JLabel(l.getName());
             try {
                     Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -381,13 +379,14 @@ public class HomeView extends JFrame implements Viewable{
             lobbyName.setVerticalAlignment(JLabel.NORTH);
             toFill.add(lobbyName,BorderLayout.NORTH);
 
-            JLabel lobbyQuota = new JLabel("Player(s): "+"4"/*l.getQuota()*/+"/"+"5"/*l.getSeats().size()*/);
+           /*
+            JLabel lobbyQuota = new JLabel(""+l.getSeats().size());
             lobbyQuota.setForeground(Color.WHITE);
             lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
-
-            JLabel storyTimeline = new JLabel("Timeline: "/*+l.getStory().getTimeline()*/);
+            */
+            JLabel storyTimeline = new JLabel("Timeline: "+l.getStory().getTimeline());
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
@@ -435,7 +434,7 @@ public class HomeView extends JFrame implements Viewable{
                 //System.out.println(lobbyTitle.getText());
                 //System.out.println(lobbyPlayerCount.getText());
                 //System.out.println(lobbyTimeline.getText());
-                /*
+                
                 //this is the one we need the ones above are extensible features
                 if(lobbiesPanels.indexOf( (JPanel) 
                         e.getComponent().getComponentAt(e.getPoint()))>-1){
@@ -447,7 +446,6 @@ public class HomeView extends JFrame implements Viewable{
                         )
                     );
                 }
-                */
                 
                 System.out.println(lobbiesPanels.indexOf( (JPanel) 
                         e.getComponent().getComponentAt(e.getPoint())));
@@ -481,6 +479,7 @@ public class HomeView extends JFrame implements Viewable{
             //hideView();
         }
     }
+    /*
     private class OngoingGamesItemListener implements ItemListener{
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -492,6 +491,7 @@ public class HomeView extends JFrame implements Viewable{
             }
         }
     }
+    */
     private class CreateLobbyListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -548,9 +548,10 @@ public class HomeView extends JFrame implements Viewable{
     private class OngoingActionListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            System.out.println("Selected: " + onGoing.getSelectedItem());
-            System.out.println(", Position: " + onGoing.getSelectedIndex());
-            joinLobby(HomePage.getPlayer().getOngoingGames().get(onGoing.getSelectedIndex()-1));
+            try{
+                joinLobby(HomePage.getPlayer().getOngoingGames()
+                        .get(onGoing.getSelectedIndex()-1));
+            }catch(ArrayIndexOutOfBoundsException e){}
         }
     }
 }

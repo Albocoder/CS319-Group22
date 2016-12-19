@@ -135,9 +135,6 @@ public class LoginView extends JFrame implements Viewable{
     private void login(){
         //loading created with http://www.ajaxload.info/
         //it has public license 
-        Loader l = new Loader();
-        l.dispose();
-        System.out.println(AccessHandler.userID);
         referrer.showHomePage(new HomePage(AccessHandler.userID));
         hideView();
     }
@@ -145,10 +142,12 @@ public class LoginView extends JFrame implements Viewable{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==login){
+                Loader l = new Loader("Logging in!");
                 String un = username.getText();
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
                 if (AccessHandler.accessGame(un, pw,false)){
+                    l.setText("Fetching Data!");
                     //clearing out things for high security.
                     Arrays.fill(pwChar,'\0');
                     pw = "";
@@ -158,6 +157,7 @@ public class LoginView extends JFrame implements Viewable{
                     password.setText("");
                     //login here
                     login();
+                    l.dispose();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, 
@@ -167,8 +167,10 @@ public class LoginView extends JFrame implements Viewable{
                 }
             }
             else{
+                Loader l = new Loader("Checking username...");
                 String un = username.getText();
                 if(!AccessConnection.isAvailable(un)){
+                    l.dispose();
                     JOptionPane.showMessageDialog(null, 
                         "Uh this username is taken!",
                         "Uhhh!!!", JOptionPane.ERROR_MESSAGE,
@@ -177,7 +179,9 @@ public class LoginView extends JFrame implements Viewable{
                 }
                 char[] pwChar = password.getPassword();
                 String pw = new String(pwChar);
+                l.setText("Registering...");
                 if(AccessHandler.accessGame(un,pw,true)){
+                    l.setVisible(false);
                     JOptionPane.showMessageDialog(null, 
                         "Welcomeee <3. We are happier with you!!!",
                         "Welcomeee!!!", JOptionPane.PLAIN_MESSAGE,
@@ -190,7 +194,9 @@ public class LoginView extends JFrame implements Viewable{
                     username.setText("");
                     password.setText("");
                     //login the same way 
+                    l.setText("Logging in...");
                     login();
+                    l.dispose();
                 }
             }
         }

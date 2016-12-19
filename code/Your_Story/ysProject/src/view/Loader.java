@@ -15,18 +15,26 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Loader extends JFrame{
-    public Loader(/*String msg*/){
+    JLabel txt;
+    
+    public Loader(String msg){
         getContentPane().setLayout(new BorderLayout());
         JLabel l  = new JLabel();
         l.setIcon(new ImageIcon("./img/loading.gif"));
-        //JLabel txt = new JLabel(msg);
+        txt = new JLabel(msg);
         //txt.setForeground(new Color());
-        //txt.setFont(new Font("Arial",Font.BOLD,20));
+        txt.setFont(new Font("Arial",Font.BOLD,20));
         setUndecorated(true);
         add(l,BorderLayout.CENTER);
-        //add(txt,BorderLayout.SOUTH);
+        add(txt,BorderLayout.SOUTH);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+    public void setText(String msg){
+        txt.setText(msg);
+    }
+    public String getText(){
+        return txt.getText();
     }
 }

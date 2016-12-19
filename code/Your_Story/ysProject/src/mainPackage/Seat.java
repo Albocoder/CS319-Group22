@@ -91,12 +91,12 @@ public class Seat {
     }
     
     public void startTime(){
-    timer = 120; //Depending on how the countdown is done. 
+        timer = 120; //Depending on how the countdown is done. 
     }
     
     public void addPlayer(long playerID){
-    this.playerID = playerID;
-    isOccupied = true;
+        this.playerID = playerID;
+        isOccupied = true;
     }
    
     public void removePlayer(){

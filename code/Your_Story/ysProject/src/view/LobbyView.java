@@ -25,12 +25,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import static javax.swing.WindowConstants.*;
 import javax.swing.border.EtchedBorder;
 import view.*;
 import mainPackage.*;
+import mainPackage.Character;
 
 public class LobbyView extends JFrame implements Viewable {
     private JScrollPane theSeats;
@@ -40,9 +44,8 @@ public class LobbyView extends JFrame implements Viewable {
     private JButton leaveLobby;
     private JComboBox kickPlayer;
     private ViewManager referrer;
-    //private ArrayList<Seat> seats;
     private Story theStory;
-    //private Seat mySeat;
+    private Seat mySeat;
     
     //newly added
     private VotingHandler voter;
@@ -51,11 +54,12 @@ public class LobbyView extends JFrame implements Viewable {
     private ArrayList<JPanel> seats;
     
     private final int COLOR_COLD_RAND = 155;
-    private final int COLOR_RAND = 255;
+    private final int TIME_MAX = 120;
     private final int BORDER_THICKNESS = 5;
     
 
     public LobbyView(Lobby aLobby,ViewManager ref){
+        logoutOnExitWithDialogue();
         referrer = ref;
         theLobby = aLobby;
         theStory = new Story(theLobby.getID());
@@ -64,10 +68,13 @@ public class LobbyView extends JFrame implements Viewable {
         showSeatsWaiting();
         theSeats = new JScrollPane(seatsPanel);
         
-        
         storyDesc = new JLabel(theLobby.getStory().getDescription());
         
         showFreeCharacters();
+        kickPlayer = new JComboBox();
+        
+        //mySeat = new Seat(joinSeat());
+        timeLeft = new JLabel(""+TIME_MAX);
     }    
     
     public void startVote(int type) {
@@ -77,23 +84,37 @@ public class LobbyView extends JFrame implements Viewable {
     }
 
     public void startKick(Seat target) {
-        voter.startVoting(Lobby.VOTE_KICK,null/*target.getPlayer()*/);
+        voter.startVoting(Lobby.VOTE_KICK,target.getPlayer());
     }
 
     public void leaveLobby() {
+       //do something to leave mySeat
+    }
+    
+    private long joinSeat(){
+        // do something to add yourself to the seat and update the seat table
+        return -1;
     }
     
     @Override
     public void terminateView() {
+        referrer.showHomePage(null);
     }
 
     @Override
     public void hideView() {
+        this.setVisible(false);
     }
 
     @Override
     public void updateView() {
-        
+        /*
+        ScheduledExecutorService chatExec = Executors.
+            newSingleThreadScheduledExecutor();
+            
+        chatExec.scheduleAtFixedRate(
+            new (),5,5,TimeUnit.SECONDS);
+        */
     }
 
     @Override
@@ -102,7 +123,17 @@ public class LobbyView extends JFrame implements Viewable {
     }
     
     private void showFreeCharacters(){
+        ArrayList<Character> freeOnes;
+        freeOnes = theLobby.getFreeChars();
+        JPanel all = new JPanel(new GridLayout(3,freeOnes.size()/3));
         
+        JLabel rand = new JLabel();
+        rand.setIcon(new ImageIcon("./img/random.jpg"));
+        all.add(rand);
+        
+        for(int i = 0; i<5; i++/*Character c:freeOnes*/){
+            
+        }
     }
     
     private void showSeatsWaiting(){
@@ -137,7 +168,6 @@ public class LobbyView extends JFrame implements Viewable {
 
             //adding the icon to the left
             JLabel icon = new JLabel();
-
             try {
                 BufferedImage playerImg = s.getPlayer().getProfile().getImage();
                 Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
@@ -189,12 +219,7 @@ public class LobbyView extends JFrame implements Viewable {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                if (JOptionPane.showConfirmDialog(null, 
-                    "Are you sure to exit the game?", "Really?! Leaving just now?", 
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,new ImageIcon("./img/leaving.png")) == JOptionPane.YES_OPTION){
-                    terminateView();
-                }
+                terminateView();
             }
         });
     }

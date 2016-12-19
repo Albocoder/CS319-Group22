@@ -13,6 +13,8 @@ import javax.swing.*;
 import mainPackage.*;
 
 public class InGameView extends JFrame implements Viewable {
+    
+        private ViewManager referrer;
 	
 	static Font font;
 	static int LINE_HEIGHT;
@@ -23,9 +25,10 @@ public class InGameView extends JFrame implements Viewable {
 	Lobby l;
 	
 	public InGameView(Lobby l, ViewManager ref) {
+                logoutOnExitWithDialogue();
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
-		
+		referrer = ref;
 		JPanel mainPanel = new JPanel();
 		
 		this.l = l;
@@ -169,22 +172,25 @@ public class InGameView extends JFrame implements Viewable {
 	
 	@Override
 	public void terminateView() {
-		AccessHandler.logOut();
-        System.exit(0);
+            referrer.showHomePage(null);
 	}
 
 	@Override
 	public void hideView() {
-		setVisible(false);
+            setVisible(false);
 	}
 
 	@Override
 	public void updateView() {
-		ScheduledExecutorService chatExec = Executors.newSingleThreadScheduledExecutor();
-        ScheduledExecutorService onlineUsersExec = Executors.newSingleThreadScheduledExecutor();
+            ScheduledExecutorService chatExec = Executors.
+                    newSingleThreadScheduledExecutor();
+            ScheduledExecutorService onlineUsersExec = Executors.
+                    newSingleThreadScheduledExecutor();
         
-        chatExec.scheduleAtFixedRate(new ChatUpdater(),5,5,TimeUnit.SECONDS);
-        onlineUsersExec.scheduleAtFixedRate(new OnlineUsersUpdater(),23,23,TimeUnit.SECONDS);
+            chatExec.scheduleAtFixedRate(
+                    new ChatUpdater(),5,5,TimeUnit.SECONDS);
+            onlineUsersExec.scheduleAtFixedRate(
+                    new OnlineUsersUpdater(),23,23,TimeUnit.SECONDS);
 	}
 
 	@Override
@@ -215,13 +221,22 @@ public class InGameView extends JFrame implements Viewable {
 	}
 	
 	public static void main (String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    AccessHandler.username = "e3";
+                    AccessHandler.userID = 6;
+                    new InGameView(LobbyConnection.getLobby(9), null);
+                }
+            });
+	}
+    private void logoutOnExitWithDialogue(){
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void run() {
-            	AccessHandler.username = "e3";
-            	AccessHandler.userID = 6;
-                new InGameView(LobbyConnection.getLobby(9), null);
+            public void windowClosing(WindowEvent windowEvent) {
+                terminateView();
             }
         });
-	}
+    }
 }

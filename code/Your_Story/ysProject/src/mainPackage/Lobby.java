@@ -40,8 +40,6 @@ public class Lobby {
         chat = new Chat(ID, AccessHandler.userID);
         votingHandler = new VotingHandler(ID);
         charList = LobbyConnection.getCharacters(ID);
-        
-        
     }
     
     //public Lobby(long ID, long storyID){
@@ -84,11 +82,12 @@ public class Lobby {
     
      //other methods 
     
-     public void updateQuota(){
-         quota = LobbyConnection.getQuota(ID);
-     }
-     public void updateChars(){
-             charList = LobbyConnection.getCharacters(ID);
+    //methods to update data
+    public void updateQuota(){
+        quota = LobbyConnection.getQuota(ID);
+    }
+    public void updateChars(){
+        charList = LobbyConnection.getCharacters(ID);
     }
           
      
@@ -116,8 +115,8 @@ public class Lobby {
      public void sendVote(long id, boolean vote){
         votingHandler.sendVote(id, vote);
      }
-    @Override
-    public String toString(){
-        return name;
+    
+    public ArrayList<Character> getFreeChars(){
+        return null;
     }
 }
