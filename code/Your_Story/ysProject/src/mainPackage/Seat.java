@@ -13,7 +13,7 @@ public class Seat {
     
     private boolean vote;
     private int timer;
-    private boolean isOccupied;
+    private boolean isOccupied = false;
     private long seatID;
     private long playerID;
     private long lobbyID;
@@ -35,7 +35,8 @@ public class Seat {
         this.seatID = seatID;
         this.lobbyID = lobbyID;
         this.charID = charID;
-        character = new Character(charID);
+        if(charID > 0)
+            character = new Character(charID);
     }//
     
     public Seat(long seatID,long lobbyID,long charID, long playerID){
@@ -43,7 +44,12 @@ public class Seat {
         this.lobbyID = lobbyID;
         this.charID = charID;
         this.playerID = playerID;
-        player = new Player(playerID);
+        if(charID > 0)
+            character = new Character(charID);
+        if(playerID > 0){
+            player = new Player(playerID);
+            isOccupied = true;
+        }
     }//
     
     
@@ -55,6 +61,7 @@ public class Seat {
     public boolean getIsOccupied(){return isOccupied;}
     public long getSeatID(){return seatID;}
     public Player getPlayer(){return player;}
+    public long getPlayerID(){return playerID;}
     public long getLobbyID(){return lobbyID;}
     public long getCharID(){return charID;}
     public Character getCharacter(){return character;}
@@ -96,6 +103,7 @@ public class Seat {
     
     public void addPlayer(long playerID){
         this.playerID = playerID;
+        player = new Player(playerID);
         isOccupied = true;
     }
    
@@ -104,6 +112,8 @@ public class Seat {
         playerID = 0;
         isOccupied = false;
         player = null;
+        charID = 0;
+        character = null;
         }
     }
     
