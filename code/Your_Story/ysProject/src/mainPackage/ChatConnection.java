@@ -39,7 +39,7 @@ public class ChatConnection {
                 " ON " + SEAT_DATA +
                 ".charac = " + CHARACTER_DATA +
                 ".id WHERE " + CHAT_DATA +
-                ".lobby = 9 GROUP BY " + CHAT_DATA +
+                ".lobby = " + id + " GROUP BY " + CHAT_DATA +
                 ".id");
         return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
@@ -65,9 +65,9 @@ public class ChatConnection {
                 ".id");
         return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
-    public static long sendMessage(String message, int lobby){
+    public static long sendMessage(String message, long lobby, long user){
         message = DBInterface.escapeString(message);
-        DBInterface.getConnection().executeStuff("INSERT INTO " + CHAT_DATA + "(body, lobby) VALUES('" + message + "', " + lobby + ")");
+        DBInterface.getConnection().executeStuff("INSERT INTO " + CHAT_DATA + "(user, body, lobby) VALUES(" + user +", '" + message + "', " + lobby + ")");
         long[] temp = DBInterface.selectIntArray(CHAT_DATA, "id", "lobby", lobby);
         return temp[temp.length - 1];
     }

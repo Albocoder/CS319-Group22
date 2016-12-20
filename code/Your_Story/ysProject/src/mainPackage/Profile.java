@@ -18,7 +18,7 @@ public class Profile {
     private String description;
     private ArrayList<Lobby> finishedGames;
     private boolean isYours;
-    private long ID;//
+    private long ID;
     
     /*public Profile( String name, BufferedImage photo, String description, boolean isYours){
         this.name = name;
@@ -30,7 +30,7 @@ public class Profile {
     }*/
     public Profile(long ID){
         this.ID = ID;
-        //isYours = this.ID == HomePage.getPlayer().getPlayerID();
+        isYours = this.ID == AccessHandler.userID;
         retrieveData();
     }
     
@@ -48,27 +48,28 @@ public class Profile {
    
     public void setName(String name){
         this.name = name;
-        updateData();
+        //updateData();
     }
     public void setImage(BufferedImage photo){
         this.photo = photo;
-        updateData();
+        //updateData();
     }
         
     public void setDescription(String description){
         this.description = description;
-        updateData();
+        //updateData();
     }
     public void setFinishedGames(ArrayList<Lobby> finishedGames){
         this.finishedGames = finishedGames;
-        updateData();
+        //updateData();
     }
     public void setIsYours(boolean isYours){
         this.isYours = isYours;
-        updateData();
+        //updateData();
     }
     
     public void retrieveData(){
+        
         ProfileConnection.updateProfileInClient(this);
     //Retrieves the data of profile. This will sync the variables of object
     //with the data in the database, therefore before showing a profile to the users, this method will
@@ -78,16 +79,21 @@ public class Profile {
     
     public void updateData(){//
         ProfileConnection.updateProfileInDatabase(this);
-
     }
     
     public Player createPlayer (long ID, boolean isYours){
         return new Player(ID);
     }
     
-    public ArrayList<Lobby> viewUnfinishedGames(){
+    public ArrayList<Lobby> viewFinishedGames(){
     //Returns unfinished games of player that profile belongs to
     return ProfileConnection.getFinishedGames(ID);
     }
+    
+    public ArrayList<Lobby> viewUnfinishedGames(){
+    //Returns unfinished games of player that profile belongs to
+    return LobbyConnection.getOngoingGamesOfPlayer(ID);
+    }
+    
     
 }

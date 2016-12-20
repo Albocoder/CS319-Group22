@@ -23,10 +23,10 @@ public class ProfileConnection {
     
     public static boolean updateProfileInClient(Profile profile){
         long userID = profile.getID();
-        System.out.println("ID is: " + userID);
         long profileID = DBInterface.selectIntArray(PROFILE_DATA, "id", "user", userID)[0];
-        profile.setDescription(DBInterface.selectString(PROFILE_DATA, "description", profileID));
         profile.setName(DBInterface.selectString(PLAYER_DATA, "username", userID));
+        profile.setFinishedGames(getFinishedGames(userID));
+        profile.setDescription(DBInterface.selectString(PROFILE_DATA, "description", profileID));
         return true;
     }
     

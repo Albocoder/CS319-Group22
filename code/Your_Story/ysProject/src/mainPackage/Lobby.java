@@ -18,7 +18,8 @@ public class Lobby {
     private Story story;
     private ArrayList<Seat> seats;
     private VotingHandler votingHandler;
-    
+    private Chat chat;
+    private ArrayList<Character> charList;
     
     //Other Variables
     public static final int LOBBY_INGAME = 1;
@@ -35,9 +36,21 @@ public class Lobby {
         this.quota = quota;
         this.state = state;
         this.voteID = voteID;
-        this.story = new Story(storyID);
+        this.story = LobbyConnection.getStory(storyID);
+        chat = new Chat(ID, AccessHandler.userID);
         votingHandler = new VotingHandler(ID);
+        charList = LobbyConnection.getCharacters(ID);
+        System.out.println("In");
+        seats = LobbyConnection.getSeats(ID);
+        System.out.println("Out");
     }
+    
+    //public Lobby(long ID, long storyID){
+      //  this.ID = ID;
+       // this.story = new Story(storyID);
+    //}
+            
+            
      public Lobby(){
         this.name = "Sample";
         this.ID = 0;
@@ -56,6 +69,8 @@ public class Lobby {
      public ArrayList<Long> getVoteID() {return voteID;}
      public Story getStory() {return story;}
      public ArrayList<Seat> getSeats() {return seats;}
+     public Chat getChat() {return chat;}
+     public ArrayList<Character> getChars(){return charList;}
      
     //setters 
      public void setName(String name) {this.name = name;}
@@ -65,16 +80,20 @@ public class Lobby {
      public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
      public void setStory(Story story) {this.story = story;}
      public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
+     public void setChat(Chat chat) {this.chat = chat;}
+     public void setCharList(ArrayList<Character> charList){this.charList = charList;}
     
      //other methods 
     
-     public void updateQuota(){
-         quota = LobbyConnection.getQuota(ID);
-     }
+    //methods to update data
+    public void updateQuota(){
+        quota = LobbyConnection.getQuota(ID);
+    }
+    public void updateChars(){
+        charList = LobbyConnection.getCharacters(ID);
+    }
+          
      
-     public void updateCharacter(Character aCharacter){
-         
-     }
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
      public void addPlayer(Player aPlayer){
@@ -99,4 +118,13 @@ public class Lobby {
      public void sendVote(long id, boolean vote){
         votingHandler.sendVote(id, vote);
      }
+    
+    public ArrayList<Character> getFreeChars(){
+        ArrayList<Character> temp = new ArrayList<Character>();
+        for(int i = 0; i < charList.size(); i++){
+            if(!charList.get(i).getIsTaken())
+                temp.add(charList.get(i));
+        }
+        return temp;
     }
+}

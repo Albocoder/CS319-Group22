@@ -65,7 +65,7 @@ public class LobbyConnection {
                 ".story = " + STORY_DATA +
                 ".ID WHERE " + LOBBY_DATA +
                 ".id = " + id + " GROUP BY " + LOBBY_DATA + 
-                ".id HAVING quota > 0");
+                ".id");
         return DBInterface.resultSetToLobbyArray(r)[0];
     }
     
@@ -74,6 +74,7 @@ public class LobbyConnection {
     }
     
     public static ArrayList<Seat> getSeats(long lobbyID){
+        System.out.println("In2");
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
                 " WHERE lobby = " + lobbyID);
         return new ArrayList<Seat>(Arrays.asList(DBInterface.resultSetToSeatArray(r)));
@@ -129,7 +130,7 @@ public class LobbyConnection {
                 " INNER JOIN " + SEAT_DATA +
                 " ON " + PLAYER_DATA +
                 ".online = 1 AND " + SEAT_DATA +
-                ".user = " + SEAT_DATA +
+                ".user = " + PLAYER_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
@@ -141,7 +142,7 @@ public class LobbyConnection {
                 " INNER JOIN " + SEAT_DATA +
                 " ON " + PLAYER_DATA +
                 ".online = 0 AND " + SEAT_DATA +
-                ".user = " + SEAT_DATA +
+                ".user = " + PLAYER_DATA +
                 ".id AND " + SEAT_DATA +
                 ".lobby = " + lobby);
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
@@ -233,5 +234,20 @@ public class LobbyConnection {
             Logger.getLogger(LobbyConnection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public static ArrayList<Character> getCharacters(long lobby){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
+                ".*, COUNT(" + SEAT_DATA +
+                ".id) AS occupied FROM " + CHARACTER_DATA +
+                " LEFT JOIN " + SEAT_DATA +
+                " ON " + SEAT_DATA +
+                ".charac = " + CHARACTER_DATA +
+                ".id INNER JOIN " + LOBBY_DATA +
+                " ON " + LOBBY_DATA +
+                ".story = " + CHARACTER_DATA +
+                ".story AND " + LOBBY_DATA + 
+                ".id = " + lobby + " GROUP BY " + CHARACTER_DATA +".id");
+        return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
 }

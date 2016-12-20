@@ -31,6 +31,24 @@ public class DBInterface {
             return term;
         }
         
+        public static Character[] resultSetToCharacterArray(ResultSet r){
+            try {
+                r.last();
+                int size = r.getRow();
+                Character[] result = new Character[size];
+                int index = 0;
+                Character c;
+                for(boolean go = r.first(); go; go = r.next()){
+                    c = new Character(r.getString("description"), r.getString("name"), r.getLong("id"), r.getInt("occupied")== 1);
+                    result[index++] = c;
+                }
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+        
         public static Message[] resultSetToMessageArray(ResultSet r){
             try {
                 r.last();
@@ -50,6 +68,7 @@ public class DBInterface {
         }
         
         public static Seat[] resultSetToSeatArray(ResultSet r){
+            System.out.println("Middle2");
             try {
                 r.last();
                 int size = r.getRow();
@@ -58,10 +77,13 @@ public class DBInterface {
                 Seat s;
                 for(boolean go = r.first(); go; go = r.next()){
                     s = new Seat(r.getLong("id"), r.getLong("lobby"), r.getLong("charac"));
+                    System.out.println("Middle3");
                     if(r.getLong("user") > 0)
                         s.addPlayer(r.getByte("user"));
+                    System.out.println("Middle4");
                     result[index++] = s;
                 }
+                System.out.println("Out2");
                 return result;
             } catch (SQLException ex) {
                 Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);

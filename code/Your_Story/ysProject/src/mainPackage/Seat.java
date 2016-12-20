@@ -13,7 +13,7 @@ public class Seat {
     
     private boolean vote;
     private int timer;
-    private boolean isOccupied;
+    private boolean isOccupied = false;
     private long seatID;
     private long playerID;
     private long lobbyID;
@@ -35,7 +35,8 @@ public class Seat {
         this.seatID = seatID;
         this.lobbyID = lobbyID;
         this.charID = charID;
-        character = new Character(charID);
+        if(charID > 0)
+            character = new Character(charID);
     }//
     
     public Seat(long seatID,long lobbyID,long charID, long playerID){
@@ -43,7 +44,12 @@ public class Seat {
         this.lobbyID = lobbyID;
         this.charID = charID;
         this.playerID = playerID;
-        player = new Player(playerID);
+        if(charID > 0)
+            character = new Character(charID);
+        if(playerID > 0){
+            player = new Player(playerID);
+            isOccupied = true;
+        }
     }//
     
     
@@ -55,6 +61,7 @@ public class Seat {
     public boolean getIsOccupied(){return isOccupied;}
     public long getSeatID(){return seatID;}
     public Player getPlayer(){return player;}
+    public long getPlayerID(){return playerID;}
     public long getLobbyID(){return lobbyID;}
     public long getCharID(){return charID;}
     public Character getCharacter(){return character;}
@@ -78,15 +85,11 @@ public class Seat {
     {this.character = character;}
     
     //other methods 
-    public boolean chooseChar(Character aChar){
-        return LobbyConnection.assignCharacterToPlayer(playerID, aChar.getCharID(), lobbyID);
-    }
+    public void chooseChar(Character aChar){}
     //This method is called to choose a character. It will 
     //connect a player entry to the player table with a character entry in the character table.
     
-    public void startVoting(int voteType){
-        
-    }
+    public void startVoting(int voteType){}
     //Sends a player’s intention to start a voting to the lobby.
     //Voting type depends on the value of typeofVote:
     
@@ -95,12 +98,13 @@ public class Seat {
     }
     
     public void startTime(){
-    timer = 120; //Depending on how the countdown is done. 
+        timer = 120; //Depending on how the countdown is done. 
     }
     
     public void addPlayer(long playerID){
-    this.playerID = playerID;
-    isOccupied = true;
+        this.playerID = playerID;
+        player = new Player(playerID);
+        isOccupied = true;
     }
    
     public void removePlayer(){
@@ -108,6 +112,8 @@ public class Seat {
         playerID = 0;
         isOccupied = false;
         player = null;
+        charID = 0;
+        character = null;
         }
     }
     

@@ -23,15 +23,13 @@ public class Story {
         charList = new ArrayList<Character>();
     }
     
-     public Story (long ID)
-    {
-        //This constructor will take the story from database depending on the 
-        //ID
-        
-        this.ID = ID;
-      
+    public Story(long id){
+        System.out.println("id:" + id);
+        Story s = LobbyConnection.getStory(id);
+        this.description = s.description;
+        this.timeline = s.timeline ;
+        this.ID = s.ID; 
     }
-    
     
     public Story ()
     {
