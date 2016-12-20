@@ -51,7 +51,7 @@ public class LobbyView extends JFrame implements Viewable {
     private VotingHandler voter;
     private Lobby theLobby;
     private JPanel seatsPanel;
-    private ArrayList<JPanel> seats;
+    private ArrayList<JPanel> seats = new ArrayList<JPanel>();
     
     private final int COLOR_COLD_RAND = 155;
     private final int TIME_MAX = 120;
@@ -64,10 +64,11 @@ public class LobbyView extends JFrame implements Viewable {
         logoutOnExitWithDialogue();
         referrer = ref;
         theLobby = aLobby;
-        theStory = new Story(theLobby.getID());
+        theStory = aLobby.getStory();
         voter = new VotingHandler(theLobby.getID());
-        showSeatsWaiting();
         theSeats = new JScrollPane(seatsPanel);
+        showSeatsWaiting();
+        
         
         storyDesc = new JLabel(theLobby.getStory().getDescription());
         
@@ -141,11 +142,11 @@ public class LobbyView extends JFrame implements Viewable {
     
     private void showSeatsWaiting(){
         theSeats.removeAll();
-        seats.removeAll(seats);
+            seats.removeAll(seats);
         Random r = new Random();
         int numberOfSeatsOccupied = 0;
         
-        for(Seat s:theLobby.getSeats()){
+        for(Seat s:theLobby.getSeats()){         
             if(s.getIsOccupied())
                 numberOfSeatsOccupied++;
         }
@@ -171,6 +172,7 @@ public class LobbyView extends JFrame implements Viewable {
 
             //adding the icon to the left
             JLabel icon = new JLabel();
+            /*
             try {
                 BufferedImage playerImg = s.getPlayer().getProfile().getImage();
                 Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
@@ -180,7 +182,7 @@ public class LobbyView extends JFrame implements Viewable {
             } catch (Exception e) {
                     e.printStackTrace();
             }
-
+*/
             toFill.add(icon,BorderLayout.WEST);
 
             JLabel plName = new JLabel(s.getPlayer().getProfile().getName());
@@ -203,11 +205,14 @@ public class LobbyView extends JFrame implements Viewable {
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
             */
-            
-            JLabel storyTimeline = new JLabel("Selected: "+s.getCharacter().getName());
+
+
+            JLabel storyTimeline = new JLabel("Selected: Unknown");
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
+            
+
 
             tmpLobby.add(toFill, BorderLayout.CENTER);
             //lobbies.add(l);
