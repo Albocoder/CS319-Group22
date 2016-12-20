@@ -31,24 +31,6 @@ public class DBInterface {
             return term;
         }
         
-        public static Character[] resultSetToCharacterArray(ResultSet r){
-            try {
-                r.last();
-                int size = r.getRow();
-                Character[] result = new Character[size];
-                int index = 0;
-                Character c;
-                for(boolean go = r.first(); go; go = r.next()){
-                    c = new Character(r.getString("description"), r.getString("name"), r.getLong("id"), r.getInt("occupied")== 1);
-                    result[index++] = c;
-                }
-                return result;
-            } catch (SQLException ex) {
-                Logger.getLogger(DBInterface.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            }
-        }
-        
         public static Message[] resultSetToMessageArray(ResultSet r){
             try {
                 r.last();

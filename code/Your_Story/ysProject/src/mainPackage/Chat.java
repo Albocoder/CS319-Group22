@@ -15,13 +15,13 @@ import java.util.Arrays;
  */
 public class Chat {
     
-    private long lobby;
-    private long user;
+    private int lobby;
+    private String username;
     private long threshold;
     
-    public Chat(long lobby, long user){
+    public Chat(int lobby, String username){
         this.lobby = lobby;
-        this.user = user;
+        this.username = username;
     }
     public ArrayList<Message> getMessages(){
         ArrayList<Message> result = ChatConnection.getMessages(lobby);
@@ -38,7 +38,8 @@ public class Chat {
         threshold = temp[temp.length - 1];
     }
     public long sendMessage(String message){
-        return ChatConnection.sendMessage(message, lobby, user);
+        message = username + ": " + message;
+        return ChatConnection.sendMessage(message, lobby);
     }
     
 }
