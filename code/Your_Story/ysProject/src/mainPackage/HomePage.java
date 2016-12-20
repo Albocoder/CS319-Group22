@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
  * Date: Dec/07/2016
- * Version: 2.0.0
+ * Version: 2.1.0
  *==================================================================
  * Referrer: https://github.com/Albocoder/CS319-Group22
  *==================================================================
@@ -24,6 +24,7 @@ public class HomePage {
         lobbiesWaiting = LobbyConnection.getWaitingLobbies();
         myPlayer.getProfile().getIsYours();
     }
+    //player will be static when class is created
     public static Player getPlayer(){
         return myPlayer;
     }
@@ -34,6 +35,6 @@ public class HomePage {
         return LobbyConnection.getOnlineUsers();
     }
     public void updateLobbiesWaiting(){
-        lobbiesWaiting = LobbyConnection.getWaitingLobbies();
+        lobbiesWaiting = LobbyConnection.getWaitingLobbies(); 
     }
 }
