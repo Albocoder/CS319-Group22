@@ -319,7 +319,7 @@ public class HomeView extends JFrame implements Viewable{
     private void showOngoing(){
         while( onGoing.getItemCount() > 1)
             onGoing.removeItemAt(1);
-        for(Lobby l:mainData.getPlayer().getOngoingGames())
+        for(Lobby l:mainData.getPlayer().updateOngoingGames().getOngoingGames())
             onGoing.addItem(l.getName());
     }
     private void showOnlineUsers(){
