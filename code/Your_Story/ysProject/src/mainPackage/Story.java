@@ -24,7 +24,7 @@ public class Story {
     }
     
     public Story(long id){
-        System.out.println("id:" + id);
+        System.out.println("Story id:" + id);
         Story s = LobbyConnection.getStory(id);
         this.description = s.description;
         this.timeline = s.timeline ;

@@ -12,15 +12,30 @@
 package view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Loader extends JFrame{
-    JLabel txt;
+    private JLabel txt;
     
     public Loader(String msg){
         getContentPane().setLayout(new BorderLayout());
         JLabel l  = new JLabel();
-        l.setIcon(new ImageIcon("./img/loading.gif"));
+        File f = new File("./img/loading.gif");
+        BufferedImage i = null;
+        try {
+            i = ImageIO.read(f);
+        } catch (Exception ex) {
+            Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        l.setIcon(new ImageIcon(i));
         txt = new JLabel(msg);
         //txt.setForeground(new Color());
         txt.setFont(new Font("Arial",Font.BOLD,20));

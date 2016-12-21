@@ -28,6 +28,8 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import static javax.swing.WindowConstants.*;
@@ -42,7 +44,7 @@ public class LobbyView extends JFrame implements Viewable {
     private JLabel timeLeft;
     private JButton startVote;
     private JButton leaveLobby;
-    private JComboBox kickPlayer;
+    private JComboBox<String> kickPlayer;
     private ViewManager referrer;
     private Story theStory;
     private Seat mySeat;
@@ -51,6 +53,10 @@ public class LobbyView extends JFrame implements Viewable {
     private VotingHandler voter;
     private Lobby theLobby;
     private JPanel seatsPanel;
+    private JPanel freeChars;
+    private ArrayList<JPanel> freeCharList;
+    private int myTime;
+    
     private ArrayList<JPanel> seats = new ArrayList<JPanel>();
     
     private final int COLOR_COLD_RAND = 155;
@@ -59,25 +65,106 @@ public class LobbyView extends JFrame implements Viewable {
     
 
     public LobbyView(Lobby aLobby,ViewManager ref){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setTitle(aLobby.getName());
         if (aLobby == null)
-            throw new NullPointerException("Lobby object is nul can't get data");
+            throw new NullPointerException("Lobby object is null can't get data");
         logoutOnExitWithDialogue();
+        setLayout(new BorderLayout());
+        
         referrer = ref;
         theLobby = aLobby;
         theStory = aLobby.getStory();
         voter = new VotingHandler(theLobby.getID());
+        
+        seatsPanel = new JPanel();
         theSeats = new JScrollPane(seatsPanel);
         showSeatsWaiting();
+        theSeats.getVerticalScrollBar().setUnitIncrement(16);
         
+        storyDesc = new JLabel("<html>"+theStory.getDescription()+"</html>");
+        Dimension d = new Dimension(300,(theStory.getDescription().length()/2));
+        storyDesc.setPreferredSize(d);
         
-        storyDesc = new JLabel(theLobby.getStory().getDescription());
+        JPanel theRest = new JPanel(new BorderLayout());
+        theRest.setBackground(Color.BLACK);
+        JScrollPane storyScroller = new JScrollPane(storyDesc);
+        storyScroller.setPreferredSize(new Dimension(320,220));
+        storyScroller.getVerticalScrollBar().setUnitIncrement(14);
+        storyDesc.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        theRest.add(storyScroller,BorderLayout.NORTH);
+        freeChars = new JPanel();
+        freeChars.setBackground(Color.BLACK);
+        theRest.add(freeChars,BorderLayout.CENTER);
         
         showFreeCharacters();
+        
+        JPanel botWrapper = new JPanel(new BorderLayout());
+        JPanel botup = new JPanel(new FlowLayout());
+        JPanel botdown = new JPanel(new FlowLayout());
+        botWrapper.setBackground(Color.BLACK);
+        botup.setBackground(Color.BLACK);
+        botdown.setBackground(Color.BLACK);
+        
+        myTime = TIME_MAX;
+        JLabel timeLeft2 = new JLabel("Time Left: ");
+        timeLeft = new JLabel(""+TIME_MAX);
+        timeLeft.setFont(new Font("Arial",Font.BOLD,16));
+        timeLeft.setForeground(Color.RED);
+        timeLeft.setBackground(Color.BLACK);
+        timeLeft2.setBackground(Color.BLACK);
+        timeLeft2.setForeground(Color.WHITE);
+        JLabel divider = new JLabel("  ");
+        botup.add(divider);
+        botup.add(timeLeft2);
+        botup.add(timeLeft);
+        botup.add(new JLabel("              "));
+        startVote = new JButton("Start Game");
+        startVote.setBackground(Color.LIGHT_GRAY);
+        startVote.setOpaque(true);
+        startVote.setForeground(Color.red);
+        startVote.setFocusPainted(false);
+        startVote.setFont(new Font("Comic Sans MS",Font.BOLD,13));
+        botup.add(startVote);
+        botup.add(divider);
+        botdown.add(divider);
         kickPlayer = new JComboBox();
+        kickPlayer.addItem("Kick a player");
+        kickPlayer.setBackground(Color.LIGHT_GRAY);
+        kickPlayer.setOpaque(true);
+        kickPlayer.setForeground(Color.red);
+        kickPlayer.setFont(new Font("Comic Sans MS",Font.BOLD,13));
+        botdown.add(kickPlayer);
+        botdown.add(new JLabel("          "));
+        leaveLobby = new JButton("Leave");
+        leaveLobby.setBackground(Color.LIGHT_GRAY);
+        leaveLobby.setOpaque(true);
+        leaveLobby.setForeground(Color.red);
+        leaveLobby.setFocusPainted(false);
+        leaveLobby.setFont(new Font("Comic Sans MS",Font.BOLD,13));
+        botdown.add(leaveLobby);
+        botdown.add(divider);
+        botWrapper.add(botup,BorderLayout.NORTH);
+        botWrapper.add(botdown,BorderLayout.CENTER);
+        botWrapper.add(divider,BorderLayout.SOUTH);
+        theRest.add(botWrapper,BorderLayout.SOUTH);
+        
         
         //mySeat = new Seat(joinSeat());
-        timeLeft = new JLabel(""+TIME_MAX);
+        
+        add(theSeats,BorderLayout.CENTER);
+        add(theRest,BorderLayout.EAST);
+        pack();
+        setVisible(true);
     }    
+    
+    public static void main(String args[]){
+        new LobbyView(new Lobby("Erin\'s Lobby",14,0,0,null,5), null);
+    }
     
     public void startVote(int type) {
         if(type == Lobby.VOTE_START){
@@ -91,9 +178,9 @@ public class LobbyView extends JFrame implements Viewable {
 
     public void leaveLobby() {
        //do something to leave mySeat
-    }
-    
-    public Lobby getLobby(){return theLobby;}
+        }
+
+        public Lobby getLobby(){return theLobby;}
     
     private long joinSeat(){
         // do something to add yourself to the seat and update the seat table
@@ -129,20 +216,53 @@ public class LobbyView extends JFrame implements Viewable {
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
-        JPanel all = new JPanel(new GridLayout(3,freeOnes.size()/3));
-        
+        freeChars.setLayout(new GridLayout(3,/*freeOnes.size()/3*/2));
         JLabel rand = new JLabel();
-        rand.setIcon(new ImageIcon("./img/random.jpg"));
-        all.add(rand);
-        
+        JPanel charWrapper = new JPanel(new BorderLayout());
+        JLabel empty = new JLabel(" ");
+        charWrapper.add(empty,BorderLayout.NORTH);
+        charWrapper.add(empty,BorderLayout.SOUTH);
+        charWrapper.add(empty,BorderLayout.EAST);
+        charWrapper.add(empty,BorderLayout.WEST);
+        charWrapper.add(rand,BorderLayout.CENTER);
+        try {
+            /////// get image and resize it///////////////////////////////////////////////
+            FileInputStream fis = new FileInputStream(new File("./img/random.png"));
+            Image gameIcon = ImageIO.read(fis);
+            ImageIcon imageIcon = new ImageIcon(gameIcon);
+            //////////////////////////////////////////////////////////////////////////////
+            rand.setIcon(imageIcon);
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+        rand.setBorder(BorderFactory.createLineBorder(Color.BLUE,2, true));
+        freeCharList.add(charWrapper);
+        freeChars.add(charWrapper);
         for(int i = 0; i<5; i++/*Character c:freeOnes*/){
-            
+            charWrapper = new JPanel(new BorderLayout());
+            JLabel tmp = new JLabel();
+            try {
+                /////// get image and resize it///////////////////////////////////////////////
+                FileInputStream fis = new FileInputStream(new File("./img/dtb.jpg"));
+                Image gameIcon = ImageIO.read(fis);
+                ImageIcon imageIcon = new ImageIcon(gameIcon);
+                //////////////////////////////////////////////////////////////////////////////
+                tmp.setIcon(imageIcon);
+            } catch (Exception e) {}
+            tmp.setBorder(BorderFactory.createLineBorder(Color.BLUE,2, true));
+            charWrapper.add(empty,BorderLayout.NORTH);
+            charWrapper.add(empty,BorderLayout.SOUTH);
+            charWrapper.add(empty,BorderLayout.EAST);
+            charWrapper.add(empty,BorderLayout.WEST);
+            charWrapper.add(tmp,BorderLayout.CENTER);
+            freeCharList.add(charWrapper);
+            freeChars.add(charWrapper);
         }
     }
     
     private void showSeatsWaiting(){
-        theSeats.removeAll();
-            seats.removeAll(seats);
+        seats.removeAll(seats);
+        seatsPanel.removeAll();
         Random r = new Random();
         int numberOfSeatsOccupied = 0;
         
@@ -150,10 +270,10 @@ public class LobbyView extends JFrame implements Viewable {
             if(s.getIsOccupied())
                 numberOfSeatsOccupied++;
         }
-        seatsPanel = new JPanel(new GridLayout(numberOfSeatsOccupied,1));
-        for(Seat s:theLobby.getSeats()){
-            if(!s.getIsOccupied())
-                continue;
+        seatsPanel.setLayout(new GridLayout(/*numberOfSeatsOccupied*/10,1));
+        for(int i = 0; i < 10; i++/*Seat s:theLobby.getSeats()*/){
+            //if(!s.getIsOccupied())
+            //    continue;
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -172,9 +292,9 @@ public class LobbyView extends JFrame implements Viewable {
 
             //adding the icon to the left
             JLabel icon = new JLabel();
-            /*
+            
             try {
-                BufferedImage playerImg = s.getPlayer().getProfile().getImage();
+                BufferedImage playerImg = ImageIO.read(new File("./img/itsygoAlternate.jpg"))/*s.getPlayer().getProfile().getImage()*/;
                 Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(dimg);
                 icon.setIcon(imageIcon);
@@ -182,10 +302,9 @@ public class LobbyView extends JFrame implements Viewable {
             } catch (Exception e) {
                     e.printStackTrace();
             }
-*/
             toFill.add(icon,BorderLayout.WEST);
 
-            JLabel plName = new JLabel(s.getPlayer().getProfile().getName());
+            JLabel plName = new JLabel("John Spica"/*s.getPlayer().getProfile().getName()*/);
             try {
                 Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -197,17 +316,17 @@ public class LobbyView extends JFrame implements Viewable {
             plName.setVerticalAlignment(JLabel.NORTH);
             toFill.add(plName,BorderLayout.NORTH);
 
-            /*
+            
             //Maybe useless
-            JLabel lobbyQuota = new JLabel(" ");
+            JLabel lobbyQuota = new JLabel("Locked in");
             lobbyQuota.setForeground(Color.WHITE);
             lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
-            */
+            
 
 
-            JLabel storyTimeline = new JLabel("Selected: Unknown");
+            JLabel storyTimeline = new JLabel("Selected: Ahri");
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
@@ -215,11 +334,11 @@ public class LobbyView extends JFrame implements Viewable {
 
 
             tmpLobby.add(toFill, BorderLayout.CENTER);
-            //lobbies.add(l);
+            
             seatsPanel.add(tmpLobby);
             seats.add(tmpLobby);
         }
-        theSeats.updateUI();
+        seatsPanel.updateUI();
     }
     
     private void logoutOnExitWithDialogue(){
@@ -227,7 +346,8 @@ public class LobbyView extends JFrame implements Viewable {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                terminateView();
+                //terminateView();
+                System.exit(0);
             }
         });
     }

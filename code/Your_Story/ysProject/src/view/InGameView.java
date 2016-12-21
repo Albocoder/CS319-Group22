@@ -7,6 +7,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
@@ -23,8 +25,16 @@ public class InGameView extends JFrame implements Viewable {
 	JPanel onlineUsers;
 	MessageTypingBoxView mv;
 	Lobby l;
+        
+        private ScheduledExecutorService chatExec;
+        private ScheduledExecutorService onlineUsersExec;
 	
 	public InGameView(Lobby l, ViewManager ref) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ex) {
+                Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 logoutOnExitWithDialogue();
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		LINE_HEIGHT = font.getSize() + 8;
@@ -177,13 +187,15 @@ public class InGameView extends JFrame implements Viewable {
 	@Override
 	public void hideView() {
             setVisible(false);
+            chatExec.shutdown();
+            onlineUsersExec.shutdown();
 	}
 
 	@Override
 	public void updateView() {
-            ScheduledExecutorService chatExec = Executors.
+            chatExec = Executors.
                     newSingleThreadScheduledExecutor();
-            ScheduledExecutorService onlineUsersExec = Executors.
+            onlineUsersExec = Executors.
                     newSingleThreadScheduledExecutor();
         
             chatExec.scheduleAtFixedRate(
@@ -195,6 +207,7 @@ public class InGameView extends JFrame implements Viewable {
 	@Override
 	public void showView() {
 		setVisible(true);
+                updateView();
 	}
 	
 	private class ChatUpdater implements Runnable {

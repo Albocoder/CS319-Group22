@@ -40,6 +40,11 @@ public class LoginView extends JFrame implements Viewable{
 
 
     public LoginView(ViewManager ref){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // add title and color to the background of the frame
         getContentPane().setBackground(new Color(0, 0, 0));
         setTitle("Your Story - Login");

@@ -37,6 +37,8 @@ import java.awt.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.border.Border;
 import mainPackage.*;
@@ -75,6 +77,11 @@ public class HomeView extends JFrame implements Viewable{
 
     
     public HomeView(HomePage data,ViewManager ref){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setTitle("Your Story - Home Page");
         logoutOnExitWithDialogue();
         Random r = new Random();
