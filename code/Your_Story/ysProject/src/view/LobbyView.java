@@ -4,15 +4,9 @@ package view;
  * Author: Erin Avllazagaj AKA "Albocoder"
  * Website: http://erin.avllazagaj.ug.bilkent.edu.tr
  * Date: Dec/07/2016
- * Version: 2.0.0
+ * Version: 1.3.0
  *==================================================================
  * Referrer: https://github.com/Albocoder/CS319-Group22
- *==================================================================
- * Changelog: 
- * 1) Added some more classes to increase efficiency with 
- *  tradeoff of memory. 
- * 2) Added some constants, listeners and private functions;reduced
- * the constructor
  *==================================================================
  * Description:
  * This class is the lobby view for a lobby that is waiting
