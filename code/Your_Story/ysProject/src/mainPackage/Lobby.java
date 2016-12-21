@@ -45,10 +45,16 @@ public class Lobby {
         System.out.println("Out");
     }
     
-    //public Lobby(long ID, long storyID){
-      //  this.ID = ID;
-       // this.story = new Story(storyID);
-    //}
+    public Lobby(long ID, long storyID){
+      this.ID = ID;
+     this.story = new Story(storyID);
+      chat = new Chat(ID, AccessHandler.userID);
+        votingHandler = new VotingHandler(ID);
+        charList = LobbyConnection.getCharacters(ID);
+        System.out.println("In");
+        seats = LobbyConnection.getSeats(ID);
+        System.out.println("Out");
+    }
             
             
      public Lobby(){
