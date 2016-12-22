@@ -62,9 +62,7 @@ public class LobbyView extends JFrame implements Viewable {
     public LobbyView(Lobby aLobby,ViewManager ref){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception ex) {System.out.println("Error: "+ex.getMessage());}
         setTitle(aLobby.getName());
         
         ///do the logic here and add this piece in top before views are created
