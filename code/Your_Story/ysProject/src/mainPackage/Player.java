@@ -35,6 +35,7 @@ public class Player {
     public Lobby createLobby (String name, Story story){
         
         long lobbyID = LobbyConnection.createLobby(name,story.getID());
+        enterLobby(LobbyConnection.getLobby(lobbyID));
         return LobbyConnection.getLobby(lobbyID);              
     }
     
@@ -52,6 +53,18 @@ public class Player {
           }
           return false;
     }
+    public boolean exitLobby (Lobby aLobby){
+        LobbyConnection.removePlayerFromLobby(playerID,aLobby.getID());
+        ArrayList<Seat> seats = LobbyConnection.getSeats(aLobby.getID());
+        for (int i = 0; i < seats.size(); i++)
+            {
+                if (seats.get(i).getPlayerID() == playerID)
+                return false;
+            }
+        return true;
+    }
+    
+    
   
     public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
