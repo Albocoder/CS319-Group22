@@ -50,3 +50,6 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+/code/Your_Story/ysProject/nbproject/private/
+/code/Your_Story/ysProject/build/
+/code/Your_Story/ysProject/dist/
