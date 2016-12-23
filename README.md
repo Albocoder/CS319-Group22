@@ -1,5 +1,5 @@
 # CS319-Group22 project "Your Story"
-<img src="http://erin.avllazagaj.ug.bilkent.edu.tr/YS.png" width="150" height="150">
+<center><img src="http://erin.avllazagaj.ug.bilkent.edu.tr/YS.png" width="150" height="150"></center><br>
 Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, that will motivate us.<hr />
 [![Build Status](https://travis-ci.org/Albocoder/CS319-Group22.svg?branch=master)](https://travis-ci.org/Albocoder/CS319-Group22)
 <br /><br />
