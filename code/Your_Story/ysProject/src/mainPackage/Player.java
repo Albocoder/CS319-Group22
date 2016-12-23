@@ -40,9 +40,19 @@ public class Player {
     
     public boolean enterLobby (Lobby aLobby){
        
-        return  LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
-   
-        
+          boolean check = LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
+          Seat playerSeat =  LobbyConnection.getSeat(playerID);
+          ArrayList<Seat> seats = LobbyConnection.getSeats(aLobby.getID());
+          int i = 0;
+         
+          if (check){
+             i = seats.indexOf(playerSeat);  
+             if (i != -1)
+                 return true;
+          }
+          else
+              return false;
+          return false; 
     }
   
     public void updateProfile(String name, BufferedImage photo, String description){
