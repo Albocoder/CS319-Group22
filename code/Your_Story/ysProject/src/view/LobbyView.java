@@ -163,11 +163,11 @@ public class LobbyView extends JFrame implements Viewable {
         pack();
         setVisible(true);
     }    
-    
+    /*
     public static void main(String args[]){
         new LobbyView(new Lobby("Erin\'s Lobby",14,0,0,null,5), null);
     }
-    
+    */
     public void startVote(int type) {
         if(type == Lobby.VOTE_START){
             voter.startVoting(type);

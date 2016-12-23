@@ -199,9 +199,9 @@ public class InGameView extends JFrame implements Viewable {
                     newSingleThreadScheduledExecutor();
         
             chatExec.scheduleAtFixedRate(
-                    new ChatUpdater(),5,5,TimeUnit.SECONDS);
+                    new ChatUpdater(),2,2,TimeUnit.SECONDS);
             onlineUsersExec.scheduleAtFixedRate(
-                    new OnlineUsersUpdater(),23,23,TimeUnit.SECONDS);
+                    new OnlineUsersUpdater(),9,9,TimeUnit.SECONDS);
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class InGameView extends JFrame implements Viewable {
 			onlineUsers.repaint();
 		}
 	}
-	
+	/*
 	public static void main (String [] args) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -241,14 +241,14 @@ public class InGameView extends JFrame implements Viewable {
                     new InGameView(LobbyConnection.getLobby(9), null);
                 }
             });
-	}
+	}*/
     private void logoutOnExitWithDialogue(){
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 terminateView();
-                System.out.println("sdfsdfsd");
+                //System.out.println("sdfsdfsd");
             }
         });
     }

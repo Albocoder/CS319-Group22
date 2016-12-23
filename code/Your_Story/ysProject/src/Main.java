@@ -14,7 +14,7 @@
 import view.*;
 import mainPackage.*;
 
-public class Tester {
+public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
             // here we can test each class we create for consistency
