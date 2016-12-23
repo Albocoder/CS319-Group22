@@ -41,18 +41,16 @@ public class Player {
     public boolean enterLobby (Lobby aLobby){
        
           boolean check = LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
-          Seat playerSeat =  LobbyConnection.getSeat(playerID);
           ArrayList<Seat> seats = LobbyConnection.getSeats(aLobby.getID());
-          int i = 0;
-         
+          
           if (check){
-             i = seats.indexOf(playerSeat);  
-             if (i != -1)
-                 return true;
+            for (int i = 0; i < seats.size(); i++)
+            {
+                if (seats.get(i).getPlayerID() == playerID)
+                    return true;
+            }
           }
-          else
-              return false;
-          return false; 
+          return false;
     }
   
     public void updateProfile(String name, BufferedImage photo, String description){
