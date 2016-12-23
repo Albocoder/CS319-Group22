@@ -1,4 +1,5 @@
 language: java
+cd code/Your_Story/ysProject
 jdk:
   - oraclejdk8
   - oraclejdk7
