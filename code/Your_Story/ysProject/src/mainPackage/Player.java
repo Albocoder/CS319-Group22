@@ -32,10 +32,10 @@ public class Player {
     public void setProfile(Profile profile){this.profile = profile;}
     //other methods 
     
-    public Lobby createLobby (Story story){
+    public Lobby createLobby (String name, Story story){
         
-        return new Lobby("sample",0, 10, 00, new ArrayList<Long>(), story.getID());
-        
+        long lobbyID = LobbyConnection.createLobby(name,story.getID());
+        return LobbyConnection.getLobby(lobbyID);              
     }
     
     public boolean enterLobby (Lobby aLobby){
