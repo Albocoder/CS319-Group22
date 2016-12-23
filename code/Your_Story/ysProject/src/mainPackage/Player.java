@@ -39,20 +39,9 @@ public class Player {
     }
     
     public boolean enterLobby (Lobby aLobby){
-        ArrayList<Seat> seats = aLobby.getSeats();
-        boolean check = false;
-        for (int i = 0; i < seats.size(); i++ ){
-            if (!seats.get(i).getIsOccupied()){
-                check = true;
-                seats.get(i).addPlayer(playerID);
-                LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
-                break;
-            }
-        }
-        if (check == false)
-            return false;
-        else
-            return true;
+       
+        return  LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
+   
         
     }
   
