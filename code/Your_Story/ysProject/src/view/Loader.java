@@ -28,7 +28,7 @@ public class Loader extends JFrame{
     public Loader(String msg){
         getContentPane().setLayout(new BorderLayout());
         JLabel l  = new JLabel();
-        File f = new File("./img/loading.gif");
+        File f = new File("./img/loading.jpg");
         BufferedImage i = null;
         try {
             i = ImageIO.read(f);

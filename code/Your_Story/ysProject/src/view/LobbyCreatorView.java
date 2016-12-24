@@ -34,13 +34,16 @@ public class LobbyCreatorView extends JFrame implements Viewable{
     //added new stuff
     private JTextField lobbyName;
     private JLabel namePrompt;
-    private ArrayList<JPanel> storyList;
+    private ArrayList<JPanel> storyPanelsList;
     private JPanel allStories;
+    private ArrayList<Story> storiesList;
     
     //constants
     private final int COLOR_COLD_RAND = 155;
     
-    public LobbyCreatorView(){
+    public LobbyCreatorView(ViewManager ref){
+        referrer = ref;
+        logoutOnExitWithDialogue();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {System.out.println("Error: "+ex.getMessage());}
@@ -57,22 +60,30 @@ public class LobbyCreatorView extends JFrame implements Viewable{
         upperPanel.add(lobbyName,BorderLayout.CENTER);
         // initializing the scrolling list of stories
         allStories = new JPanel();
-        storyList = new ArrayList<>();
+        storyPanelsList = new ArrayList<>();
+        storiesList = new ArrayList<>();
         stories = new JScrollPane();
         showStories();
+        stories.setPreferredSize(new Dimension(600,700));
         /////////////////////////////////////////////
-        
+        add(upperPanel,BorderLayout.NORTH);
+        add(stories,BorderLayout.CENTER);
     }
     
+    /*
+    public static void main(String args[]){
+        new LobbyCreatorView(null);
+    }
+    */
+    
     private void showStories(){
-        storyList.removeAll(storyList);
+        storyPanelsList.removeAll(storyPanelsList);
+        storiesList.removeAll(storiesList);
         allStories.removeAll();
         Random r = new Random();
-        
-        allStories.setLayout(new GridLayout(/*someWHERE.getStories().size()*/10,1));
-        for(int i = 0; i < 10; i++/*Seat s:someWHERE.getStories()*/){
-            //if(!s.getIsOccupied())
-            //    continue;
+        storiesList = Story.getStories();
+        allStories.setLayout(new GridLayout(storiesList.size(),1));
+        for(Story s:storiesList){
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -103,7 +114,7 @@ public class LobbyCreatorView extends JFrame implements Viewable{
             }
             toFill.add(icon,BorderLayout.WEST);
 
-            JLabel plName = new JLabel("Timeline:"/*s.getTimeline()*/);
+            JLabel plName = new JLabel("Timeline:"+s.getTimeline());
             try {
                 Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -115,7 +126,7 @@ public class LobbyCreatorView extends JFrame implements Viewable{
             plName.setVerticalAlignment(JLabel.NORTH);
             toFill.add(plName,BorderLayout.NORTH);
 
-            JLabel storyTimeline = new JLabel("Description: "/*s.getDescription()*/);
+            JLabel storyTimeline = new JLabel("Description: "+s.getDescription());
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
@@ -123,26 +134,40 @@ public class LobbyCreatorView extends JFrame implements Viewable{
             tmpLobby.add(toFill, BorderLayout.CENTER);
             
             allStories.add(tmpLobby);
-            storyList.add(tmpLobby);
+            storyPanelsList.add(tmpLobby);
         }
         allStories.updateUI();
     }
     
-    public void createLobby(Story s) {
+    public void createLobby(String name, Story s) {
+        
     }
 
-    public void getStories() {
+    //REMOVED: public void getStories() {}
+    
+    private void logoutOnExitWithDialogue(){
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                hideView();
+                referrer.showHomePage(null);
+                //System.exit(0);
+            }
+        });
     }
-        
+    
     @Override
-    public void terminateView() {
-    }
+    public void terminateView() {hideView();this.dispose();}
     @Override
     public void hideView() {
+        setVisible(false);
     }
     @Override
     public void updateView() {/*** nothing to update ***/}
     @Override
     public void showView() {
+        setVisible(true);
     }
+    
 }

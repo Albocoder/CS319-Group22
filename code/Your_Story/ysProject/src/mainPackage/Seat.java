@@ -108,12 +108,12 @@ public class Seat {
     }
    
     public void removePlayer(){
-    if (isOccupied){
-        playerID = 0;
-        isOccupied = false;
-        player = null;
-        charID = 0;
-        character = null;
+        if (isOccupied){
+            playerID = 0;
+            isOccupied = false;
+            player = null;
+            charID = 0;
+            character = null;
         }
     }
     

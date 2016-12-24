@@ -243,6 +243,8 @@ public class HomeView extends JFrame implements Viewable{
     }
 
     public void logout() {
+        //disposing of player's data like the ID
+        mainData = null;
         referrer.hideLogin(true);
         AccessHandler.logOut();
         referrer.showLogin();
@@ -471,7 +473,7 @@ public class HomeView extends JFrame implements Viewable{
             JLabel pressedPanel = ((JLabel)e.getComponent());
             pressedPanel.setBorder(c);
             // TODO - showProfile thingy();
-            
+            referrer.showProfile(HomePage.getPlayer().getProfile());
         }
     }
     private class FinishedGamesListener implements ActionListener{
@@ -499,9 +501,8 @@ public class HomeView extends JFrame implements Viewable{
     private class CreateLobbyListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Creating a lobby!");
-            //hideView();
-            //referrer.showCreateLobby();
+            //System.out.println("Creating a lobby!");
+            referrer.showCreateLobby();
         }
     }
     private class LogoutListener implements ActionListener{

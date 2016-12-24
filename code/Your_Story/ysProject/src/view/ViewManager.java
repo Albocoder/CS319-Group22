@@ -25,7 +25,7 @@ public class ViewManager {
     private LobbyView lobby;
     private HomeView homepage;
     private InGameView ingame;
-    //private LobbyCreatorView lobbycreator;
+    private LobbyCreatorView lobbycreator;
     private ProfileView profile;
     //////////////////////////////////////////////////////////////
 
@@ -114,7 +114,15 @@ public class ViewManager {
     }
 
     public void showCreateLobby(){
-        //TODO
+        if(lobbycreator == null)
+            lobbycreator = new LobbyCreatorView(this);
+        else
+            homepage.setVisible(true);
+        hideLogin(false);
+        hideOngoingGame(false);
+        hideLobby(false);
+        hideProfile(false);
+        hideHomePage(false);
     }
 
     public void showLastHidden() {
@@ -129,7 +137,7 @@ public class ViewManager {
         lobby.updateView();
         homepage.updateView();
         ingame.updateView();
-        //lobbycreator.updateView();
+        lobbycreator.updateView();
     }
 
     public void hideLogin(boolean terminate) {
@@ -163,7 +171,13 @@ public class ViewManager {
     }
 
     public void hideProfile(boolean terminate) {
-        // TODO - implement ViewManager.hideProfile
+        if(profile == null)
+            return;
+        profile.setVisible(false);
+        if(terminate)
+            profile = null;
+        else
+            hiddenViews.add(profile);
     }
 
     public void hideOngoingGame(boolean terminate) {
@@ -177,6 +191,12 @@ public class ViewManager {
     }
     
     public void hideCreateLobby(boolean terminate){
-        //TODO
+        if(lobbycreator == null)
+            return;
+        lobbycreator.setVisible(false);
+        if(terminate)
+            lobbycreator = null;
+        else
+            hiddenViews.add(lobbycreator);
     }
 }

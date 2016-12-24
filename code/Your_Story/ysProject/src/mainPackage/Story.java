@@ -56,6 +56,16 @@ public class Story {
     public void setCharList(ArrayList<Character> charList)
     {this.charList=charList;}
     
+    //returns the stories if user is authenticated
+    //or an empty stoy arraylist if encounters any error
+    public static ArrayList<Story> getStories(){
+        try{
+            return LobbyConnection.getStories(HomePage.getPlayer().getPlayerID());
+        }
+        catch(Exception e){
+            return new ArrayList<Story>(0);
+        }
+    }
     
     //methods
 }

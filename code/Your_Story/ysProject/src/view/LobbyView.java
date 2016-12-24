@@ -179,19 +179,21 @@ public class LobbyView extends JFrame implements Viewable {
     }
 
     public void leaveLobby() {
-       //do something to leave mySeat
+        mySeat.removePlayer();
     }
 
-        public Lobby getLobby(){return theLobby;}
+    //public Lobby getLobby(){return theLobby;}
     
     private long joinSeat(){
-        // do something to add yourself to the seat and update the seat table
+        // TODO
+        //return theLobby.addPlayer(HomePage.getPlayer());
         return -1;
     }
     
     @Override
     public void terminateView() {
         referrer.showHomePage(null);
+        this.dispose();
     }
 
     @Override
@@ -330,8 +332,9 @@ public class LobbyView extends JFrame implements Viewable {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                //terminateView();
-                System.exit(0);
+                hideView();
+                referrer.showHomePage(null);
+                //System.exit(0);
             }
         });
     }
