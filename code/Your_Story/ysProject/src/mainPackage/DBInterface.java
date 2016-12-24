@@ -107,7 +107,7 @@ public class DBInterface {
                     s = new Seat(r.getLong("id"), r.getLong("lobby"), r.getLong("charac"));
                     System.out.println("Middle3");
                     if(r.getLong("user") > 0)
-                        s.addPlayer(r.getByte("user"));
+                        s.addPlayer(r.getLong("user"));
                     System.out.println("Middle4");
                     result[index++] = s;
                 }
