@@ -10,11 +10,11 @@ import thirdparty.*;
 
 public class DBInterface {
 	private static final String type = "mysql";
-        private static final String adress = "sql7.freemysqlhosting.net";
+        private static final String adress = "160.153.75.104";
         private static final String port = "3306";
-        private static final String database = "sql7149730";
-        private static final String username = "sql7149730";
-        private static final String password = "g55vGMRzBq";
+        private static final String database = "YourStoryDB";
+        private static final String username = "albocoder";
+        private static final String password = "@fI@6U!yMGRMv^]";
         
         private static final String VOTING_DATA = "voting";
         
