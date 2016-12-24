@@ -190,20 +190,20 @@ public class Seat {
     //other methods 
 
     /**
-     *
+     * This method is called to choose a character. It will 
+     * connect a player entry to the player table with a character entry in the character table.
      * @param aChar
      */
     public void chooseChar(Character aChar){}
-    //This method is called to choose a character. It will 
-    //connect a player entry to the player table with a character entry in the character table.
+
     
     /**
-     *
+     * Sends a player’s intention to start a voting to the lobby.
+     * Voting type depends on the value of typeofVote:
      * @param voteType
      */
     public void startVoting(int voteType){}
-    //Sends a player’s intention to start a voting to the lobby.
-    //Voting type depends on the value of typeofVote:
+    
     
     /**
      *
