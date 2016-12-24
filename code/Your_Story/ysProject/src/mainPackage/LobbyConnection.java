@@ -365,6 +365,11 @@ public class LobbyConnection {
                 " SET state = " + state + " WHERE id = " + lobby);
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Character getCharacter(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
                 ".*, 0 AS occupied FROM " + CHARACTER_DATA +
