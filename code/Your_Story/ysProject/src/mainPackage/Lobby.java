@@ -133,4 +133,9 @@ public class Lobby {
         }
         return temp;
     }
+    
+    public static Lobby createLobby(String name, Story s){
+        return new Lobby(name, LobbyConnection.createLobby(name,s.getID()),1,
+                Lobby.LOBBY_WAITING, null,s.getID());
+    }
 }

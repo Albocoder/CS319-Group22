@@ -131,7 +131,6 @@ public class ViewManager {
     }
 
     public void updateAll() {
-        // TODO - implement ViewManager.update
         profile.updateView();
         login.updateView();
         lobby.updateView();

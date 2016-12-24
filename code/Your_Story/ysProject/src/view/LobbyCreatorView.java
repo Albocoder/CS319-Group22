@@ -29,8 +29,10 @@ import mainPackage.Character;
 
 public class LobbyCreatorView extends JFrame implements Viewable{
     private JScrollPane stories;
-    private JButton creator;
-    private Story[] availableStories;
+    ////////// REMOVED !!! /////////////////////
+    //private JButton creator;
+    //private Story[] availableStories;
+    ////////////////////////////////////////////
     private ViewManager referrer;
     
     //added new stuff
@@ -68,6 +70,9 @@ public class LobbyCreatorView extends JFrame implements Viewable{
         stories = new JScrollPane(allStories);
         stories.setPreferredSize(new Dimension(600,700));
         /////////////////////////////////////////////
+        // adding the listener
+        allStories.addMouseListener(new StoryChooserMouseListener());
+        
         add(upperPanel,BorderLayout.NORTH);
         add(stories,BorderLayout.CENTER);
         pack();
@@ -106,9 +111,9 @@ public class LobbyCreatorView extends JFrame implements Viewable{
 
             //adding the icon to the left
             JLabel icon = new JLabel();
-            /*
+            
             try {
-                BufferedImage playerImg = ImageIO.read(new File("./img/castleBlack.jpg"))s.getImage();
+                BufferedImage playerImg = ImageIO.read(new File("./img/castleBlack.jpg"));//s.getImage()
                 Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(dimg);
                 icon.setIcon(imageIcon);
@@ -117,7 +122,7 @@ public class LobbyCreatorView extends JFrame implements Viewable{
                     //e.printStackTrace();
             }
             toFill.add(icon,BorderLayout.WEST);
-            */
+            
             JLabel plName = new JLabel("Timeline: "+s.getTimeline());
             try {
                 Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
@@ -140,7 +145,7 @@ public class LobbyCreatorView extends JFrame implements Viewable{
                 if(it.hasNext())
                     text+= ch.getName()+", ";
             }
-            System.out.println("Characters for"+s.getTimeline()+" are: "+text);
+            
             JLabel chars = new JLabel("<html>"+text+"</html>");
             toFill.add(chars,BorderLayout.SOUTH);
 
@@ -153,7 +158,14 @@ public class LobbyCreatorView extends JFrame implements Viewable{
     }
     
     public void createLobby(String name, Story s) {
-        
+        if(name.length() > 22)
+            JOptionPane.showMessageDialog(null, 
+                "Name of your lobby is longer than 22 characters!!!",
+                "Ooops!!!", JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon("./img/longNaming.png"));
+        else{
+            referrer.showLobby(Lobby.createLobby(name, s));
+        }
     }
 
     //REMOVED: public void getStories() {}
@@ -181,5 +193,41 @@ public class LobbyCreatorView extends JFrame implements Viewable{
     public void showView() {
         setVisible(true);
     }
-    
+    private class StoryChooserMouseListener extends MouseAdapter{
+            Color c;
+            JPanel pressedPanel;
+            JPanel pressedPanel2;
+            JPanel pressedPanel3;
+            public void mousePressed(MouseEvent e){
+                pressedPanel = ((JPanel)e.getComponent().getComponentAt(e.getPoint()));
+                pressedPanel2 = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(0);
+                pressedPanel3 = (JPanel)((JPanel)e.getComponent().getComponentAt(e.getPoint())).getComponent(1);
+                c = pressedPanel.getBackground();
+                Random r = new Random();
+                Color col = Color.WHITE;
+                pressedPanel.setBackground(col);
+                pressedPanel2.setBackground(col);
+                pressedPanel3.setBackground(col);
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e){
+                pressedPanel.setBackground(c);
+                pressedPanel2.setBackground(c);
+                pressedPanel3.setBackground(c);
+                
+                //this is the one we need the ones above are extensible features
+                if(storyPanelsList.indexOf( (JPanel) 
+                        e.getComponent().getComponentAt(e.getPoint()))>-1){
+                    createLobby(
+                            lobbyName.getText(),
+                        storiesList.get(storyPanelsList
+                            .indexOf( (JPanel) 
+                                e.getComponent().getComponentAt(e.getPoint() ) 
+                            )
+                        )
+                    );
+                }
+            }
+    }
 }
