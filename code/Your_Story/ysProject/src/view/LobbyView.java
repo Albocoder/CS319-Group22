@@ -220,7 +220,7 @@ public class LobbyView extends JFrame implements Viewable {
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
-        freeChars.setLayout(new GridLayout(3,freeOnes.size()/3));
+        freeChars.setLayout(new GridLayout((freeOnes.size()/3),3));
         JLabel rand = new JLabel();
         try {
             /////// get image and resize it///////////////////////////////////////////////
@@ -233,17 +233,18 @@ public class LobbyView extends JFrame implements Viewable {
         rand.setBorder(BorderFactory.createLineBorder(Color.BLUE,2, true));
         freeCharList.add(rand);
         freeChars.add(rand);
-        for(int i = 0; i<20; i++/*Character c:freeOnes*/){
-            JLabel tmp = new JLabel();
+        for(Character c:freeOnes){
+            JLabel tmp = new JLabel(c.getName());
             try {
                 /////// get image and resize it///////////////////////////////////////////////
                 FileInputStream fis = new FileInputStream(new File("./img/dtb.jpg"));
                 Image gameIcon = ImageIO.read(fis).getScaledInstance(CHAR_SIZE_H,
-                        CHAR_SIZE_W, BufferedImage.SCALE_SMOOTH);
+                        CHAR_SIZE_W-c.getName().length(), BufferedImage.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(gameIcon);
                 //////////////////////////////////////////////////////////////////////////////
                 tmp.setIcon(imageIcon);
             } catch (Exception e) {}
+            tmp.setToolTipText(c.getDescription());
             tmp.setBorder(BorderFactory.createLineBorder(Color.BLUE,2, true));
             freeCharList.add(tmp);
             freeChars.add(tmp);
@@ -270,7 +271,6 @@ public class LobbyView extends JFrame implements Viewable {
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
             JPanel tmpLobby = new JPanel(new BorderLayout());
-            tmpLobby.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
             tmpLobby.setBackground(c);
             //this sets up a padding from the border to the components
             tmpLobby.add(emptyPanel, BorderLayout.NORTH);
