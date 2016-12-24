@@ -99,7 +99,7 @@ public class InGameView extends JFrame implements Viewable {
 		panel.setLayout(new BorderLayout());
 		panel.add(storyScroll, BorderLayout.NORTH);
 		panel.add(onlineUsers, BorderLayout.CENTER);
-		panel.add(bottomPanel, BorderLayout.SOUTH);
+		panel.add(/*bottomPanel*/buttonPanel, BorderLayout.SOUTH);
 		
 		storyScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		storyScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -114,8 +114,8 @@ public class InGameView extends JFrame implements Viewable {
 		
 		onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), SwingConstants.CENTER));
 		
-		bottomPanel.setLayout(new BorderLayout());
-		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+//		bottomPanel.setLayout(new BorderLayout());
+//		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.add(voteButton);
