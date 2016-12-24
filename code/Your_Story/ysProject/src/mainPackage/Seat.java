@@ -213,10 +213,10 @@ public class Seat {
     }
     
     /**
+     *Depending on how the countdown is done. 
      *
-     */
     public void startTime(){
-        timer = 120; //Depending on how the countdown is done. 
+        timer = 120; 
     }
     
     /**
@@ -245,7 +245,7 @@ public class Seat {
     /**
      * Sends a vote of a player to lobby. Not implemented in this current build. 
      * @param voteType
-     * @param vote
+     * @param vote 
      */
     public void sendVote(int voteType, boolean vote){
     }
