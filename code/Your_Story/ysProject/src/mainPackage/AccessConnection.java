@@ -19,9 +19,22 @@ import thirdparty.*;
  */
 public class AccessConnection {
     
+    /**
+     *
+     */
     public final static String AUTH_DATA = "user";
+
+    /**
+     *
+     */
     public final static String PROFILE_DATA = "profile";
     
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public static long record(String username, String password){
         if(!isAvailable(username))
             return -1;
@@ -34,10 +47,21 @@ public class AccessConnection {
         return id;
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     public static boolean isAvailable(String username){
         return DBInterface.selectIntArray(AUTH_DATA, "id", "username", username).length == 0;
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public static long authenticate(String username, String password){
         try {
             username = DBInterface.escapeString(username);
@@ -56,6 +80,10 @@ public class AccessConnection {
         }
     }
     
+    /**
+     *
+     * @param player
+     */
     public static void logout(long player){
         DBInterface.getConnection().executeStuff("UPDATE " + AUTH_DATA +
                     " SET online = 0 WHERE id = " + player);

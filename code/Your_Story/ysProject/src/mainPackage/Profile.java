@@ -28,6 +28,12 @@ public class Profile {
         finishedGames = new ArrayList<Lobby>();
     
     }*/
+
+    /**
+     *
+     * @param ID
+     */
+
     public Profile(long ID){
         this.ID = ID;
         isYours = this.ID == AccessHandler.userID;
@@ -36,38 +42,94 @@ public class Profile {
     
        
     //getters / setters 
+
+    /**
+     *
+     * @return
+     */
     
     public String getName(){return name;}
+
+    /**
+     *
+     * @return
+     */
     public BufferedImage getImage(){return photo;}
+
+    /**
+     *
+     * @return
+     */
     public String getDescription(){return description;}
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Lobby> getFinishedGames(){return finishedGames;}
+
+    /**
+     *
+     * @return
+     */
     public boolean getIsYours(){return isYours;}
+
+    /**
+     *
+     * @return
+     */
     public long getID(){
         return ID;
     }
    
+    /**
+     *
+     * @param name
+     */
     public void setName(String name){
         this.name = name;
         //updateData();
     }
+
+    /**
+     *
+     * @param photo
+     */
     public void setImage(BufferedImage photo){
         this.photo = photo;
         //updateData();
     }
         
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description){
         this.description = description;
         //updateData();
     }
+
+    /**
+     *
+     * @param finishedGames
+     */
     public void setFinishedGames(ArrayList<Lobby> finishedGames){
         this.finishedGames = finishedGames;
         //updateData();
     }
+
+    /**
+     *
+     * @param isYours
+     */
     public void setIsYours(boolean isYours){
         this.isYours = isYours;
         //updateData();
     }
     
+    /**
+     *
+     */
     public void retrieveData(){
         
         ProfileConnection.updateProfileInClient(this);
@@ -77,19 +139,36 @@ public class Profile {
     
     }
     
+    /**
+     *
+     */
     public void updateData(){//
         ProfileConnection.updateProfileInDatabase(this);
     }
     
+    /**
+     *
+     * @param ID
+     * @param isYours
+     * @return
+     */
     public Player createPlayer (long ID, boolean isYours){
         return new Player(ID);
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Lobby> viewFinishedGames(){
     //Returns unfinished games of player that profile belongs to
     return ProfileConnection.getFinishedGames(ID);
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Lobby> viewUnfinishedGames(){
     //Returns unfinished games of player that profile belongs to
     return LobbyConnection.getOngoingGamesOfPlayer(ID);

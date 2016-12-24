@@ -14,7 +14,12 @@ public class Story {
     private long ID;
     private ArrayList<Character> charList; // Every story has at least 2 characters
     
-
+    /**
+     *
+     * @param description
+     * @param timeline
+     * @param ID
+     */
     public Story (String description, String timeline, long ID)
     {
         this.description = description ;
@@ -24,6 +29,10 @@ public class Story {
         
     }
     
+    /**
+     *
+     * @param id
+     */
     public Story(long id){
         System.out.println("Story id:" + id);
         Story s = LobbyConnection.getStory(id);
@@ -32,6 +41,9 @@ public class Story {
         this.ID = s.ID; 
     }
     
+    /**
+     *
+     */
     public Story ()
     {
         this.description = "Sample" ;
@@ -42,23 +54,68 @@ public class Story {
     
     
     //getters
+
+    /**
+     *
+     * @return
+     */
     public String getDescription(){return description;} 
+
+    /**
+     *
+     * @return
+     */
     public String getTimeline(){return timeline;} 
+
+    /**
+     *
+     * @return
+     */
     public long getID(){return ID;} 
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Character> getCharList(){return charList;}
     
     //setters
+
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description)
     {this.description = description;}
+
+    /**
+     *
+     * @param timeline
+     */
     public void setTimeline(String timeline)
     {this.timeline = timeline;}
+
+    /**
+     *
+     * @param storyID
+     */
     public void setID(long storyID)
     {ID = storyID;}
+
+    /**
+     *
+     * @param charList
+     */
     public void setCharList(ArrayList<Character> charList)
     {this.charList=charList;}
     
     //returns the stories if user is authenticated
     //or an empty stoy arraylist if encounters any error
+
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Story> getStories(){
         try{
             return LobbyConnection.getStories(HomePage.getPlayer().getPlayerID());

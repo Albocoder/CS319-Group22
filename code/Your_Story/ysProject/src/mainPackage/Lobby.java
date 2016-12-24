@@ -22,14 +22,41 @@ public class Lobby {
     private ArrayList<Character> charList;
     
     //Other Variables
+
+    /**
+     *
+     */
     public static final int LOBBY_INGAME = 1;
+
+    /**
+     *
+     */
     public static final int LOBBY_WAITING = 0;
+
+    /**
+     *
+     */
     public static final int VOTE_START = 0;
+
+    /**
+     *
+     */
     public static final int VOTE_KICK = 1;
+
+    /**
+     *
+     */
     public static final int VOTE_END = 2;
     
-    
-    
+    /**
+     *
+     * @param name
+     * @param ID
+     * @param quota
+     * @param state
+     * @param voteID
+     * @param storyID
+     */
     public Lobby(String name,long ID, int quota, int state, ArrayList<Long> voteID,long storyID){
         this.name = name;
         this.ID = ID;
@@ -45,6 +72,11 @@ public class Lobby {
         System.out.println("Out");
     }
     
+    /**
+     *
+     * @param ID
+     * @param storyID
+     */
     public Lobby(long ID, long storyID){
       this.ID = ID;
      this.story = new Story(storyID);
@@ -56,8 +88,10 @@ public class Lobby {
         System.out.println("Out");
     }
             
-            
-     public Lobby(){
+    /**
+     *
+     */
+    public Lobby(){
         this.name = "Sample";
         this.ID = 0;
         this.quota = 10;
@@ -68,33 +102,131 @@ public class Lobby {
      
      
     //getters 
+
+    /**
+     *
+     * @return
+     */
      public String getName(){return name;}
-     public long getID(){return ID;}
-     public int getQuota(){return quota;}
-     public int getState(){return state;}
-     public ArrayList<Long> getVoteID() {return voteID;}
-     public Story getStory() {return story;}
-     public ArrayList<Seat> getSeats() {return seats;}
-     public Chat getChat() {return chat;}
-     public ArrayList<Character> getChars(){return charList;}
+
+    /**
+     *
+     * @return
+     */
+    public long getID(){return ID;}
+
+    /**
+     *
+     * @return
+     */
+    public int getQuota(){return quota;}
+
+    /**
+     *
+     * @return
+     */
+    public int getState(){return state;}
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Long> getVoteID() {return voteID;}
+
+    /**
+     *
+     * @return
+     */
+    public Story getStory() {return story;}
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Seat> getSeats() {return seats;}
+
+    /**
+     *
+     * @return
+     */
+    public Chat getChat() {return chat;}
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Character> getChars(){return charList;}
      
     //setters 
+
+    /**
+     *
+     * @param name
+     */
      public void setName(String name) {this.name = name;}
-     public void setID(long ID) {this.ID = ID;}
-     public void setQuota(int quota) {this.quota = quota;}
-     public void setState(int state) {this.state = state;}
-     public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
-     public void setStory(Story story) {this.story = story;}
-     public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
-     public void setChat(Chat chat) {this.chat = chat;}
-     public void setCharList(ArrayList<Character> charList){this.charList = charList;}
+
+    /**
+     *
+     * @param ID
+     */
+    public void setID(long ID) {this.ID = ID;}
+
+    /**
+     *
+     * @param quota
+     */
+    public void setQuota(int quota) {this.quota = quota;}
+
+    /**
+     *
+     * @param state
+     */
+    public void setState(int state) {this.state = state;}
+
+    /**
+     *
+     * @param voteID
+     */
+    public void setVoteID(ArrayList<Long> voteID) {this.voteID = voteID;}
+
+    /**
+     *
+     * @param story
+     */
+    public void setStory(Story story) {this.story = story;}
+
+    /**
+     *
+     * @param seats
+     */
+    public void setSeats(ArrayList<Seat> seats) {this.seats = seats;}
+
+    /**
+     *
+     * @param chat
+     */
+    public void setChat(Chat chat) {this.chat = chat;}
+
+    /**
+     *
+     * @param charList
+     */
+    public void setCharList(ArrayList<Character> charList){this.charList = charList;}
     
      //other methods 
     
     //methods to update data
+
+    /**
+     *
+     */
     public void updateQuota(){
         quota = LobbyConnection.getQuota(ID);
     }
+
+    /**
+     *
+     */
     public void updateChars(){
         charList = LobbyConnection.getCharacters(ID);
     }
@@ -102,29 +234,58 @@ public class Lobby {
      
      
      //Precondition​ : It cannot be done if there is no empty seats, or the game has already started.
+
+    /**
+     *
+     * @param aPlayer
+     */
      public void addPlayer(Player aPlayer){
          LobbyConnection.addPlayerToLobby(aPlayer.getPlayerID(), ID);
      }
      
-     public void finishGame(){
+    /**
+     *
+     */
+    public void finishGame(){
          setState(2);
      }
      
-     public void updateView(){}
+    /**
+     *
+     */
+    public void updateView(){}
      
-     public void startVoting(int voteType, Player targetPlayer){
+    /**
+     *
+     * @param voteType
+     * @param targetPlayer
+     */
+    public void startVoting(int voteType, Player targetPlayer){
          long id = votingHandler.startVoting(voteType, targetPlayer);
          voteID.add(id);
      }    
      
-     public void startVoting(int voteType){
+    /**
+     *
+     * @param voteType
+     */
+    public void startVoting(int voteType){
          votingHandler.startVoting(voteType);
      }
      
-     public void sendVote(long id, boolean vote){
+    /**
+     *
+     * @param id
+     * @param vote
+     */
+    public void sendVote(long id, boolean vote){
         votingHandler.sendVote(id, vote);
      }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Character> getFreeChars(){
         ArrayList<Character> temp = new ArrayList<Character>();
         for(int i = 0; i < charList.size(); i++){
@@ -134,6 +295,12 @@ public class Lobby {
         return temp;
     }
     
+    /**
+     *
+     * @param name
+     * @param s
+     * @return
+     */
     public static Lobby createLobby(String name, Story s){
         return new Lobby(name, LobbyConnection.createLobby(name,s.getID()),1,
                 Lobby.LOBBY_WAITING, null,s.getID());

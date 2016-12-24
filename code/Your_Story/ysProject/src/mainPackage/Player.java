@@ -18,6 +18,10 @@ public class Player {
     private Profile profile; 
     private ArrayList<Lobby> ongoing;
     
+    /**
+     *
+     * @param ID
+     */
     public Player(long ID){////
         playerID = ID;
         profile = new Profile(ID);
@@ -25,13 +29,38 @@ public class Player {
     }
     
     //getters / setters
+
+    /**
+     *
+     * @return
+     */
     public long getPlayerID(){return playerID;}
+
+    /**
+     *
+     * @return
+     */
     public Profile getProfile(){return profile;}
         
+    /**
+     *
+     * @param ID
+     */
     public void setPlayerID(long ID){playerID = ID;}
+
+    /**
+     *
+     * @param profile
+     */
     public void setProfile(Profile profile){this.profile = profile;}
     //other methods 
     
+    /**
+     *
+     * @param name
+     * @param story
+     * @return
+     */
     public Lobby createLobby (String name, Story story){
         
         long lobbyID = LobbyConnection.createLobby(name,story.getID());
@@ -39,6 +68,11 @@ public class Player {
         return LobbyConnection.getLobby(lobbyID);              
     }
     
+    /**
+     *
+     * @param aLobby
+     * @return
+     */
     public boolean enterLobby (Lobby aLobby){
        
           boolean check = LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
@@ -53,6 +87,12 @@ public class Player {
           }
           return false;
     }
+
+    /**
+     *
+     * @param aLobby
+     * @return
+     */
     public boolean exitLobby (Lobby aLobby){
         LobbyConnection.removePlayerFromLobby(playerID,aLobby.getID());
         ArrayList<Seat> seats = LobbyConnection.getSeats(aLobby.getID());
@@ -64,8 +104,12 @@ public class Player {
         return true;
     }
     
-    
-  
+    /**
+     *
+     * @param name
+     * @param photo
+     * @param description
+     */
     public void updateProfile(String name, BufferedImage photo, String description){
     //Returns profile of the user. This profile object will include all
     //information about that user, name, photo and the descritipion.
@@ -75,10 +119,18 @@ public class Player {
         profile.updateData();
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Lobby> getOngoingGames(){ 
         return ongoing;
     }
     
+    /**
+     *
+     * @return
+     */
     public Player updateOngoingGames(){ 
         ongoing = LobbyConnection.getOngoingGamesOfPlayer(playerID);
         return this;

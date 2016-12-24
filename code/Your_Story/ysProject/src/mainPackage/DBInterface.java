@@ -8,6 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import thirdparty.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class DBInterface {
 	private static final String type = "mysql";
         private static final String adress = "160.153.75.104";
@@ -22,16 +26,30 @@ public class DBInterface {
         private static Connection con = c.ConnectToDB();
         private static DBInter db = new DBInter(con);
 
-        public static DBInter getConnection(){
+    /**
+     *
+     * @return
+     */
+    public static DBInter getConnection(){
             return db;
         }
 
-        public static String escapeString(String term){
+    /**
+     *
+     * @param term
+     * @return
+     */
+    public static String escapeString(String term){
             term = term.replaceAll("'","''");
             return term;
         }
         
-        public static Character[] resultSetToCharacterArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Character[] resultSetToCharacterArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -49,7 +67,12 @@ public class DBInterface {
             }
         }
         
-        public static Message[] resultSetToMessageArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Message[] resultSetToMessageArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -67,7 +90,12 @@ public class DBInterface {
             }
         }
         
-        public static Seat[] resultSetToSeatArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Seat[] resultSetToSeatArray(ResultSet r){
             System.out.println("Middle2");
             try {
                 r.last();
@@ -91,7 +119,12 @@ public class DBInterface {
             }
         }
         
-        public static Player[] resultSetToPlayerArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Player[] resultSetToPlayerArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -109,7 +142,12 @@ public class DBInterface {
             }
         }
         
-        public static Lobby[] resultSetToLobbyArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Lobby[] resultSetToLobbyArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -133,7 +171,12 @@ public class DBInterface {
             }
         }
         
-        public static Story[] resultSetToStoryArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static Story[] resultSetToStoryArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -151,7 +194,12 @@ public class DBInterface {
             }
         }
 
-        public static long[] resultSetToIntArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static long[] resultSetToIntArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -167,7 +215,12 @@ public class DBInterface {
             }
         }
 
-        public static String[] resultSetToStringArray(ResultSet r){
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public static String[] resultSetToStringArray(ResultSet r){
             try {
                 r.last();
                 int size = r.getRow();
@@ -183,16 +236,39 @@ public class DBInterface {
             }
         }
 
-        public static boolean update(String table, String column, long id, String value){
+    /**
+     *
+     * @param table
+     * @param column
+     * @param id
+     * @param value
+     * @return
+     */
+    public static boolean update(String table, String column, long id, String value){
             value = escapeString(value);
             return db.executeStuff("UPDATE " + table + " SET " + column + " = '" + value + "' WHERE id = " + id);
         }
 
-	public static boolean update(String table, String column, long id, int value){
+    /**
+     *
+     * @param table
+     * @param column
+     * @param id
+     * @param value
+     * @return
+     */
+    public static boolean update(String table, String column, long id, int value){
             return db.executeStuff("UPDATE " + table + " SET " + column + " = " + value + " WHERE id = " + id);
         }
 
-        public static long selectInt(String table, String column, long id){
+    /**
+     *
+     * @param table
+     * @param column
+     * @param id
+     * @return
+     */
+    public static long selectInt(String table, String column, long id){
             try {
                 ResultSet r = db.selectStuff("SELECT " + column + " FROM " + table + " WHERE id = " + id);
                 r.first();
@@ -203,7 +279,14 @@ public class DBInterface {
             }
         }
 
-        public static String selectString(String table, String column, long id){
+    /**
+     *
+     * @param table
+     * @param column
+     * @param id
+     * @return
+     */
+    public static String selectString(String table, String column, long id){
             try {
                 ResultSet r = db.selectStuff("SELECT " + column + " FROM " + table + " WHERE id = " + id);
                 r.first();
@@ -214,24 +297,56 @@ public class DBInterface {
             }
         }
 
-        public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, String conditionValue){
+    /**
+     *
+     * @param table
+     * @param targetColumn
+     * @param conditionColumn
+     * @param conditionValue
+     * @return
+     */
+    public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, String conditionValue){
             conditionValue = escapeString(conditionValue);
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = '" + conditionValue + "'");
             return resultSetToIntArray(r);
         }
 
-        public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, long conditionValue){
+    /**
+     *
+     * @param table
+     * @param targetColumn
+     * @param conditionColumn
+     * @param conditionValue
+     * @return
+     */
+    public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, long conditionValue){
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = " + conditionValue);
             return resultSetToIntArray(r);
         }
 
-        public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, String conditionValue){
+    /**
+     *
+     * @param table
+     * @param targetColumn
+     * @param conditionColumn
+     * @param conditionValue
+     * @return
+     */
+    public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, String conditionValue){
             conditionValue = escapeString(conditionValue);
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = '" + conditionValue + "'");
             return resultSetToStringArray(r);
         }
 
-        public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, long conditionValue){
+    /**
+     *
+     * @param table
+     * @param targetColumn
+     * @param conditionColumn
+     * @param conditionValue
+     * @return
+     */
+    public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, long conditionValue){
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = " + conditionValue);
             return resultSetToStringArray(r);
         }

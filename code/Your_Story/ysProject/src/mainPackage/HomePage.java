@@ -15,25 +15,54 @@ import java.util.ArrayList;
  * page of a user
  * */
 
+/**
+ *
+ * @author kaxell
+ */
+
+
 public class HomePage {
     private static Player myPlayer;
     private ArrayList<Lobby> lobbiesWaiting;
     
+    /**
+     *
+     * @param id
+     */
     public HomePage(long id){
         myPlayer = new Player(id);
         lobbiesWaiting = LobbyConnection.getWaitingLobbies();
         myPlayer.getProfile().getIsYours();
     }
     //player will be static when class is created
+
+    /**
+     *
+     * @return
+     */
     public static Player getPlayer(){
         return myPlayer;
     }
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Lobby> getLobbiesWaiting(){
         return lobbiesWaiting;
     }
+
+    /**
+     *
+     * @return
+     */
     public int getOnlineUsers(){
         return LobbyConnection.getOnlineUsers();
     }
+
+    /**
+     *
+     */
     public void updateLobbiesWaiting(){
         lobbiesWaiting = LobbyConnection.getWaitingLobbies(); 
     }
