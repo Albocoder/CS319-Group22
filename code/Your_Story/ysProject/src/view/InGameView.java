@@ -35,28 +35,18 @@ public class InGameView extends JFrame implements Viewable {
 	private ScheduledExecutorService chatExec;
 	private ScheduledExecutorService onlineUsersExec;
 	
-<<<<<<< 0493deb5b51a95ef3d3e819fe54a649872b5d6fe
     /**
      *
      * @param l
      * @param ref
      */
-    public InGameView(Lobby l, ViewManager ref) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ex) {
-                Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                logoutOnExitWithDialogue();
-=======
 	public InGameView(Lobby l, ViewManager ref) {
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
             Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
->>>>>>> Adding InGameView some functions
+		
 		font = new Font("Tahoma", Font.PLAIN, 12);
 		boldFont = new Font("Tahoma", Font.BOLD, 12);
 		LINE_HEIGHT = font.getSize() + 8;
@@ -70,8 +60,8 @@ public class InGameView extends JFrame implements Viewable {
 		
 		JPanel panel = new JPanel();
 		onlineUsers = new JPanel();
-		JScrollPane storyScroll = new JScrollPane();
 		JPanel story = new JPanel();
+		JScrollPane storyScroll = new JScrollPane(story);
 		bottomPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JButton voteButton = new JButton("Vote");
@@ -87,7 +77,7 @@ public class InGameView extends JFrame implements Viewable {
 			public void componentResized(ComponentEvent e) {
 				scrollPane.setSize(new Dimension(mv.getWidth(), 
 								mv.getHeight() - mv.getBoxHeight()));
-				storyScroll.setPreferredSize(new Dimension(300, getHeight() / 3));
+				storyScroll.setSize(new Dimension(300, getHeight() / 3));
 			}
 		});
 		
@@ -99,14 +89,13 @@ public class InGameView extends JFrame implements Viewable {
 		panel.setLayout(new BorderLayout());
 		panel.add(storyScroll, BorderLayout.NORTH);
 		panel.add(onlineUsers, BorderLayout.CENTER);
-		panel.add(/*bottomPanel*/buttonPanel, BorderLayout.SOUTH);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		storyScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		storyScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		storyScroll.getVerticalScrollBar().setUnitIncrement(15);
 		storyScroll.getVerticalScrollBar().setBlockIncrement(0);
 		storyScroll.setPreferredSize(new Dimension(300, getHeight() / 3));
-		storyScroll.add(story);
 		
 		BufferedImage img = createStoryImage();
 		story.add(new JLabel(new ImageIcon(img)));
@@ -114,11 +103,11 @@ public class InGameView extends JFrame implements Viewable {
 		
 		onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), SwingConstants.CENTER));
 		
-//		bottomPanel.setLayout(new BorderLayout());
-//		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		buttonPanel.setLayout(new FlowLayout());
-		buttonPanel.add(voteButton);
+//		buttonPanel.add(voteButton);
 		buttonPanel.add(exitButton);
 		
 		voteButton.addActionListener(new VoteListener());
