@@ -291,16 +291,16 @@ public class InGameView extends JFrame implements Viewable {
 		}
 	}
 	
-	public static void main (String [] args) {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    AccessHandler.username = "e3";
-                    AccessHandler.userID = 6;
-                    new InGameView(LobbyConnection.getLobby(9), null);
-                }
-            });
-	}
+//	public static void main (String [] args) {
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    AccessHandler.username = "e3";
+//                    AccessHandler.userID = 6;
+//                    new InGameView(LobbyConnection.getLobby(9), null);
+//                }
+//            });
+//	}
 	
     private void logoutOnExitWithDialogue(){
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
