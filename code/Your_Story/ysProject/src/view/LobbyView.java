@@ -220,7 +220,7 @@ public class LobbyView extends JFrame implements Viewable {
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
-        freeChars.setLayout(new GridLayout(7,/*freeOnes.size()/3*/3));
+        freeChars.setLayout(new GridLayout(3,freeOnes.size()/3));
         JLabel rand = new JLabel();
         try {
             /////// get image and resize it///////////////////////////////////////////////
@@ -260,10 +260,12 @@ public class LobbyView extends JFrame implements Viewable {
             if(s.getIsOccupied())
                 numberOfSeatsOccupied++;
         }
-        seatsPanel.setLayout(new GridLayout(/*numberOfSeatsOccupied*/10,1));
-        for(int i = 0; i < 10; i++/*Seat s:theLobby.getSeats()*/){
-            //if(!s.getIsOccupied())
-            //    continue;
+        seatsPanel.setLayout(new GridLayout(numberOfSeatsOccupied,1));
+        for(Seat s:theLobby.getSeats()){
+            if(s == null)
+                continue;
+            if(!s.getIsOccupied())
+                continue;
             JPanel emptyPanel = new JPanel();
             Color c = new Color(r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND),r.nextInt(COLOR_COLD_RAND));
             emptyPanel.setBackground(c);
@@ -294,7 +296,7 @@ public class LobbyView extends JFrame implements Viewable {
             }
             toFill.add(icon,BorderLayout.WEST);
 
-            JLabel plName = new JLabel("John Spica"/*s.getPlayer().getProfile().getName()*/);
+            JLabel plName = new JLabel(s.getPlayer().getProfile().getName());
             try {
                 Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -314,7 +316,7 @@ public class LobbyView extends JFrame implements Viewable {
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
             */
 
-            JLabel storyTimeline = new JLabel("Selected: Ahri"/*s.getChar().getName()*/);
+            JLabel storyTimeline = new JLabel("Selected: "+s.getCharacter().getName());
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);

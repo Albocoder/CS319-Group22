@@ -31,6 +31,11 @@ public class Character {
     public Character(long charID)
     {
         this.charID = charID;
+        Character temp = LobbyConnection.getCharacter(charID);
+        this.description = temp.description;
+        this.name = temp.name;
+        this.charID = temp.charID;
+        this.isTaken = temp.isTaken;
     }
     
     public Character()
