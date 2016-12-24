@@ -75,7 +75,7 @@ public class ChatConnection {
                 " ON " + SEAT_DATA +
                 ".charac = " + CHARACTER_DATA +
                 ".id WHERE " + CHAT_DATA +
-                ".lobby = 9 AND " + CHAT_DATA +
+                ".lobby = " + id + " AND " + CHAT_DATA +
                 ".id > " + lastMessage + " GROUP BY " + CHAT_DATA +
                 ".id");
         return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
