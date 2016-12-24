@@ -18,6 +18,10 @@ package view;
 import java.util.*;
 import mainPackage.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class ViewManager {
     //////// we forgot these too in the design ///////////////////
     private ArrayList<Viewable> hiddenViews;
@@ -29,11 +33,17 @@ public class ViewManager {
     private ProfileView profile;
     //////////////////////////////////////////////////////////////
 
+    /**
+     *
+     */
     public ViewManager(){
         hiddenViews = new ArrayList<Viewable>();
         showLogin();
     }
 
+    /**
+     *
+     */
     public void showLogin() {
         hiddenViews = new ArrayList<Viewable>();
         //show login and destroy the rest
@@ -48,6 +58,10 @@ public class ViewManager {
         hideCreateLobby(true);
     }
 
+    /**
+     *
+     * @param playersHome
+     */
     public void showHomePage(HomePage playersHome) {
         if(playersHome != null)
             homepage = new HomeView(playersHome,this);
@@ -64,6 +78,10 @@ public class ViewManager {
         hideCreateLobby(false);
     }
 
+    /**
+     *
+     * @param aLobby
+     */
     public void showLobby(Lobby aLobby) {
         if(aLobby != null)
             lobby = new LobbyView(aLobby,this);
@@ -81,6 +99,11 @@ public class ViewManager {
     }
     
     //we forgot showProfile 
+
+    /**
+     *
+     * @param p
+     */
     public void showProfile(Profile p){
         if(p != null)
             profile = new ProfileView(p,this);
@@ -97,6 +120,10 @@ public class ViewManager {
         hideCreateLobby(false);
     }
 
+    /**
+     *
+     * @param aLobby
+     */
     public void showOngoingGame(Lobby aLobby) {
         if(aLobby != null)
             ingame = new InGameView(aLobby,this);
@@ -113,6 +140,9 @@ public class ViewManager {
         hideCreateLobby(false);
     }
 
+    /**
+     *
+     */
     public void showCreateLobby(){
         if(lobbycreator == null)
             lobbycreator = new LobbyCreatorView(this);
@@ -125,11 +155,17 @@ public class ViewManager {
         hideHomePage(false);
     }
 
+    /**
+     *
+     */
     public void showLastHidden() {
         if(hiddenViews.size()>=1)
             hiddenViews.remove(hiddenViews.size()-1).showView();
     }
 
+    /**
+     *
+     */
     public void updateAll() {
         profile.updateView();
         login.updateView();
@@ -139,6 +175,10 @@ public class ViewManager {
         lobbycreator.updateView();
     }
 
+    /**
+     *
+     * @param terminate
+     */
     public void hideLogin(boolean terminate) {
         if(login == null)
             return;
@@ -149,6 +189,10 @@ public class ViewManager {
             hiddenViews.add(login);
     }
 
+    /**
+     *
+     * @param terminate
+     */
     public void hideHomePage(boolean terminate) {
         if(homepage == null)
             return;
@@ -159,6 +203,10 @@ public class ViewManager {
             hiddenViews.add(homepage);
     }
 
+    /**
+     *
+     * @param terminate
+     */
     public void hideLobby(boolean terminate) {
         if(lobby == null)
             return;
@@ -169,6 +217,10 @@ public class ViewManager {
             hiddenViews.add(lobby);
     }
 
+    /**
+     *
+     * @param terminate
+     */
     public void hideProfile(boolean terminate) {
         if(profile == null)
             return;
@@ -179,6 +231,10 @@ public class ViewManager {
             hiddenViews.add(profile);
     }
 
+    /**
+     *
+     * @param terminate
+     */
     public void hideOngoingGame(boolean terminate) {
         if(ingame == null)
             return;
@@ -189,6 +245,10 @@ public class ViewManager {
             hiddenViews.add(ingame);
     }
     
+    /**
+     *
+     * @param terminate
+     */
     public void hideCreateLobby(boolean terminate){
         if(lobbycreator == null)
             return;

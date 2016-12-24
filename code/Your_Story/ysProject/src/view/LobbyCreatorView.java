@@ -27,6 +27,10 @@ import javax.swing.border.EtchedBorder;
 import mainPackage.*;
 import mainPackage.Character;
 
+/**
+ *
+ * @author kaxell
+ */
 public class LobbyCreatorView extends JFrame implements Viewable{
     private JScrollPane stories;
     ////////// REMOVED !!! /////////////////////
@@ -45,6 +49,10 @@ public class LobbyCreatorView extends JFrame implements Viewable{
     //constants
     private final int COLOR_COLD_RAND = 155;
     
+    /**
+     *
+     * @param ref
+     */
     public LobbyCreatorView(ViewManager ref){
         referrer = ref;
         logoutOnExitWithDialogue();
@@ -157,6 +165,11 @@ public class LobbyCreatorView extends JFrame implements Viewable{
         allStories.updateUI();
     }
     
+    /**
+     *
+     * @param name
+     * @param s
+     */
     public void createLobby(String name, Story s) {
         if(name.length() > 22)
             JOptionPane.showMessageDialog(null, 
@@ -181,14 +194,29 @@ public class LobbyCreatorView extends JFrame implements Viewable{
         });
     }
     
+    /**
+     *
+     */
     @Override
     public void terminateView() {hideView();this.dispose();}
+
+    /**
+     *
+     */
     @Override
     public void hideView() {
         setVisible(false);
     }
+
+    /**
+     *
+     */
     @Override
     public void updateView() {/*** nothing to update ***/}
+
+    /**
+     *
+     */
     @Override
     public void showView() {
         setVisible(true);

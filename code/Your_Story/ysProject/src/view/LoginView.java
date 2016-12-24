@@ -27,6 +27,10 @@ import javax.swing.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import mainPackage.*;
 
+/**
+ *
+ * @author kaxell
+ */
 @SuppressWarnings("serial")
 public class LoginView extends JFrame implements Viewable{
     private JTextField username;
@@ -38,7 +42,10 @@ public class LoginView extends JFrame implements Viewable{
     private long playerID;
     JPanel contentPane;
 
-
+    /**
+     *
+     * @param ref
+     */
     public LoginView(ViewManager ref){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -118,6 +125,9 @@ public class LoginView extends JFrame implements Viewable{
         showView(); 
     }
 
+    /**
+     *
+     */
     @Override
     public void terminateView() {
         username.setText("");
@@ -125,14 +135,23 @@ public class LoginView extends JFrame implements Viewable{
         hideView();
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
 
+    /**
+     *
+     */
     @Override
     public void updateView() {/*nothing to update here*/}
 
+    /**
+     *
+     */
     @Override
     public void showView() {
         this.setVisible(true);

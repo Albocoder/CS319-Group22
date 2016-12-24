@@ -21,6 +21,11 @@ public class ProfileConnection {
     private static final String SEAT_DATA = "seat";
     private static final String STORY_DATA = "story";
     
+    /**
+     *
+     * @param profile
+     * @return
+     */
     public static boolean updateProfileInClient(Profile profile){
         long userID = profile.getID();
         long profileID = DBInterface.selectIntArray(PROFILE_DATA, "id", "user", userID)[0];
@@ -30,6 +35,11 @@ public class ProfileConnection {
         return true;
     }
     
+    /**
+     *
+     * @param profile
+     * @return
+     */
     public static boolean updateProfileInDatabase(Profile profile){
         long userID = DBInterface.selectIntArray(PLAYER_DATA, "id", "username", profile.getName())[0];
         long profileID = DBInterface.selectIntArray(PROFILE_DATA, "id", "user", userID)[0];
@@ -37,6 +47,11 @@ public class ProfileConnection {
         return true;
     }
     
+    /**
+     *
+     * @param player
+     * @return
+     */
     public static ArrayList<Lobby> getFinishedGames(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +

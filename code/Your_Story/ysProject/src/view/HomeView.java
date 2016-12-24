@@ -46,6 +46,11 @@ import mainPackage.*;
 //HomePage.getPlayer().getProfile().setDescription("1234");
 //HomePage.getPlayer().getProfile().updateData();
 
+/**
+ *
+ * @author kaxell
+ */
+
 @SuppressWarnings("serial")
 public class HomeView extends JFrame implements Viewable{
 
@@ -75,7 +80,11 @@ public class HomeView extends JFrame implements Viewable{
     private final String FINISHED_IMG = "./img/finished.png";
     private final String CREATE_IMG = "./img/create.png";
 
-    
+    /**
+     *
+     * @param data
+     * @param ref
+     */
     public HomeView(HomePage data,ViewManager ref){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -242,6 +251,9 @@ public class HomeView extends JFrame implements Viewable{
         setVisible(true);
     }
 
+    /**
+     *
+     */
     public void logout() {
         //disposing of player's data like the ID
         mainData = null;
@@ -250,10 +262,19 @@ public class HomeView extends JFrame implements Viewable{
         System.gc();
         referrer.showLogin();
     }
+
+    /**
+     *
+     */
     public void createLobby() {
         //show creationUI(loggedInPlayer)
         //hide this!
     }
+
+    /**
+     *
+     * @param aLobby
+     */
     public void joinLobby(Lobby aLobby){
         //referrer.showOngoingGame(aLobby,referrer);
         if(aLobby.getState() == Lobby.LOBBY_INGAME){
@@ -264,15 +285,26 @@ public class HomeView extends JFrame implements Viewable{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void terminateView() {
         AccessHandler.logOut();
         System.exit(0);
     }
+
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
+
+    /**
+     *
+     */
     @Override
     public void updateView() {
         //showProfilePic();
@@ -287,6 +319,10 @@ public class HomeView extends JFrame implements Viewable{
         onlinePlayersExec.scheduleAtFixedRate(new OnlinePlayersUpdater(),17,17,TimeUnit.SECONDS);
         profilePicExec.scheduleAtFixedRate(new ProfilePicUpdater(),10,15,TimeUnit.MINUTES);
     }
+
+    /**
+     *
+     */
     @Override
     public void showView() {
         this.setVisible(true);

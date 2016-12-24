@@ -1,9 +1,28 @@
 package mainPackage;
 
+/**
+ *
+ * @author kaxell
+ */
 public class AccessHandler {
+
+    /**
+     *
+     */
     public static long userID = -1;
+
+    /**
+     *
+     */
     public static String username = "";
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @param newUser
+     * @return
+     */
     public static boolean accessGame(String username, String password, boolean newUser) {
         if (newUser) {
             return createAccount(username, password);
@@ -12,6 +31,9 @@ public class AccessHandler {
         }
     }
 
+    /**
+     *
+     */
     public static void logOut() {
         AccessConnection.logout(userID);
         userID = -1;

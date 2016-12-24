@@ -32,6 +32,10 @@ import view.*;
 import mainPackage.*;
 import mainPackage.Character;
 
+/**
+ *
+ * @author kaxell
+ */
 public class LobbyView extends JFrame implements Viewable {
     private JScrollPane theSeats;
     private JLabel storyDesc;
@@ -58,7 +62,11 @@ public class LobbyView extends JFrame implements Viewable {
     private final int CHAR_SIZE_W = 70;
     private final int CHAR_SIZE_H = 97;
     
-
+    /**
+     *
+     * @param aLobby
+     * @param ref
+     */
     public LobbyView(Lobby aLobby,ViewManager ref){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -168,16 +176,29 @@ public class LobbyView extends JFrame implements Viewable {
         new LobbyView(new Lobby("Erin\'s Lobby",14,0,0,null,5), null);
     }
     */
+
+    /**
+     *
+     * @param type
+     */
+
     public void startVote(int type) {
         if(type == Lobby.VOTE_START){
             voter.startVoting(type);
         }
     }
 
+    /**
+     *
+     * @param target
+     */
     public void startKick(Seat target) {
         voter.startVoting(Lobby.VOTE_KICK,target.getPlayer());
     }
 
+    /**
+     *
+     */
     public void leaveLobby() {
         mySeat.removePlayer();
     }

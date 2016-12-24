@@ -20,6 +20,14 @@ public class Character {
    
 
     //read image file
+
+    /**
+     *
+     * @param description
+     * @param name
+     * @param charID
+     * @param isTaken
+     */
     public Character(String description, String name, long charID, boolean isTaken)
     {
         this.description = description;
@@ -28,6 +36,10 @@ public class Character {
         this.isTaken = isTaken;
     }
     
+    /**
+     *
+     * @param charID
+     */
     public Character(long charID)
     {
         this.charID = charID;
@@ -38,6 +50,9 @@ public class Character {
         this.isTaken = temp.isTaken;
     }
     
+    /**
+     *
+     */
     public Character()
     {
         this.description = "";
@@ -47,21 +62,71 @@ public class Character {
     }
     
     //getters
+
+    /**
+     *
+     * @return
+     */
     public String getDescription(){return description;} 
+
+    /**
+     *
+     * @return
+     */
     public String getName(){return name;} 
+
+    /**
+     *
+     * @return
+     */
     public long getCharID(){return charID;} 
+
+    /**
+     *
+     * @return
+     */
     public boolean getIsTaken(){return isTaken;}
+
+    /**
+     *
+     * @return
+     */
     public BufferedImage getPhoto(){return photo;}
     
     //setters
+
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description)
     {this.description = description;}
+
+    /**
+     *
+     * @param name
+     */
     public void setName(String name)
     {this.name = name;}
+
+    /**
+     *
+     * @param charID
+     */
     public void setCharID(long charID)
     {this.charID = charID;}
+
+    /**
+     *
+     * @param isTaken
+     */
     public void setIsTaken(boolean isTaken)
     {this.isTaken = isTaken;}   
+
+    /**
+     *
+     * @param photo
+     */
     public void setPhoto (BufferedImage photo)
     {this.photo = photo;}
     

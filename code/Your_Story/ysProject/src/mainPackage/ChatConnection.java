@@ -17,11 +17,19 @@ import thirdparty.*;
  */
 public class ChatConnection {
     
+    /**
+     *
+     */
     public final static String CHAT_DATA = "message";
     private final static String PLAYER_DATA = "user";
     private final static String SEAT_DATA = "seat";
     private final static String CHARACTER_DATA = "charac";
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static ArrayList<Message> getMessages(long id){
         ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
                 ".body AS body, " + CHARACTER_DATA +
@@ -43,6 +51,13 @@ public class ChatConnection {
                 ".id");
         return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
+
+    /**
+     *
+     * @param lobby
+     * @param lastMessage
+     * @return
+     */
     public static ArrayList<Message> getMessages(long lobby, long lastMessage){
         ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
                 ".body AS body, " + CHARACTER_DATA +
@@ -65,6 +80,14 @@ public class ChatConnection {
                 ".id");
         return new ArrayList<Message>(Arrays.asList(DBInterface.resultSetToMessageArray(r)));
     }
+
+    /**
+     *
+     * @param message
+     * @param lobby
+     * @param user
+     * @return
+     */
     public static long sendMessage(String message, long lobby, long user){
         message = DBInterface.escapeString(message);
         DBInterface.getConnection().executeStuff("INSERT INTO " + CHAT_DATA + "(user, body, lobby) VALUES(" + user +", '" + message + "', " + lobby + ")");

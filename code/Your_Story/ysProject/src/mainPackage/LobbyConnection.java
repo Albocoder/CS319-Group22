@@ -27,6 +27,11 @@ public class LobbyConnection {
     private static final String VOTING_DATA = "vote";
     private static final String CHARACTER_DATA = "charac";
     
+    /**
+     *
+     * @param player
+     * @return
+     */
     public static ArrayList<Lobby> getOngoingGamesOfPlayer(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
@@ -44,12 +49,22 @@ public class LobbyConnection {
         return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Seat getSeat(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
                 " WHERE id = " + id);
         return DBInterface.resultSetToSeatArray(r)[0];
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Lobby getLobby(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA + 
@@ -69,10 +84,20 @@ public class LobbyConnection {
         return DBInterface.resultSetToLobbyArray(r)[0];
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Player getPlayer(long id){
         return new Player(id);
     }
     
+    /**
+     *
+     * @param lobbyID
+     * @return
+     */
     public static ArrayList<Seat> getSeats(long lobbyID){
         System.out.println("In2");
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
@@ -80,11 +105,20 @@ public class LobbyConnection {
         return new ArrayList<Seat>(Arrays.asList(DBInterface.resultSetToSeatArray(r)));
     }
     
+    /**
+     *
+     * @param storyID
+     * @return
+     */
     public static Story getStory(long storyID){
         return new Story(DBInterface.selectString(STORY_DATA, "description", storyID),
         DBInterface.selectString(STORY_DATA, "timeline", storyID), storyID);
     }
     
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Lobby> getWaitingLobbies(){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA + 
@@ -104,6 +138,11 @@ public class LobbyConnection {
         return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
+    /**
+     *
+     * @param player
+     * @return
+     */
     public static ArrayList<Lobby> getLobbies(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
@@ -120,10 +159,19 @@ public class LobbyConnection {
         return new ArrayList<Lobby>(Arrays.asList(DBInterface.resultSetToLobbyArray(r)));
     }
     
+    /**
+     *
+     * @return
+     */
     public static int getOnlineUsers(){
         return DBInterface.selectIntArray(PLAYER_DATA, "id", "online", 1).length;
     }
     
+    /**
+     *
+     * @param lobby
+     * @return
+     */
     public static ArrayList<Player> getOnlineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
                 ".* FROM " + PLAYER_DATA +
@@ -136,6 +184,11 @@ public class LobbyConnection {
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
     }
     
+    /**
+     *
+     * @param lobby
+     * @return
+     */
     public static ArrayList<Player> getOfflineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
                 ".* FROM " + PLAYER_DATA +
@@ -148,6 +201,11 @@ public class LobbyConnection {
         return new ArrayList<Player>(Arrays.asList(DBInterface.resultSetToPlayerArray(r)));
     }
     
+    /**
+     *
+     * @param player
+     * @return
+     */
     public static ArrayList<Story> getStories(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + STORY_DATA +
                 ".* FROM " + STORY_DATA + 
@@ -156,6 +214,12 @@ public class LobbyConnection {
         return new ArrayList<Story>(Arrays.asList(DBInterface.resultSetToStoryArray(r)));
     }
     
+    /**
+     *
+     * @param name
+     * @param story
+     * @return
+     */
     public static long createLobby(String name, long story){
         name = DBInterface.escapeString(name);
         DBInterface.getConnection().executeStuff("INSERT INTO " + LOBBY_DATA + "(name, state, story) VALUES('" + name + "', 0, " + story + ")");
@@ -168,6 +232,11 @@ public class LobbyConnection {
         return lobby;
     }
     
+    /**
+     *
+     * @param lobby
+     * @return
+     */
     public static int getQuota(long lobby){
         try {
             ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + STORY_DATA +
@@ -189,6 +258,12 @@ public class LobbyConnection {
         }
     }
     
+    /**
+     *
+     * @param player
+     * @param lobby
+     * @return
+     */
     public static boolean addPlayerToLobby(long player, long lobby){
         try {
             ResultSet r = DBInterface.getConnection().selectStuff("SELECT id FROM " + SEAT_DATA +
@@ -211,11 +286,23 @@ public class LobbyConnection {
         }
     }
     
+    /**
+     *
+     * @param player
+     * @param lobby
+     */
     public static void removePlayerFromLobby(long player, long lobby){
         DBInterface.getConnection().executeStuff("UPDATE " + SEAT_DATA +
                 " SET user = NULL, charac = NULL WHERE lobby = " + lobby + " AND user = " + player);
     }
     
+    /**
+     *
+     * @param player
+     * @param character
+     * @param lobby
+     * @return
+     */
     public static boolean assignCharacterToPlayer(long player, long character, long lobby){
         try {
             ResultSet r = DBInterface.getConnection().selectStuff("SELECT id FROM seat WHERE lobby = " + lobby +
@@ -236,6 +323,11 @@ public class LobbyConnection {
         }
     }
     
+    /**
+     *
+     * @param lobby
+     * @return
+     */
     public static ArrayList<Character> getCharacters(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
                 ".*, COUNT(" + SEAT_DATA +
@@ -250,6 +342,12 @@ public class LobbyConnection {
                 ".id = " + lobby + " GROUP BY " + CHARACTER_DATA +".id");
         return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
+
+    /**
+     *
+     * @param story
+     * @return
+     */
     public static ArrayList<Character> getCharactersByStory(long story){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
                 ".*, 0 AS occupied FROM " + CHARACTER_DATA +
@@ -257,11 +355,21 @@ public class LobbyConnection {
         return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
     
+    /**
+     *
+     * @param lobby
+     * @param state
+     */
     public static void setLobbyState(long lobby, int state){
         DBInterface.getConnection().executeStuff("UPDATE " + LOBBY_DATA +
                 " SET state = " + state + " WHERE id = " + lobby);
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Character getCharacter(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
                 ".*, 0 AS occupied FROM " + CHARACTER_DATA +

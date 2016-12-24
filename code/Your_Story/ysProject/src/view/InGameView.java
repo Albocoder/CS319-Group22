@@ -14,6 +14,10 @@ import javax.swing.*;
 
 import mainPackage.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class InGameView extends JFrame implements Viewable {
     
         private ViewManager referrer;
@@ -29,7 +33,12 @@ public class InGameView extends JFrame implements Viewable {
         private ScheduledExecutorService chatExec;
         private ScheduledExecutorService onlineUsersExec;
 	
-	public InGameView(Lobby l, ViewManager ref) {
+    /**
+     *
+     * @param l
+     * @param ref
+     */
+    public InGameView(Lobby l, ViewManager ref) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception ex) {
@@ -89,7 +98,11 @@ public class InGameView extends JFrame implements Viewable {
 		updateView();
 	}
 	
-	public BufferedImage createStoryImage() {
+    /**
+     *
+     * @return
+     */
+    public BufferedImage createStoryImage() {
 		int width = 300;
 		Story s = l.getStory();
 		String storyString = s.getTimeline() + "\n" + s.getDescription();
@@ -109,7 +122,11 @@ public class InGameView extends JFrame implements Viewable {
 		return img;
 	}
 	
-	public BufferedImage createOnlineUsersImage() {
+    /**
+     *
+     * @return
+     */
+    public BufferedImage createOnlineUsersImage() {
 		ArrayList<Player> onlineUsers = LobbyConnection.getOnlineUsersOfLobby(l.getID());
 		ArrayList<Player> offlineUsers = LobbyConnection.getOfflineUsersOfLobby(l.getID());
 		int userNumber = onlineUsers.size() + offlineUsers.size();
@@ -148,7 +165,13 @@ public class InGameView extends JFrame implements Viewable {
 		return img;
 	}
 	
-	public static ArrayList<String> fitString(String s, int finalWidth) {
+    /**
+     *
+     * @param s
+     * @param finalWidth
+     * @return
+     */
+    public static ArrayList<String> fitString(String s, int finalWidth) {
 		ArrayList<String> modified = new ArrayList<String>();
 		FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
 		
@@ -179,19 +202,28 @@ public class InGameView extends JFrame implements Viewable {
 		return modified;
 	}
 	
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void terminateView() {
             referrer.showHomePage(null);
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void hideView() {
             setVisible(false);
             chatExec.shutdown();
             onlineUsersExec.shutdown();
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void updateView() {
             chatExec = Executors.
                     newSingleThreadScheduledExecutor();
@@ -204,7 +236,10 @@ public class InGameView extends JFrame implements Viewable {
                     new OnlineUsersUpdater(),9,9,TimeUnit.SECONDS);
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void showView() {
 		setVisible(true);
                 updateView();
