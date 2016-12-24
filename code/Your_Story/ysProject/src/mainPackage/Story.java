@@ -25,8 +25,7 @@ public class Story {
         this.description = description ;
         this.timeline = timeline ;
         this.ID = ID; 
-        charList = new ArrayList<Character>();
-        
+        charList = LobbyConnection.getCharactersByStory(ID);
     }
     
     /**
@@ -34,11 +33,11 @@ public class Story {
      * @param id
      */
     public Story(long id){
-        System.out.println("Story id:" + id);
         Story s = LobbyConnection.getStory(id);
         this.description = s.description;
         this.timeline = s.timeline ;
         this.ID = s.ID; 
+        charList = LobbyConnection.getCharactersByStory(ID);
     }
     
     /**
@@ -124,6 +123,5 @@ public class Story {
             return new ArrayList<Story>(0);
         }
     }
-    
     //methods
 }
