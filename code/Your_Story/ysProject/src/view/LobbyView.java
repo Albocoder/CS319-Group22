@@ -12,6 +12,8 @@ package view;
  * This class is the lobby view for a lobby that is waiting
  * */
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -34,7 +36,7 @@ import mainPackage.Character;
 
 /**
  *
- * @author kaxell
+ * @author Erin Avllazagaj
  */
 public class LobbyView extends JFrame implements Viewable {
     private JScrollPane theSeats;
@@ -75,7 +77,7 @@ public class LobbyView extends JFrame implements Viewable {
         setTitle(aLobby.getName());
         
         ///do the logic here and add this piece in top before views are created
-        //mySeat = new Seat(joinSeat());
+        mySeat = joinSeat();
         ///////////////////////////////////////////////////////////////////////
         
         if (aLobby == null)
@@ -166,7 +168,9 @@ public class LobbyView extends JFrame implements Viewable {
         showKickable();
         updateView();
         //Listeners go here
-        
+        kickPlayer.addActionListener(new KickPlayerListener());
+        leaveLobby.addActionListener(new LeaveLobbyListener());
+        startVote.addActionListener(new StartGameListener());
         ///////////////////////////////
         
         add(theSeats,BorderLayout.CENTER);
@@ -198,15 +202,13 @@ public class LobbyView extends JFrame implements Viewable {
      *
      */
     public void leaveLobby() {
-        mySeat.removePlayer();
+        theLobby.kickPlayer(mySeat.getPlayer());
     }
 
     //public Lobby getLobby(){return theLobby;}
     
-    private long joinSeat(){
-        // TODO
-        //return theLobby.addPlayer(HomePage.getPlayer());
-        return -1;
+    private Seat joinSeat(){
+        return HomePage.getPlayer().enterLobby(theLobby);
     }
     
     @Override
@@ -247,7 +249,15 @@ public class LobbyView extends JFrame implements Viewable {
     public void showView() {
         this.setVisible(true);
     }
-    
+    private void kickPlayer(Player p){
+        if(inGamePlayers.get(0).getPlayerID()==HomePage.getPlayer().getPlayerID())
+            theLobby.kickPlayer(p);
+        else
+            JOptionPane.showMessageDialog(null, 
+                "A-a-aaaa... You don't have permission to do that!",
+                "As if it was so ez!!!", JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon("./img/operationDenied.png"));
+    }
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
@@ -389,7 +399,12 @@ public class LobbyView extends JFrame implements Viewable {
                 kickPlayer.addItem(s.getPlayer().getProfile().getName());
             }
     }
-    
+    private void startGame(){
+        if(inGamePlayers.get(0).getPlayerID()==HomePage.getPlayer().getPlayerID()){
+            theLobby.setState(Lobby.LOBBY_INGAME);
+            referrer.showOngoingGame(theLobby);
+        }
+    }
     private class SeatUpdater implements Runnable{
         @Override
         public void run(){
@@ -403,6 +418,10 @@ public class LobbyView extends JFrame implements Viewable {
         public void run(){
             if (myTime > 0)
                 myTime--;
+            else{
+                kickPlayer.setEnabled(false);
+                leaveLobby.setEnabled(false);
+            }
             timeLeft.setText(""+myTime);
         }
     }
@@ -410,6 +429,30 @@ public class LobbyView extends JFrame implements Viewable {
         @Override
         public void run(){
             checkStatus();
+        }
+    }
+    
+    private class KickPlayerListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            try{
+                kickPlayer(inGamePlayers.get(kickPlayer.getSelectedIndex()-1));
+            }catch(ArrayIndexOutOfBoundsException e){}
+        }
+    }
+    
+    private class LeaveLobbyListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            leaveLobby();
+            referrer.showHomePage(null);
+        }
+    }
+    
+    private class StartGameListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            startGame();
         }
     }
 }

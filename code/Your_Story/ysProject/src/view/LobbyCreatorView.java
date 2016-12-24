@@ -153,8 +153,9 @@ public class LobbyCreatorView extends JFrame implements Viewable{
                 if(it.hasNext())
                     text+= ch.getName()+", ";
             }
-            
             JLabel chars = new JLabel("<html>"+text+"</html>");
+            chars.setForeground(Color.WHITE);
+            chars.setFont(new Font("Arial",Font.BOLD,12));
             toFill.add(chars,BorderLayout.SOUTH);
 
             tmpLobby.add(toFill, BorderLayout.CENTER);

@@ -181,7 +181,10 @@ public class Lobby {
      *
      * @param state
      */
-    public void setState(int state) {this.state = state;}
+    public void setState(int state) {
+            LobbyConnection.setLobbyState(this.ID,state);
+            this.state = state;
+    }
 
     /**
      *
@@ -304,5 +307,9 @@ public class Lobby {
     public static Lobby createLobby(String name, Story s){
         return new Lobby(name, LobbyConnection.createLobby(name,s.getID()),1,
                 Lobby.LOBBY_WAITING, null,s.getID());
+    }
+    
+    public void kickPlayer(Player p){
+        LobbyConnection.removePlayerFromLobby(p.getPlayerID(), this.getID());
     }
 }

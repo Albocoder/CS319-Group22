@@ -48,7 +48,7 @@ import mainPackage.*;
 
 /**
  *
- * @author kaxell
+ * @author Erin Avllazagaj
  */
 
 @SuppressWarnings("serial")
@@ -556,6 +556,15 @@ public class HomeView extends JFrame implements Viewable{
         }
     }
     
+    private class OngoingActionListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            try{
+                joinLobby(HomePage.getPlayer().getOngoingGames()
+                        .get(onGoing.getSelectedIndex()-1));
+            }catch(ArrayIndexOutOfBoundsException e){}
+        }
+    }
     //runnable classes
     private class LobbyUpdater implements Runnable {
         @Override
@@ -585,15 +594,6 @@ public class HomeView extends JFrame implements Viewable{
             //get new profile pic by update()-ing from 
             //mainData.getPlayer().getProfile() and call showProfilePic()
             showProfilePic();
-        }
-    }
-    private class OngoingActionListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            try{
-                joinLobby(HomePage.getPlayer().getOngoingGames()
-                        .get(onGoing.getSelectedIndex()-1));
-            }catch(ArrayIndexOutOfBoundsException e){}
         }
     }
 }

@@ -24,7 +24,7 @@ import javax.swing.*;
 
 /**
  *
- * @author kaxell
+ * @author Erin Avllazagaj
  */
 public class Loader extends JFrame{
     private JLabel txt;
