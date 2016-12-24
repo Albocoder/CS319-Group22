@@ -61,6 +61,7 @@ public class ChatView extends JPanel {
     public void fetchNewMessages() {
 		ArrayList<Message> newMessages = ChatConnection.getMessages(lobby.getID());
 		if (newMessages.size() != messages.size()) {
+//			System.out.println("fetchNewMessages içinde");
 			messages = newMessages;
 			repaint();
 		}
@@ -70,7 +71,7 @@ public class ChatView extends JPanel {
      *
      * @return
      */
-    public int getPreferredHeight() {
-		return height;
+	public int getArraySize() {
+		return messages.size();
 	}
 }

@@ -20,32 +20,35 @@ import mainPackage.*;
  */
 public class InGameView extends JFrame implements Viewable {
     
-        private ViewManager referrer;
+	private ViewManager referrer;
 	
 	static Font font;
+	static Font boldFont;
 	static int LINE_HEIGHT;
 	JScrollPane scrollPane;
 	ChatView chat;
 	JPanel onlineUsers;
+	JPanel bottomPanel;
 	MessageTypingBoxView mv;
 	Lobby l;
         
-        private ScheduledExecutorService chatExec;
-        private ScheduledExecutorService onlineUsersExec;
+	private ScheduledExecutorService chatExec;
+	private ScheduledExecutorService onlineUsersExec;
 	
     /**
      *
      * @param l
      * @param ref
      */
-    public InGameView(Lobby l, ViewManager ref) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ex) {
-                Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                logoutOnExitWithDialogue();
+	public InGameView(Lobby l, ViewManager ref) {
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+		
 		font = new Font("Tahoma", Font.PLAIN, 12);
+		boldFont = new Font("Tahoma", Font.BOLD, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		referrer = ref;
 		JPanel mainPanel = new JPanel();
@@ -58,10 +61,14 @@ public class InGameView extends JFrame implements Viewable {
 		JPanel panel = new JPanel();
 		onlineUsers = new JPanel();
 		JPanel story = new JPanel();
+		JScrollPane storyScroll = new JScrollPane(story);
+		bottomPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JButton voteButton = new JButton("Vote");
 		JButton exitButton = new JButton("Exit");
 		
+		logoutOnExitWithDialogue();
+		updateView();
 		add(mainPanel);
 		addMouseListener(mv);
 		setMinimumSize(new Dimension(700, 400));
@@ -70,6 +77,7 @@ public class InGameView extends JFrame implements Viewable {
 			public void componentResized(ComponentEvent e) {
 				scrollPane.setSize(new Dimension(mv.getWidth(), 
 								mv.getHeight() - mv.getBoxHeight()));
+				storyScroll.setSize(new Dimension(300, getHeight() / 3));
 			}
 		});
 		
@@ -79,23 +87,36 @@ public class InGameView extends JFrame implements Viewable {
 		
 		panel.setPreferredSize(new Dimension(300, 400));
 		panel.setLayout(new BorderLayout());
-		panel.add(story, BorderLayout.NORTH);
+		panel.add(storyScroll, BorderLayout.NORTH);
 		panel.add(onlineUsers, BorderLayout.CENTER);
-		panel.add(buttonPanel, BorderLayout.SOUTH);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
 		
-		story.add(new JLabel(new ImageIcon(createStoryImage())));
+		storyScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		storyScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		storyScroll.getVerticalScrollBar().setUnitIncrement(15);
+		storyScroll.getVerticalScrollBar().setBlockIncrement(0);
+		storyScroll.setPreferredSize(new Dimension(300, getHeight() / 3));
+		
+		BufferedImage img = createStoryImage();
+		story.add(new JLabel(new ImageIcon(img)));
+		story.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
 		
 		onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), SwingConstants.CENTER));
 		
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+		
 		buttonPanel.setLayout(new FlowLayout());
-		buttonPanel.add(voteButton);
+//		buttonPanel.add(voteButton);
 		buttonPanel.add(exitButton);
+		
+		voteButton.addActionListener(new VoteListener());
+		exitButton.addActionListener(new ExitListener());
 		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(0);
-		updateView();
 	}
 	
     /**
@@ -229,7 +250,7 @@ public class InGameView extends JFrame implements Viewable {
                     newSingleThreadScheduledExecutor();
             onlineUsersExec = Executors.
                     newSingleThreadScheduledExecutor();
-        
+            
             chatExec.scheduleAtFixedRate(
                     new ChatUpdater(),2,2,TimeUnit.SECONDS);
             onlineUsersExec.scheduleAtFixedRate(
@@ -242,15 +263,17 @@ public class InGameView extends JFrame implements Viewable {
     @Override
 	public void showView() {
 		setVisible(true);
-                updateView();
 	}
 	
 	private class ChatUpdater implements Runnable {
 		@Override
 		public void run() {
-			int height = chat.getPreferredHeight();
+			int height = chat.getArraySize();
 			chat.fetchNewMessages();
-			if (height != chat.getPreferredHeight()) {
+			revalidate();
+			if (height != chat.getArraySize()) {
+				scrollPane.repaint();
+				revalidate();
 				JScrollBar vertical = scrollPane.getVerticalScrollBar();
 				vertical.setValue(vertical.getMaximum());
 			}
@@ -260,31 +283,48 @@ public class InGameView extends JFrame implements Viewable {
 	private class OnlineUsersUpdater implements Runnable {
 		@Override
 		public void run() {
-//			onlineUsers.removeAll();
-//			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
-//					SwingConstants.CENTER));
-			onlineUsers.repaint();
+			onlineUsers.removeAll();
+			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
+					SwingConstants.CENTER));
+			repaint();
+			revalidate();
 		}
 	}
-	/*
-	public static void main (String [] args) {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    AccessHandler.username = "e3";
-                    AccessHandler.userID = 6;
-                    new InGameView(LobbyConnection.getLobby(9), null);
-                }
-            });
-	}*/
+	
+//	public static void main (String [] args) {
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    AccessHandler.username = "e3";
+//                    AccessHandler.userID = 6;
+//                    new InGameView(LobbyConnection.getLobby(9), null);
+//                }
+//            });
+//	}
+	
     private void logoutOnExitWithDialogue(){
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 terminateView();
-                //System.out.println("sdfsdfsd");
             }
         });
+    }
+    
+    private class VoteListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+//			bottomPanel.add(new );
+			mv.addNotify();
+		}
+    }
+    
+    private class ExitListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			terminateView();
+			mv.addNotify();
+		}
     }
 }
