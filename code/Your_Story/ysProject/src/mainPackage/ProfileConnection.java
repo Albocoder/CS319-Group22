@@ -50,12 +50,12 @@ public class ProfileConnection {
     /**
      * Gets finished gamed of a player
      * @param player ID of player
-     * @return Arraylist of lobbied
+     * @return Arraylist of lobbies
      */
     public static ArrayList<Lobby> getFinishedGames(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
                 ".*, " + STORY_DATA +
-                ".quota - COUNT(b.id) AS quota FROM " + LOBBY_DATA +
+                ".quota - COUNT(b.id) AS quota, " + STORY_DATA + ".id AS storyid FROM " + LOBBY_DATA +
                 " INNER JOIN " + SEAT_DATA +
                 " a ON a.lobby = " + LOBBY_DATA + 
                 ".id AND a.user = " + player + " LEFT JOIN " + SEAT_DATA +
