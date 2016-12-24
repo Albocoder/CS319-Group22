@@ -299,6 +299,7 @@ public class LobbyView extends JFrame implements Viewable {
                 tmp.setIcon(imageIcon);
             } catch (Exception e) {}
             tmp.setToolTipText(c.getDescription());
+            tmp.addMouseListener(new CharacterSelectionMouseListener());
             tmp.setBorder(BorderFactory.createLineBorder(Color.BLUE,2, true));
             freeCharList.add(tmp);
             freeChars.add(tmp);
@@ -472,11 +473,11 @@ public class LobbyView extends JFrame implements Viewable {
     private class CharacterSelectionMouseListener extends MouseAdapter{
         @Override
         public void mouseReleased(MouseEvent e){
+            System.out.println("view.LobbyView.CharacterSelectionMouseListener.mouseReleased()");
             Character selected = theLobby.getFreeChars().get(
-                    freeCharList.indexOf(
-                            (JLabel)(e.getComponent().getComponentAt(e.getPoint()))
-                    ));
+                    freeCharList.indexOf((JLabel)(e.getComponent())));
             mySeat.setCharacter(selected);
+            System.out.println("salkdfsdklfhklasdjhfaskljdhflakjsdhlkfjas");
             showSeatsWaiting();
         }
     }
