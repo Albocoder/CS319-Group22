@@ -1,6 +1,6 @@
 # CS319-Group22 project "Your Story"
 <center><img src="http://erin.avllazagaj.ug.bilkent.edu.tr/YS.png" width="150" height="150"></center><br>
-Object-Oriented Software Engineering Fall 2016. Be a stargazer, drop us a star, that will motivate us.<hr />
+Object-Oriented Software Engineering Fall 2016. This is a chat-based role player game. The player can team up with other players and by messaging develop a story on given premade header of a story. The player can also create their own lobby. For more check the Analysis Report in the docs folder<hr />
 [![Build Status](https://travis-ci.org/Albocoder/CS319-Group22.svg?branch=master)](https://travis-ci.org/Albocoder/CS319-Group22)
 <br /><br />
 ### Members:
