@@ -95,6 +95,7 @@ public class InGameView extends JFrame implements Viewable {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(0);
+		
 		updateView();
 	}
 	
@@ -229,7 +230,7 @@ public class InGameView extends JFrame implements Viewable {
                     newSingleThreadScheduledExecutor();
             onlineUsersExec = Executors.
                     newSingleThreadScheduledExecutor();
-        
+            
             chatExec.scheduleAtFixedRate(
                     new ChatUpdater(),2,2,TimeUnit.SECONDS);
             onlineUsersExec.scheduleAtFixedRate(
@@ -248,9 +249,12 @@ public class InGameView extends JFrame implements Viewable {
 	private class ChatUpdater implements Runnable {
 		@Override
 		public void run() {
-			int height = chat.getPreferredHeight();
+			int height = chat.getArraySize();
 			chat.fetchNewMessages();
-			if (height != chat.getPreferredHeight()) {
+			revalidate();
+			if (height != chat.getArraySize()) {
+				scrollPane.repaint();
+				revalidate();
 				JScrollBar vertical = scrollPane.getVerticalScrollBar();
 				vertical.setValue(vertical.getMaximum());
 			}
@@ -260,10 +264,11 @@ public class InGameView extends JFrame implements Viewable {
 	private class OnlineUsersUpdater implements Runnable {
 		@Override
 		public void run() {
-//			onlineUsers.removeAll();
-//			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
-//					SwingConstants.CENTER));
-			onlineUsers.repaint();
+			onlineUsers.removeAll();
+			onlineUsers.add(new JLabel(new ImageIcon(createOnlineUsersImage()), 
+					SwingConstants.CENTER));
+			repaint();
+			revalidate();
 		}
 	}
 	/*
