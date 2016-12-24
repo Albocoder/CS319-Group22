@@ -5,12 +5,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import mainPackage.*;
-
 import javax.swing.event.*;
 
 /**
@@ -20,30 +18,31 @@ import javax.swing.event.*;
 public class ProfileView extends JFrame implements Viewable {
 	
 	private ViewManager referrer;
-        private Profile theProfile;
+	private Profile theProfile;
 	
     /**
      *
      * @param toShow
      * @param ref
      */
-    public ProfileView(Profile toShow,ViewManager ref) {
-                theProfile = toShow;
+    public ProfileView(Profile toShow, ViewManager ref) {
+    	theProfile = toShow;
 		referrer = ref;
+		
 		add(new ProfilePanel());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		logoutOnExitWithDialogue();
 		setMinimumSize(new Dimension(700, 400));
 		setVisible(true);
 	}
 	
-//	public static void main(String [] args) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new ProfileView(null);
-//            }
-//        });
-//	}
+	public static void main(String [] args) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new ProfileView(new Profile(6), null);
+            }
+        });
+	}
 
     /**
      *
@@ -51,8 +50,7 @@ public class ProfileView extends JFrame implements Viewable {
 
 	@Override
 	public void terminateView() {
-		// TODO Auto-generated method stub
-		
+		referrer.showHomePage(null);
 	}
 
     /**
@@ -60,27 +58,32 @@ public class ProfileView extends JFrame implements Viewable {
      */
     @Override
 	public void hideView() {
-		// TODO Auto-generated method stub
-		
+		setVisible(false);
 	}
 
     /**
      *
      */
     @Override
-	public void updateView() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateView() {}
 
     /**
      *
      */
     @Override
 	public void showView() {
-		// TODO Auto-generated method stub
-		
+		setVisible(true);	
 	}
+    
+    private void logoutOnExitWithDialogue(){
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                terminateView();
+            }
+        });
+    }
 	
 	class ProfilePanel extends JPanel {
 		
@@ -163,6 +166,7 @@ public class ProfileView extends JFrame implements Viewable {
 						username.setEditable(editable);
 						username.removeFocusListener(nameFocusListener);
 						((JButton) e.getSource()).setText("Edit");
+						theProfile.setDescription(null);
 					} else if (((JButton) e.getSource()).getText().equals("Exit")) {
 						referrer.showHomePage(null);
 					}
@@ -199,30 +203,30 @@ public class ProfileView extends JFrame implements Viewable {
 		
 		final static int LIST_OBJECT_WIDTH = 270;
 		final static int LIST_OBJECT_HEIGHT = 80;
-		Lobby [] lobbies;
+		ArrayList<Lobby> lobbies;
 		
 		public FinishedGames() {
-//			lobbies = LobbyConnection.getLobbies(AccessHandler.userID);
+			lobbies = theProfile.getFinishedGames();
 			
-			JList list = new JList(new Object[7]);
-//			list.setModel(new AbstractListModel() {
-//
-//	            @Override
-//	            public int getSize() {
-//	                return lobbies.length;
-//	            }
-//
-//	            @Override
-//	            public Object getElementAt(int i) {
-//	                return lobbies[i];
-//	            }
-//	        });
+			JList list = new JList(lobbies.toArray());
+			list.setModel(new AbstractListModel() {
+
+	            @Override
+	            public int getSize() {
+	                return lobbies.size();
+	            }
+
+	            @Override
+	            public Object getElementAt(int i) {
+	                return lobbies.get(i);
+	            }
+	        });
 			list.setCellRenderer(new LobbyListRenderer());
 			list.addListSelectionListener(new ListSelectionListener() {
 
 	            @Override
 	            public void valueChanged(ListSelectionEvent evt) {
-	                
+	                referrer.showOngoingGame((Lobby) evt.getSource());
 	            }
 	        });
 			
@@ -250,11 +254,30 @@ public class ProfileView extends JFrame implements Viewable {
 			Graphics2D g = (Graphics2D) img.createGraphics();
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setBackground(Color.DARK_GRAY);
+			
+			BufferedImage castle = null;
+			try {
+				castle = ImageIO.read(new File("img/castleBlack.jpg"));
+			} catch (IOException e) {
+				System.out.println("Error");
+			}
+			g.drawImage( castle, 10, 10, LIST_OBJECT_HEIGHT - 20, LIST_OBJECT_HEIGHT - 20, null );
+			
+			String description = lobbies.get(index).getStory().getDescription();
+			ArrayList<String> descriptionArray = InGameView.fitString(description, InGameView.font,
+													LIST_OBJECT_WIDTH - LIST_OBJECT_HEIGHT - 20);
+			String timeline = lobbies.get(index).getStory().getTimeline();
 			
 			g.setColor(Color.BLACK);
-			g.drawRect(10, 10, LIST_OBJECT_HEIGHT - 20, LIST_OBJECT_HEIGHT - 20);
-			g.drawString("Photo", 15, LIST_OBJECT_HEIGHT/2 + 6);
-			g.drawString("Story Description", LIST_OBJECT_HEIGHT + 10, LIST_OBJECT_HEIGHT/2 + 6);
+			g.setFont(InGameView.boldFont);
+			g.drawString(timeline, LIST_OBJECT_HEIGHT + 20, 10);
+			
+			g.setFont(InGameView.font);
+			g.drawString(descriptionArray.get(0), LIST_OBJECT_HEIGHT + 10, 30);
+			if (descriptionArray.size() > 1) {
+				g.drawString(descriptionArray.get(1), LIST_OBJECT_HEIGHT + 10, 50);
+			}
 			
 			return img;
 		}

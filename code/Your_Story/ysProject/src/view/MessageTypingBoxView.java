@@ -78,7 +78,8 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		ArrayList<String> modified = InGameView.fitString(typingString, ChatView.FINAL_WIDTH);
+		ArrayList<String> modified = InGameView.fitString(typingString, InGameView.font, 
+															ChatView.FINAL_WIDTH);
 		int height = modified.size() * InGameView.LINE_HEIGHT;
 		boxHeight = height + 20;
 		

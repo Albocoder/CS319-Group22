@@ -31,7 +31,8 @@ public class MessageView {
      * @return
      */
     public BufferedImage createImage() {
-		ArrayList<String> messageContent = InGameView.fitString(m.messageContent, width);
+		ArrayList<String> messageContent = InGameView.fitString(m.messageContent, 
+														InGameView.font, width);
 		String name = m.charName + " (" + m.senderName + ")";
 		setNewWidth(messageContent, name);
 		int height = InGameView.LINE_HEIGHT * (messageContent.size() + 1);
