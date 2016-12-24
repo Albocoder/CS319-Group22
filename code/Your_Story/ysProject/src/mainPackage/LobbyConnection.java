@@ -376,4 +376,13 @@ public class LobbyConnection {
                 " WHERE id = " + id);
         return (DBInterface.resultSetToCharacterArray(r)[0]);
     }
+    
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public static int getState(long id){
+        return (int)DBInterface.selectInt(LOBBY_DATA, "state", id);
+    }
 }
