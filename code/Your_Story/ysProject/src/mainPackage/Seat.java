@@ -182,7 +182,7 @@ public class Seat {
      */
     public void setCharacter(Character character)
     {
-        this.character = character;//maybe deleted
+        this.character = character;//maybe deleted dd
         LobbyConnection.assignCharacterToPlayer(playerID, charID, lobbyID);
     
     }
