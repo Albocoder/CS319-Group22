@@ -181,7 +181,11 @@ public class Seat {
      * @param character
      */
     public void setCharacter(Character character)
-    {this.character = character;}
+    {
+        this.character = character;
+        LobbyConnection.assignCharacterToPlayer(playerID, charID, lobbyID);
+    
+    }
     
     //other methods 
 
