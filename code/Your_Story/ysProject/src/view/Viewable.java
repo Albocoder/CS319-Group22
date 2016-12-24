@@ -16,10 +16,36 @@ package view;
  * use of polymorphism in all the view classes regardless of their
  * content.
  * */
+
+/**
+ *
+ * @author kaxell
+ */
+
 public interface Viewable {
-	ViewManager referrer = null;
-	public void terminateView();
-	public void hideView();
-	public void updateView();
-	public void showView();		
+
+    /**
+     *
+     */
+    ViewManager referrer = null;
+
+    /**
+     *
+     */
+    public void terminateView();
+
+    /**
+     *
+     */
+    public void hideView();
+
+    /**
+     *
+     */
+    public void updateView();
+		
+    /**
+     *
+     */
+    public void showView();		
 }

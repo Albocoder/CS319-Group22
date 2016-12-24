@@ -13,12 +13,21 @@ import mainPackage.*;
 
 import javax.swing.event.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class ProfileView extends JFrame implements Viewable {
 	
 	private ViewManager referrer;
         private Profile theProfile;
 	
-	public ProfileView(Profile toShow,ViewManager ref) {
+    /**
+     *
+     * @param toShow
+     * @param ref
+     */
+    public ProfileView(Profile toShow,ViewManager ref) {
                 theProfile = toShow;
 		referrer = ref;
 		add(new ProfilePanel());
@@ -36,25 +45,38 @@ public class ProfileView extends JFrame implements Viewable {
 //        });
 //	}
 
+    /**
+     *
+     */
+
 	@Override
 	public void terminateView() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void hideView() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void updateView() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void showView() {
 		// TODO Auto-generated method stub
 		

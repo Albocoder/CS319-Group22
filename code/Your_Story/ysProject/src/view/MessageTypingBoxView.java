@@ -12,6 +12,10 @@ import javax.swing.*;
 
 import mainPackage.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class MessageTypingBoxView extends JPanel implements KeyListener, MouseListener {
 	
 	private String typingString;
@@ -22,7 +26,12 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 	private JComponent panel;
 	private JButton button;
 	
-	public MessageTypingBoxView(JComponent panel, Lobby l) {
+    /**
+     *
+     * @param panel
+     * @param l
+     */
+    public MessageTypingBoxView(JComponent panel, Lobby l) {
 		typingString = "";
 		typingBarIsActive = false;
 		markerIsActive = false;
@@ -52,12 +61,19 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		addMouseListener(this);
 	}
 	
-	public void addNotify() {
+    /**
+     *
+     */
+    public void addNotify() {
         super.addNotify();
         requestFocus();
     }
 	
-	public void paintComponent(Graphics g) {
+    /**
+     *
+     * @param g
+     */
+    public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -89,7 +105,10 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		}
 	}
 	
-	public void activateMarker() {
+    /**
+     *
+     */
+    public void activateMarker() {
 		markerIsActive = true;
 		repaint();
 		Timer timer = new Timer();
@@ -107,25 +126,49 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		}, 500, 500);
 	}
 	
-	public boolean typingBarIsActive() {
+    /**
+     *
+     * @return
+     */
+    public boolean typingBarIsActive() {
 		return typingBarIsActive;
 	}
 	
-	public void setTypingBarIsActive(boolean b) {
+    /**
+     *
+     * @param b
+     */
+    public void setTypingBarIsActive(boolean b) {
 		typingBarIsActive = b;
 	}
 	
-	public RoundRectangle2D getMessageTypingBar() {
+    /**
+     *
+     * @return
+     */
+    public RoundRectangle2D getMessageTypingBar() {
 		return messageTypingBar;
 	}
 	
-	public int getBoxHeight() {
+    /**
+     *
+     * @return
+     */
+    public int getBoxHeight() {
 		return boxHeight;
 	}
 
-	public void keyPressed(KeyEvent e) {}
+    /**
+     *
+     * @param e
+     */
+    public void keyPressed(KeyEvent e) {}
 	
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void keyTyped(KeyEvent e) {
 		if (typingBarIsActive) {
 			typingString += e.getKeyChar();
@@ -133,10 +176,18 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		}
 	}
 
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void keyReleased(KeyEvent e) {}
 	
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void mouseClicked(MouseEvent e) {
 //		System.out.println(e.getX() + ", " + e.getY());
 		if (messageTypingBar.contains(new Point(e.getX(), e.getY()))) {
@@ -151,15 +202,31 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 		}
 	}
 
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void mousePressed(MouseEvent e) {}
 
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void mouseReleased(MouseEvent e) {}
 
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void mouseEntered(MouseEvent e) {}
 
-	@Override
+    /**
+     *
+     * @param e
+     */
+    @Override
 	public void mouseExited(MouseEvent e) {}
 }

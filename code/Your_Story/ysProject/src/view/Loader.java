@@ -22,9 +22,17 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class Loader extends JFrame{
     private JLabel txt;
     
+    /**
+     *
+     * @param msg
+     */
     public Loader(String msg){
         getContentPane().setLayout(new BorderLayout());
         JLabel l  = new JLabel();
@@ -46,9 +54,19 @@ public class Loader extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+    /**
+     *
+     * @param msg
+     */
     public void setText(String msg){
         txt.setText(msg);
     }
+
+    /**
+     *
+     * @return
+     */
     public String getText(){
         return txt.getText();
     }

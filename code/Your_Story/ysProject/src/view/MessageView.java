@@ -8,17 +8,29 @@ import java.util.ArrayList;
 
 import mainPackage.*;
 
+/**
+ *
+ * @author kaxell
+ */
 public class MessageView {
 	
 	Message m;
 	int width;
 	
-	public MessageView(Message message) {
+    /**
+     *
+     * @param message
+     */
+    public MessageView(Message message) {
 		m = message;
 		width = ChatView.FINAL_WIDTH;
 	}
 	
-	public BufferedImage createImage() {
+    /**
+     *
+     * @return
+     */
+    public BufferedImage createImage() {
 		ArrayList<String> messageContent = InGameView.fitString(m.messageContent, width);
 		messageContent.add(0, m.charName + " (" + m.senderName + ")");
 		setNewWidth(messageContent);

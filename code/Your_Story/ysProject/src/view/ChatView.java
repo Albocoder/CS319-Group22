@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 import mainPackage.*;
 
-
+/**
+ *
+ * @author kaxell
+ */
 public class ChatView extends JPanel {
 	
 	private ArrayList<Message> messages;
@@ -15,14 +18,22 @@ public class ChatView extends JPanel {
 	private int height;
 	private Lobby lobby;
 	
-	public ChatView(Lobby l) {
+    /**
+     *
+     * @param l
+     */
+    public ChatView(Lobby l) {
 		lobby = l;
 		FINAL_WIDTH = 300;
 		messages = ChatConnection.getMessages(l.getID());
 		setBackground(Color.LIGHT_GRAY);
 	}
 	
-	public void paintComponent(Graphics g) {
+    /**
+     *
+     * @param g
+     */
+    public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		height = 10;
 		Graphics2D g2 = (Graphics2D) g;
@@ -44,7 +55,10 @@ public class ChatView extends JPanel {
 		setPreferredSize(new Dimension(380, height));
 	}
 	
-	public void fetchNewMessages() {
+    /**
+     *
+     */
+    public void fetchNewMessages() {
 		ArrayList<Message> newMessages = ChatConnection.getMessages(lobby.getID());
 		if (newMessages.size() != messages.size()) {
 			messages = newMessages;
@@ -52,7 +66,11 @@ public class ChatView extends JPanel {
 		}
 	}
 	
-	public int getPreferredHeight() {
+    /**
+     *
+     * @return
+     */
+    public int getPreferredHeight() {
 		return height;
 	}
 }
