@@ -247,6 +247,7 @@ public class HomeView extends JFrame implements Viewable{
         mainData = null;
         referrer.hideLogin(true);
         AccessHandler.logOut();
+        System.gc();
         referrer.showLogin();
     }
     public void createLobby() {

@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.border.EtchedBorder;
@@ -24,6 +25,7 @@ import javax.swing.border.EtchedBorder;
  * creator to the lobby or just goes back to home page if not created
  * */
 import mainPackage.*;
+import mainPackage.Character;
 
 public class LobbyCreatorView extends JFrame implements Viewable{
     private JScrollPane stories;
@@ -62,12 +64,14 @@ public class LobbyCreatorView extends JFrame implements Viewable{
         allStories = new JPanel();
         storyPanelsList = new ArrayList<>();
         storiesList = new ArrayList<>();
-        stories = new JScrollPane();
         showStories();
+        stories = new JScrollPane(allStories);
         stories.setPreferredSize(new Dimension(600,700));
         /////////////////////////////////////////////
         add(upperPanel,BorderLayout.NORTH);
         add(stories,BorderLayout.CENTER);
+        pack();
+        showView();
     }
     
     /*
@@ -102,19 +106,19 @@ public class LobbyCreatorView extends JFrame implements Viewable{
 
             //adding the icon to the left
             JLabel icon = new JLabel();
-            
+            /*
             try {
-                BufferedImage playerImg = ImageIO.read(new File("./img/castleBlack.jpg"))/*s.getImage()*/;
+                BufferedImage playerImg = ImageIO.read(new File("./img/castleBlack.jpg"))s.getImage();
                 Image dimg = playerImg.getScaledInstance(72, 72,Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(dimg);
                 icon.setIcon(imageIcon);
                 icon.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
             } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
             }
             toFill.add(icon,BorderLayout.WEST);
-
-            JLabel plName = new JLabel("Timeline:"+s.getTimeline());
+            */
+            JLabel plName = new JLabel("Timeline: "+s.getTimeline());
             try {
                 Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./fonts/HeaderFont.ttf")).deriveFont(25f);
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -126,10 +130,19 @@ public class LobbyCreatorView extends JFrame implements Viewable{
             plName.setVerticalAlignment(JLabel.NORTH);
             toFill.add(plName,BorderLayout.NORTH);
 
-            JLabel storyTimeline = new JLabel("Description: "+s.getDescription());
+            JLabel storyTimeline = new JLabel("<html>Description: "+s.getDescription()+"</html>");
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
+            String text = "";
+            for (Iterator<Character> it = s.getCharList().iterator(); it.hasNext();) {
+                Character ch = it.next();
+                if(it.hasNext())
+                    text+= ch.getName()+", ";
+            }
+            System.out.println("Characters for"+s.getTimeline()+" are: "+text);
+            JLabel chars = new JLabel("<html>"+text+"</html>");
+            toFill.add(chars,BorderLayout.SOUTH);
 
             tmpLobby.add(toFill, BorderLayout.CENTER);
             
@@ -152,7 +165,6 @@ public class LobbyCreatorView extends JFrame implements Viewable{
             public void windowClosing(WindowEvent windowEvent) {
                 hideView();
                 referrer.showHomePage(null);
-                //System.exit(0);
             }
         });
     }

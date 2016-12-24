@@ -21,6 +21,7 @@ public class Story {
         this.timeline = timeline ;
         this.ID = ID; 
         charList = new ArrayList<Character>();
+        
     }
     
     public Story(long id){

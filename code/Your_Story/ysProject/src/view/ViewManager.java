@@ -117,7 +117,7 @@ public class ViewManager {
         if(lobbycreator == null)
             lobbycreator = new LobbyCreatorView(this);
         else
-            homepage.setVisible(true);
+            lobbycreator.setVisible(true);
         hideLogin(false);
         hideOngoingGame(false);
         hideLobby(false);
