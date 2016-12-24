@@ -6,13 +6,16 @@ import java.util.ArrayList;
 /**
  *
  * @author kaxell
+ * 
+ * Constructor class for story.
+ * Requirement: Every story has at least 2 characters
  */
 public class Story {
     
     private String description;
     private String timeline;
     private long ID;
-    private ArrayList<Character> charList; // Every story has at least 2 characters
+    private ArrayList<Character> charList; 
     
     /**
      *
@@ -108,11 +111,11 @@ public class Story {
     public void setCharList(ArrayList<Character> charList)
     {this.charList=charList;}
     
-    //returns the stories if user is authenticated
-    //or an empty stoy arraylist if encounters any error
+  
 
     /**
-     *
+     * Returns the stories if user is authenticated
+     * or an empty stoy arraylist if encounters any error
      * @return
      */
     public static ArrayList<Story> getStories(){

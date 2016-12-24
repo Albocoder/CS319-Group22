@@ -239,22 +239,20 @@ public class Seat {
     }
     
     /**
-     *
+     * Sends a vote of a player to lobby. Not implemented in this current build. 
      * @param voteType
      * @param vote
      */
     public void sendVote(int voteType, boolean vote){
-    //This will send the vote of a player in the
-    //database and will store it there to be calculated later.
     }
     
     /**
-     *
+     * This method is used to start the voting session. 
+     * It will be called from a player to start the vote to kick another player.
      * @param voteType
      * @param targetPlayer
      */
     public void startVoting(int voteType, Player targetPlayer){}
-    //This method is used to start the
-    //voting session. It will be called from a player to start the vote to kick another player.
+
    
 }

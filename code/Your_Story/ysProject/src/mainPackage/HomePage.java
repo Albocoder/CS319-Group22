@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * */
 
 /**
- *
+ * First page that a user sees when logging in. 
  * @author kaxell
  */
 

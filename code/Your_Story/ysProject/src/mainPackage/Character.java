@@ -26,7 +26,7 @@ public class Character {
      * @param description
      * @param name
      * @param charID
-     * @param isTaken
+     * @param isTaken : describes if a char is taken by a user
      */
     public Character(String description, String name, long charID, boolean isTaken)
     {
@@ -37,7 +37,7 @@ public class Character {
     }
     
     /**
-     *
+     * Constructor of a character
      * @param charID
      */
     public Character(long charID)
@@ -51,7 +51,7 @@ public class Character {
     }
     
     /**
-     *
+     *Sample Constructor
      */
     public Character()
     {

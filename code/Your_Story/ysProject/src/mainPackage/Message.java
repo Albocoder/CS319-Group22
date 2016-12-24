@@ -5,6 +5,8 @@ import java.sql.Date;
 /**
  *
  * @author kaxell
+ * Constructor for a message. 
+ * 
  */
 public class Message {
 

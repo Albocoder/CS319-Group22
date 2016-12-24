@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kaxell
+ * Profile of a player. 
  */
 public class Profile {
  
@@ -119,7 +120,7 @@ public class Profile {
     }
 
     /**
-     *
+     * Describes if this profile is yours or not. 
      * @param isYours
      */
     public void setIsYours(boolean isYours){
@@ -128,7 +129,7 @@ public class Profile {
     }
     
     /**
-     *
+     * Pulls the profile info in database
      */
     public void retrieveData(){
         
@@ -140,7 +141,7 @@ public class Profile {
     }
     
     /**
-     *
+     * Updates the profile info in database
      */
     public void updateData(){//
         ProfileConnection.updateProfileInDatabase(this);
@@ -157,8 +158,8 @@ public class Profile {
     }
     
     /**
-     *
-     * @return
+     * Views finished games of a player.
+     * @return an arraylist of lobbies
      */
     public ArrayList<Lobby> viewFinishedGames(){
     //Returns unfinished games of player that profile belongs to
@@ -166,8 +167,8 @@ public class Profile {
     }
     
     /**
-     *
-     * @return
+     * Views unfinished games of a player.
+     * @return an arraylist of lobbies
      */
     public ArrayList<Lobby> viewUnfinishedGames(){
     //Returns unfinished games of player that profile belongs to

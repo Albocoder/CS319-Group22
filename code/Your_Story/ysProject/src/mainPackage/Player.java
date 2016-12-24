@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mainPackage;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author kaxell
+ * Constructor class for a player.
+ * 
  */
 public class Player {
     
@@ -30,8 +28,8 @@ public class Player {
     
     //getters / setters
 
-    /**
-     *
+    /**private
+     *private
      * @return
      */
     public long getPlayerID(){return playerID;}
@@ -69,7 +67,7 @@ public class Player {
     }
     
     /**
-     *
+     * Enters a lobby if there is an empty seat, and assings the player. 
      * @param aLobby
      * @return
      */
@@ -89,7 +87,8 @@ public class Player {
     }
 
     /**
-     *
+     * Removes the player from the "aLobby" if the player is in that lobby
+     * and the seat of that player turns empty
      * @param aLobby
      * @return
      */
@@ -105,7 +104,7 @@ public class Player {
     }
     
     /**
-     *
+     * Updates everything about the player in database after editing. 
      * @param name
      * @param photo
      * @param description
@@ -118,23 +117,22 @@ public class Player {
         profile.setName(name);
         profile.updateData();
     }
-    
     /**
-     *
-     * @return
+     * 
+     * 
+     * @return ongoing games 
      */
     public ArrayList<Lobby> getOngoingGames(){ 
         return ongoing;
     }
     
     /**
-     *
+     * Returns the ongoing games of player via database classes
      * @return
      */
     public Player updateOngoingGames(){ 
         ongoing = LobbyConnection.getOngoingGamesOfPlayer(playerID);
         return this;
     }
-    //Returns the ongoing games of player via database
-    //classes.
+    
 }
