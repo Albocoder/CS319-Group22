@@ -256,4 +256,9 @@ public class LobbyConnection {
                 " WHERE story = " + story);
         return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
+    
+    public static void setLobbyState(long lobby, int state){
+        DBInterface.getConnection().executeStuff("UPDATE " + LOBBY_DATA +
+                " SET state = " + state + " WHERE id = " + lobby);
+    }
 }
