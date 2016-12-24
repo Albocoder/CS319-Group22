@@ -14,26 +14,26 @@ import thirdparty.*;
  */
 
 /**
- *
+ * This class is used for connections for accessing or creating a new account
  * @author Cevat
  */
 public class AccessConnection {
     
     /**
-     *
+    * Table name for user in database
      */
     public final static String AUTH_DATA = "user";
 
     /**
-     *
+    * Table name for profile in database
      */
     public final static String PROFILE_DATA = "profile";
     
     /**
-     *
-     * @param username
-     * @param password
-     * @return
+     * Adds user to database
+     * @param username Nickname of user
+     * @param password Password of user
+     * @return ID of new user
      */
     public static long record(String username, String password){
         if(!isAvailable(username))
@@ -48,19 +48,19 @@ public class AccessConnection {
     }
 
     /**
-     *
-     * @param username
-     * @return
+     * Checks if given username is available
+     * @param username Username to check
+     * @return A boolean that if it is available or not
      */
     public static boolean isAvailable(String username){
         return DBInterface.selectIntArray(AUTH_DATA, "id", "username", username).length == 0;
     }
 
     /**
-     *
-     * @param username
-     * @param password
-     * @return
+     * Checks the given credentials
+     * @param username Username of user
+     * @param password Password of user
+     * @return ID of player on success, otherwise it will be equal to -1
      */
     public static long authenticate(String username, String password){
         try {
@@ -81,8 +81,8 @@ public class AccessConnection {
     }
     
     /**
-     *
-     * @param player
+     * Sets offline a user in database
+     * @param player ID of user
      */
     public static void logout(long player){
         DBInterface.getConnection().executeStuff("UPDATE " + AUTH_DATA +

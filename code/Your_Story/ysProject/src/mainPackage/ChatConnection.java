@@ -12,13 +12,13 @@ import thirdparty.*;
  */
 
 /**
- *
+ * This is used to handle connection to database for Chat class
  * @author Cevat
  */
 public class ChatConnection {
     
     /**
-     *
+     * Name of chat table in database
      */
     public final static String CHAT_DATA = "message";
     private final static String PLAYER_DATA = "user";
@@ -26,9 +26,9 @@ public class ChatConnection {
     private final static String CHARACTER_DATA = "charac";
     
     /**
-     *
-     * @param id
-     * @return
+     * Gets the messages of given lobby
+     * @param id ID of lobby
+     * @return Arraylist of messages
      */
     public static ArrayList<Message> getMessages(long id){
         ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
@@ -53,10 +53,10 @@ public class ChatConnection {
     }
 
     /**
-     *
-     * @param lobby
-     * @param lastMessage
-     * @return
+     * Gets a lobby's messages whose ID is bigger than given message
+     * @param lobby ID of lobby
+     * @param lastMessage ID  of message
+     * @return ArrayList of messages
      */
     public static ArrayList<Message> getMessages(long lobby, long lastMessage){
         ResultSet r =DBInterface.getConnection().selectStuff("SELECT " + CHAT_DATA +
@@ -82,11 +82,11 @@ public class ChatConnection {
     }
 
     /**
-     *
-     * @param message
-     * @param lobby
-     * @param user
-     * @return
+     * Sends message to database
+     * @param message Body of message
+     * @param lobby ID of lobby that message will be sent
+     * @param user ID of player who is owner message
+     * @return ID of created message
      */
     public static long sendMessage(String message, long lobby, long user){
         message = DBInterface.escapeString(message);
