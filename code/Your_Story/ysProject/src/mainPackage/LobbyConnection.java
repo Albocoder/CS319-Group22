@@ -250,4 +250,10 @@ public class LobbyConnection {
                 ".id = " + lobby + " GROUP BY " + CHARACTER_DATA +".id");
         return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
     }
+    public static ArrayList<Character> getCharactersByStory(long story){
+        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
+                ".*, 0 AS occupied FROM " + CHARACTER_DATA +
+                " WHERE story = " + story);
+        return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
+    }
 }

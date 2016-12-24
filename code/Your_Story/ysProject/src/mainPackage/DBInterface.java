@@ -235,11 +235,4 @@ public class DBInterface {
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = " + conditionValue);
             return resultSetToStringArray(r);
         }
-	
-	public static ArrayList<Character> getCharactersByStory(long story){
-        ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
-                ".*, 0 AS occupied FROM " + CHARACTER_DATA +
-                " WHERE story = " + story);
-        return new ArrayList<Character>(Arrays.asList(DBInterface.resultSetToCharacterArray(r)));
-    }
 }
