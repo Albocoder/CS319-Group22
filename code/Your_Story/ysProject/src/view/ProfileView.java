@@ -39,6 +39,8 @@ public class ProfileView extends JFrame implements Viewable {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+            	AccessHandler.userID = 6;
+            	AccessHandler.username = "e3";
                 new ProfileView(new Profile(6), null);
             }
         });
@@ -168,7 +170,7 @@ public class ProfileView extends JFrame implements Viewable {
 						((JButton) e.getSource()).setText("Edit");
 						theProfile.setDescription(null);
 					} else if (((JButton) e.getSource()).getText().equals("Exit")) {
-						referrer.showHomePage(null);
+						terminateView();
 					}
 				}
 			});
@@ -262,7 +264,7 @@ public class ProfileView extends JFrame implements Viewable {
 			} catch (IOException e) {
 				System.out.println("Error");
 			}
-			g.drawImage( castle, 10, 10, LIST_OBJECT_HEIGHT - 20, LIST_OBJECT_HEIGHT - 20, null );
+			g.drawImage(castle, 10, 10, LIST_OBJECT_HEIGHT - 20, LIST_OBJECT_HEIGHT - 20, null );
 			
 			String description = lobbies.get(index).getStory().getDescription();
 			ArrayList<String> descriptionArray = InGameView.fitString(description, InGameView.font,
