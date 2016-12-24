@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import thirdparty.*;
 
 /**
- *
- * @author kaxell
+ * This is the  main class for other connection classes to use
+ * @author Cevat
  */
 public class DBInterface {
 	private static final String type = "mysql";
@@ -27,17 +27,17 @@ public class DBInterface {
         private static DBInter db = new DBInter(con);
 
     /**
-     *
-     * @return
+     * Gets the connection object
+     * @return Connection
      */
     public static DBInter getConnection(){
             return db;
         }
 
     /**
-     *
-     * @param term
-     * @return
+     * Protects the given string for SQL injections
+     * @param term The string to be escaped
+     * @return The escaped string
      */
     public static String escapeString(String term){
             term = term.replaceAll("'","''");
@@ -45,9 +45,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of characters
+     * @param r Target resultset
+     * @return Array of characters
      */
     public static Character[] resultSetToCharacterArray(ResultSet r){
             try {
@@ -68,9 +68,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of messages
+     * @param r Target resultset
+     * @return Array of messages
      */
     public static Message[] resultSetToMessageArray(ResultSet r){
             try {
@@ -91,9 +91,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of seats
+     * @param r Target resultset
+     * @return Array of seats
      */
     public static Seat[] resultSetToSeatArray(ResultSet r){
             System.out.println("Middle2");
@@ -120,9 +120,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of players
+     * @param r Target resultset
+     * @return Array of players
      */
     public static Player[] resultSetToPlayerArray(ResultSet r){
             try {
@@ -143,9 +143,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of lobbies
+     * @param r Target resultset
+     * @return Array of lobbies
      */
     public static Lobby[] resultSetToLobbyArray(ResultSet r){
             try {
@@ -172,9 +172,9 @@ public class DBInterface {
         }
         
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of stories
+     * @param r Target resultset
+     * @return Array of stories
      */
     public static Story[] resultSetToStoryArray(ResultSet r){
             try {
@@ -195,9 +195,9 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of long objects
+     * @param r Target resultset
+     * @return Array of long objects
      */
     public static long[] resultSetToIntArray(ResultSet r){
             try {
@@ -216,9 +216,9 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param r
-     * @return
+     * Converts a resultset to array of strings
+     * @param r Target resultset
+     * @return Array of strings
      */
     public static String[] resultSetToStringArray(ResultSet r){
             try {
@@ -237,12 +237,12 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param column
-     * @param id
-     * @param value
-     * @return
+     * Executes a 'Update' query in database
+     * @param table Table to update
+     * @param column Column to update
+     * @param id ID of row to update
+     * @param value New value of column
+     * @return Boolean that shows if query was successful
      */
     public static boolean update(String table, String column, long id, String value){
             value = escapeString(value);
@@ -250,23 +250,23 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param column
-     * @param id
-     * @param value
-     * @return
+     * Executes a 'Update' query in database
+     * @param table Table to update
+     * @param column Column to update
+     * @param id ID of row to update
+     * @param value New value of column
+     * @return Boolean that shows if query was successful
      */
     public static boolean update(String table, String column, long id, int value){
             return db.executeStuff("UPDATE " + table + " SET " + column + " = " + value + " WHERE id = " + id);
         }
 
     /**
-     *
-     * @param table
-     * @param column
-     * @param id
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table to select
+     * @param column Column to select
+     * @param id ID of row
+     * @return Returns the integer
      */
     public static long selectInt(String table, String column, long id){
             try {
@@ -280,11 +280,11 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param column
-     * @param id
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table to select
+     * @param column Column to select
+     * @param id ID of row
+     * @return Returns the string
      */
     public static String selectString(String table, String column, long id){
             try {
@@ -298,12 +298,12 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param targetColumn
-     * @param conditionColumn
-     * @param conditionValue
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table select
+     * @param targetColumn Column to select
+     * @param conditionColumn Condition column that will be used in WHERE clause
+     * @param conditionValue Value that will be used in WHERE clause
+     * @return Array of integers that satisfies condition
      */
     public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, String conditionValue){
             conditionValue = escapeString(conditionValue);
@@ -312,12 +312,12 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param targetColumn
-     * @param conditionColumn
-     * @param conditionValue
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table select
+     * @param targetColumn Column to select
+     * @param conditionColumn Condition column that will be used in WHERE clause
+     * @param conditionValue Value that will be used in WHERE clause
+     * @return Array of integers that satisfies condition
      */
     public static long[] selectIntArray(String table, String targetColumn, String conditionColumn, long conditionValue){
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = " + conditionValue);
@@ -325,12 +325,12 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param targetColumn
-     * @param conditionColumn
-     * @param conditionValue
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table select
+     * @param targetColumn Column to select
+     * @param conditionColumn Condition column that will be used in WHERE clause
+     * @param conditionValue Value that will be used in WHERE clause
+     * @return Array of strings that satisfies condition
      */
     public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, String conditionValue){
             conditionValue = escapeString(conditionValue);
@@ -339,12 +339,12 @@ public class DBInterface {
         }
 
     /**
-     *
-     * @param table
-     * @param targetColumn
-     * @param conditionColumn
-     * @param conditionValue
-     * @return
+     * Executes a 'Select' query in database
+     * @param table Table select
+     * @param targetColumn Column to select
+     * @param conditionColumn Condition column that will be used in WHERE clause
+     * @param conditionValue Value that will be used in WHERE clause
+     * @return Array of strings that satisfies condition
      */
     public static String[] selectStringArray(String table, String targetColumn, String conditionColumn, long conditionValue){
             ResultSet r = db.selectStuff("SELECT " + targetColumn + " FROM " + table + " WHERE " + conditionColumn + " = " + conditionValue);

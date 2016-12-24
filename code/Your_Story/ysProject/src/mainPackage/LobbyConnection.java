@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 
 /**
- *
- * @author Asus
+ * This class is used by Lobby class to handle database relation
+ * @author Cevat
  */
 public class LobbyConnection {
     
@@ -28,9 +28,9 @@ public class LobbyConnection {
     private static final String CHARACTER_DATA = "charac";
     
     /**
-     *
-     * @param player
-     * @return
+     * Gets ongoing gamed of a player
+     * @param player ID of player
+     * @return Arraylist of lobbied
      */
     public static ArrayList<Lobby> getOngoingGamesOfPlayer(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
@@ -50,9 +50,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Gets a seat object feom databade
+     * @param id ID of seat to get
+     * @return The seat object
      */
     public static Seat getSeat(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT * FROM " + SEAT_DATA +
@@ -61,9 +61,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Gets a lobby object from database
+     * @param id ID of lobby to get
+     * @return Lobby Object
      */
     public static Lobby getLobby(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
@@ -85,18 +85,18 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Creates a player object
+     * @param id ID of player
+     * @return Player object
      */
     public static Player getPlayer(long id){
         return new Player(id);
     }
     
     /**
-     *
-     * @param lobbyID
-     * @return
+     * Get seats of a lobby
+     * @param lobbyID ID of lobby
+     * @return Arraylist of lobbies
      */
     public static ArrayList<Seat> getSeats(long lobbyID){
         System.out.println("In2");
@@ -106,9 +106,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param storyID
-     * @return
+     * Gets a story object from database
+     * @param storyID ID of story
+     * @return The story object
      */
     public static Story getStory(long storyID){
         return new Story(DBInterface.selectString(STORY_DATA, "description", storyID),
@@ -116,8 +116,8 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @return
+     * Gets the waiting lobbies
+     * @return Arraylist of lobbies
      */
     public static ArrayList<Lobby> getWaitingLobbies(){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
@@ -139,9 +139,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param player
-     * @return
+     * Gets the lobbies that player in
+     * @param player ID of player
+     * @return Arraylist of lobbies
      */
     public static ArrayList<Lobby> getLobbies(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +
@@ -160,17 +160,17 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @return
+     * Gets the number of online users
+     * @return Number of online users
      */
     public static int getOnlineUsers(){
         return DBInterface.selectIntArray(PLAYER_DATA, "id", "online", 1).length;
     }
     
     /**
-     *
-     * @param lobby
-     * @return
+     * Gets online players in a lobby
+     * @param lobby ID of lobby
+     * @return Arraylist of online players in that lobby
      */
     public static ArrayList<Player> getOnlineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
@@ -185,9 +185,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param lobby
-     * @return
+     * Gets offline users of a lobby
+     * @param lobby ID of lobby
+     * @return Arraylist of players that offline in that lobby
      */
     public static ArrayList<Player> getOfflineUsersOfLobby(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + PLAYER_DATA +
@@ -202,9 +202,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param player
-     * @return
+     * Gets available stories to choose
+     * @param player ID of a player to authenticate access to stories
+     * @return Arraylist of stories available
      */
     public static ArrayList<Story> getStories(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + STORY_DATA +
@@ -215,10 +215,10 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param name
-     * @param story
-     * @return
+     * Creates a lobby in database
+     * @param name Name of lobby
+     * @param story Chosen story
+     * @return ID of lobby
      */
     public static long createLobby(String name, long story){
         name = DBInterface.escapeString(name);
@@ -233,9 +233,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param lobby
-     * @return
+     * Gets the remaining quota of a lobby 
+     * @param lobby ID of lobby
+     * @return Number of quota
      */
     public static int getQuota(long lobby){
         try {
@@ -259,10 +259,10 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param player
-     * @param lobby
-     * @return
+     * Adds a player to lobby
+     * @param player ID of player to add
+     * @param lobby ID of lobby to be used
+     * @return Boolean that show if it was successful or not
      */
     public static boolean addPlayerToLobby(long player, long lobby){
         try {
@@ -287,9 +287,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param player
-     * @param lobby
+     * Removes a player from lobby
+     * @param player ID of player
+     * @param lobby ID of lobby
      */
     public static void removePlayerFromLobby(long player, long lobby){
         DBInterface.getConnection().executeStuff("UPDATE " + SEAT_DATA +
@@ -297,11 +297,11 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param player
-     * @param character
-     * @param lobby
-     * @return
+     * Assigns a character to player
+     * @param player ID of player
+     * @param character ID of character
+     * @param lobby ID of lobby
+     * @return Boolean that if it was successsful or not
      */
     public static boolean assignCharacterToPlayer(long player, long character, long lobby){
         try {
@@ -324,9 +324,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param lobby
-     * @return
+     * Gets character of a lobby
+     * @param lobby ID Of lobby
+     * @return Arraylist of characters
      */
     public static ArrayList<Character> getCharacters(long lobby){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
@@ -344,9 +344,9 @@ public class LobbyConnection {
     }
 
     /**
-     *
-     * @param story
-     * @return
+     * Get characters of a story
+     * @param story ID of story
+     * @return Arraylist of characters
      */
     public static ArrayList<Character> getCharactersByStory(long story){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
@@ -356,9 +356,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param lobby
-     * @param state
+     * Sets a new state for lobby
+     * @param lobby ID of lobby
+     * @param state State as integer
      */
     public static void setLobbyState(long lobby, int state){
         DBInterface.getConnection().executeStuff("UPDATE " + LOBBY_DATA +
@@ -366,9 +366,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Gets a character object from database
+     * @param id ID of character
+     * @return Character object
      */
     public static Character getCharacter(long id){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + CHARACTER_DATA +
@@ -378,9 +378,9 @@ public class LobbyConnection {
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Gets the state of a lobby
+     * @param id ID of lobby
+     * @return Integer that represents the state
      */
     public static int getState(long id){
         return (int)DBInterface.selectInt(LOBBY_DATA, "state", id);

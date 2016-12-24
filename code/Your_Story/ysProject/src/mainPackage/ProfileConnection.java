@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
- * @author Asus
+ * Connection class that handles database relation for profile class
+ * @author Cevat
  */
 public class ProfileConnection {
     
@@ -22,9 +22,9 @@ public class ProfileConnection {
     private static final String STORY_DATA = "story";
     
     /**
-     *
-     * @param profile
-     * @return
+     * Updates the profile table in database
+     * @param profile Profile object to be uploaded
+     * @return Boolean that show if it was successful or not
      */
     public static boolean updateProfileInClient(Profile profile){
         long userID = profile.getID();
@@ -36,9 +36,9 @@ public class ProfileConnection {
     }
     
     /**
-     *
-     * @param profile
-     * @return
+     * Updates the profile object with the info at database
+     * @param profile Profile object to be updated
+     * @return Boolean that show if it was successful or not
      */
     public static boolean updateProfileInDatabase(Profile profile){
         long userID = DBInterface.selectIntArray(PLAYER_DATA, "id", "username", profile.getName())[0];
@@ -48,9 +48,9 @@ public class ProfileConnection {
     }
     
     /**
-     *
-     * @param player
-     * @return
+     * Gets finished gamed of a player
+     * @param player ID of player
+     * @return Arraylist of lobbied
      */
     public static ArrayList<Lobby> getFinishedGames(long player){
         ResultSet r = DBInterface.getConnection().selectStuff("SELECT " + LOBBY_DATA +

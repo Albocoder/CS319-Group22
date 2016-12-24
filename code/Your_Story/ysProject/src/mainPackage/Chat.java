@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 
 /**
- *
+ * This class is used for handling chatting system of a lobby
  * @author Cevat
  */
 public class Chat {
@@ -20,9 +20,9 @@ public class Chat {
     private long threshold;
     
     /**
-     *
-     * @param lobby
-     * @param user
+     * Default constructor
+     * @param lobby ID of lobby
+     * @param user ID of user in client
      */
     public Chat(long lobby, long user){
         this.lobby = lobby;
@@ -30,8 +30,8 @@ public class Chat {
     }
 
     /**
-     *
-     * @return
+     * Returns all messages of chat
+     * @return Arraylist of messages
      */
     public ArrayList<Message> getMessages(){
         ArrayList<Message> result = ChatConnection.getMessages(lobby);
@@ -40,8 +40,8 @@ public class Chat {
     }
 
     /**
-     *
-     * @return
+     * Gets new messages
+     * @return Arraylist of messages
      */
     public ArrayList<Message> getNewMessages(){
         ArrayList<Message> result = ChatConnection.getMessages(lobby, threshold);
@@ -54,9 +54,9 @@ public class Chat {
     }
 
     /**
-     *
+     * Sends a new message to other clients
      * @param message
-     * @return
+     * @return ID of new message
      */
     public long sendMessage(String message){
         return ChatConnection.sendMessage(message, lobby, user);
