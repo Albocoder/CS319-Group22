@@ -71,7 +71,7 @@ public class Player {
      * @param aLobby
      * @return
      */
-    public boolean enterLobby (Lobby aLobby){
+    public Seat enterLobby (Lobby aLobby){
        
           boolean check = LobbyConnection.addPlayerToLobby(playerID, aLobby.getID());
           ArrayList<Seat> seats = LobbyConnection.getSeats(aLobby.getID());
@@ -80,10 +80,10 @@ public class Player {
             for (int i = 0; i < seats.size(); i++)
             {
                 if (seats.get(i).getPlayerID() == playerID)
-                    return true;
+                    return seats.get(i);
             }
           }
-          return false;
+          return null;
     }
 
     /**
