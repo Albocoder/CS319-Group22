@@ -129,7 +129,7 @@ public class Profile {
     }
     
     /**
-     * Pulls the profile info in database
+     * Pulls the profile info in database.
      */
     public void retrieveData(){
         
