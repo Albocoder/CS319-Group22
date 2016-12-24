@@ -35,16 +35,16 @@ public class ProfileView extends JFrame implements Viewable {
 		setVisible(true);
 	}
 	
-	public static void main(String [] args) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            	AccessHandler.userID = 6;
-            	AccessHandler.username = "e3";
-                new ProfileView(new Profile(6), null);
-            }
-        });
-	}
+//	public static void main(String [] args) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//            	AccessHandler.userID = 6;
+//            	AccessHandler.username = "e3";
+//                new ProfileView(new Profile(6), null);
+//            }
+//        });
+//	}
 
     /**
      *
@@ -90,6 +90,8 @@ public class ProfileView extends JFrame implements Viewable {
 	class ProfilePanel extends JPanel {
 		
 		private boolean editable;
+		JTextField bio;
+		FocusListener bioFocusListener;
 		
 		public ProfilePanel() {
 			editable = false;
@@ -100,9 +102,10 @@ public class ProfileView extends JFrame implements Viewable {
 			JPanel buttons = new JPanel();
 			JLabel picture = new JLabel();
 			JTextField username = new JTextField();
-			JTextField bio = new JTextField();
+			bio = new JTextField();
 			JButton edit = new JButton("Edit");
 			JButton exit = new JButton("Exit");
+			ButtonActions actions = new ButtonActions();
 			
 			setLayout(new BorderLayout());
 			setSize(700, 400);
@@ -124,56 +127,43 @@ public class ProfileView extends JFrame implements Viewable {
 			picturePanel.add(picture, BorderLayout.WEST);
 			picturePanel.add(textFields, BorderLayout.CENTER);
 			
+			bio.setEditable(editable);
+			bio.setText(theProfile.getDescription());
+			
 			textFields.setLayout(null);
 			textFields.add(username);
 			
 			picture.setIcon(new ImageIcon(createProfileImage(150, 150)));
 			
 			username.setBounds(10, 70, 160, 30);
-			username.setForeground(Color.gray);
-			username.setText("Username Here..");
-			username.setEditable(editable);
-			FocusListener nameFocusListener = new FocusListener() {
+			username.setText(AccessHandler.username);
+			username.setEditable(false);
+			bioFocusListener = new FocusListener() {
 				boolean focused = false;
 				@Override
 				public void focusGained(FocusEvent e) {
 					if (!focused) {
-						username.setForeground(Color.black);
-						username.setText("");
+						bio.setForeground(Color.black);
+						bio.setText("");
 					}
 					focused = true;
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
-					if (username.getText().trim().equals("")) {
-						username.setForeground(Color.gray);
-						username.setText("Username Here..");
+					if (bio.getText().trim().equals("")) {
+						bio.setForeground(Color.gray);
+						bio.setText("Write your bio here..");
 						focused = false;
 					}
 				}
 			};
 			
-			buttons.add(edit);
+			if (theProfile.getIsYours()) {
+				buttons.add(edit);
+			}
 			buttons.add(exit);
-			edit.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (((JButton) e.getSource()).getText().equals("Edit")) {
-						editable = true;
-						username.setEditable(editable);
-						username.addFocusListener(nameFocusListener);
-						((JButton) e.getSource()).setText("Save");
-					} else if (((JButton) e.getSource()).getText().equals("Save")) {
-						editable = false;
-						username.setEditable(editable);
-						username.removeFocusListener(nameFocusListener);
-						((JButton) e.getSource()).setText("Edit");
-						theProfile.setDescription(null);
-					} else if (((JButton) e.getSource()).getText().equals("Exit")) {
-						terminateView();
-					}
-				}
-			});
+			edit.addActionListener(actions);
+			exit.addActionListener(actions);
 		}
 		
 		public void paintComponent(Graphics g) {
@@ -199,11 +189,32 @@ public class ProfileView extends JFrame implements Viewable {
 			
 			return img;
 		}
+		
+		class ButtonActions implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if (((JButton) e.getSource()).getText().equals("Edit")) {
+					editable = true;
+					bio.setEditable(editable);
+					bio.addFocusListener(bioFocusListener);
+					((JButton) e.getSource()).setText("Save");
+				} else if (((JButton) e.getSource()).getText().equals("Save")) {
+					editable = false;
+					bio.setEditable(editable);
+					bio.removeFocusListener(bioFocusListener);
+					theProfile.setDescription(bio.getText());
+					theProfile.updateData();
+					((JButton) e.getSource()).setText("Edit");
+					theProfile.setDescription(null);
+				} else if (((JButton) e.getSource()).getText().equals("Exit")) {
+					terminateView();
+				}
+			}
+		}
 	}
 
 	class FinishedGames extends JPanel {
 		
-		final static int LIST_OBJECT_WIDTH = 270;
+		final static int LIST_OBJECT_WIDTH = 300;
 		final static int LIST_OBJECT_HEIGHT = 80;
 		ArrayList<Lobby> lobbies;
 		
@@ -273,12 +284,12 @@ public class ProfileView extends JFrame implements Viewable {
 			
 			g.setColor(Color.BLACK);
 			g.setFont(InGameView.boldFont);
-			g.drawString(timeline, LIST_OBJECT_HEIGHT + 20, 10);
+			g.drawString(timeline, LIST_OBJECT_HEIGHT + 20, 30);
 			
 			g.setFont(InGameView.font);
-			g.drawString(descriptionArray.get(0), LIST_OBJECT_HEIGHT + 10, 30);
-			if (descriptionArray.size() > 1) {
-				g.drawString(descriptionArray.get(1), LIST_OBJECT_HEIGHT + 10, 50);
+			g.drawString(descriptionArray.get(0), LIST_OBJECT_HEIGHT + 10, 50);
+			if (descriptionArray.size() > 2) {
+				g.drawString(descriptionArray.get(2), LIST_OBJECT_HEIGHT + 10, 70);
 			}
 			
 			return img;

@@ -22,8 +22,8 @@ public class InGameView extends JFrame implements Viewable {
     
 	private ViewManager referrer;
 	
-	static Font font;
-	static Font boldFont;
+	static Font font = new Font("Tahoma", Font.PLAIN, 12);;
+	static Font boldFont = new Font("Tahoma", Font.BOLD, 12);
 	static int LINE_HEIGHT;
 	JScrollPane scrollPane;
 	ChatView chat;
@@ -47,8 +47,6 @@ public class InGameView extends JFrame implements Viewable {
             Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
         }
 		
-		font = new Font("Tahoma", Font.PLAIN, 12);
-		boldFont = new Font("Tahoma", Font.BOLD, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		referrer = ref;
 		JPanel mainPanel = new JPanel();
