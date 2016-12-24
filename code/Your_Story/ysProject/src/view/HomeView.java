@@ -591,8 +591,6 @@ public class HomeView extends JFrame implements Viewable{
     private class ProfilePicUpdater implements Runnable{
         @Override
         public void run(){
-            //get new profile pic by update()-ing from 
-            //mainData.getPlayer().getProfile() and call showProfilePic()
             showProfilePic();
         }
     }

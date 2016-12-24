@@ -14,6 +14,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -168,8 +170,8 @@ public class LobbyView extends JFrame implements Viewable {
         kickPlayer.addActionListener(new KickPlayerListener());
         leaveLobby.addActionListener(new LeaveLobbyListener());
         startVote.addActionListener(new StartGameListener());
+        freeChars.addMouseListener(new CharacterSelectionMouseListener());
         ///////////////////////////////
-        
         add(theSeats,BorderLayout.CENTER);
         add(theRest,BorderLayout.EAST);
         pack();
@@ -308,7 +310,7 @@ public class LobbyView extends JFrame implements Viewable {
         seatsPanel.removeAll();
         Random r = new Random();
         int numberOfSeatsOccupied = 0;
-        
+        theLobby.updateSeats();
         for(Seat s:theLobby.getSeats()){         
             if(s.getIsOccupied())
                 numberOfSeatsOccupied++;
@@ -395,6 +397,7 @@ public class LobbyView extends JFrame implements Viewable {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
+                leaveLobby();
                 hideView();
                 referrer.showHomePage(null);
             }
@@ -464,6 +467,17 @@ public class LobbyView extends JFrame implements Viewable {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             startGame();
+        }
+    }
+    private class CharacterSelectionMouseListener extends MouseAdapter{
+        @Override
+        public void mouseReleased(MouseEvent e){
+            Character selected = theLobby.getFreeChars().get(
+                    freeCharList.indexOf(
+                            (JLabel)(e.getComponent().getComponentAt(e.getPoint()))
+                    ));
+            mySeat.setCharacter(selected);
+            showSeatsWaiting();
         }
     }
 }

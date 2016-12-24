@@ -145,6 +145,9 @@ public class Lobby {
      * @return
      */
     public ArrayList<Seat> getSeats() {return seats;}
+    
+    
+    public void updateSeats() {seats = LobbyConnection.getSeats(ID);}
 
     /**
      *
