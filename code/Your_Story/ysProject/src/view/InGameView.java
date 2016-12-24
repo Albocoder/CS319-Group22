@@ -22,8 +22,8 @@ public class InGameView extends JFrame implements Viewable {
     
 	private ViewManager referrer;
 	
-	static Font font;
-	static Font boldFont;
+	static Font font = new Font("Tahoma", Font.PLAIN, 12);;
+	static Font boldFont = new Font("Tahoma", Font.BOLD, 12);
 	static int LINE_HEIGHT;
 	JScrollPane scrollPane;
 	ChatView chat;
@@ -47,8 +47,6 @@ public class InGameView extends JFrame implements Viewable {
             Logger.getLogger(LobbyView.class.getName()).log(Level.SEVERE, null, ex);
         }
 		
-		font = new Font("Tahoma", Font.PLAIN, 12);
-		boldFont = new Font("Tahoma", Font.BOLD, 12);
 		LINE_HEIGHT = font.getSize() + 8;
 		referrer = ref;
 		JPanel mainPanel = new JPanel();
@@ -72,7 +70,6 @@ public class InGameView extends JFrame implements Viewable {
 		add(mainPanel);
 		addMouseListener(mv);
 		setMinimumSize(new Dimension(700, 400));
-		setVisible(true);
 		addComponentListener(new ComponentAdapter(){
 			public void componentResized(ComponentEvent e) {
 				scrollPane.setSize(new Dimension(mv.getWidth(), 
@@ -127,7 +124,7 @@ public class InGameView extends JFrame implements Viewable {
 		int width = 300;
 		Story s = l.getStory();
 		String storyString = s.getTimeline() + "\n" + s.getDescription();
-		ArrayList<String> messageContent = InGameView.fitString(storyString, width);
+		ArrayList<String> messageContent = InGameView.fitString(storyString, font, width);
 		int height = LINE_HEIGHT * (messageContent.size());
 		
 		BufferedImage img = new BufferedImage(width + 1, height + 1, BufferedImage.TYPE_INT_ARGB);
@@ -192,7 +189,7 @@ public class InGameView extends JFrame implements Viewable {
      * @param finalWidth
      * @return
      */
-    public static ArrayList<String> fitString(String s, int finalWidth) {
+    public static ArrayList<String> fitString(String s, Font font, int finalWidth) {
 		ArrayList<String> modified = new ArrayList<String>();
 		FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
 		
