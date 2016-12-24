@@ -76,10 +76,6 @@ public class LobbyView extends JFrame implements Viewable {
         } catch (Exception ex) {System.out.println("Error: "+ex.getMessage());}
         setTitle(aLobby.getName());
         
-        ///do the logic here and add this piece in top before views are created
-        mySeat = joinSeat();
-        ///////////////////////////////////////////////////////////////////////
-        
         if (aLobby == null)
             throw new NullPointerException("Lobby object is null can't get data");
         logoutOnExitWithDialogue();
@@ -87,6 +83,7 @@ public class LobbyView extends JFrame implements Viewable {
         
         referrer = ref;
         theLobby = aLobby;
+        mySeat = joinSeat();
         theStory = aLobby.getStory();
         voter = new VotingHandler(theLobby.getID());
         
@@ -258,6 +255,18 @@ public class LobbyView extends JFrame implements Viewable {
                 "As if it was so ez!!!", JOptionPane.PLAIN_MESSAGE,
                 new ImageIcon("./img/operationDenied.png"));
     }
+    private void startGame(){
+        if(inGamePlayers.get(0).getPlayerID()==HomePage.getPlayer().getPlayerID()){
+            theLobby.setState(Lobby.LOBBY_INGAME);
+            referrer.showOngoingGame(theLobby);
+        }
+        else{
+            JOptionPane.showMessageDialog(null,
+                "A-a-aaaa... You don't have permission to do that!",
+                "As if it was so ez!!!", JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon("./img/operationDenied.png"));
+        }
+    }
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
@@ -385,7 +394,6 @@ public class LobbyView extends JFrame implements Viewable {
             public void windowClosing(WindowEvent windowEvent) {
                 hideView();
                 referrer.showHomePage(null);
-                //System.exit(0);
             }
         });
     }
@@ -398,12 +406,6 @@ public class LobbyView extends JFrame implements Viewable {
                 inGamePlayers.add(s.getPlayer());
                 kickPlayer.addItem(s.getPlayer().getProfile().getName());
             }
-    }
-    private void startGame(){
-        if(inGamePlayers.get(0).getPlayerID()==HomePage.getPlayer().getPlayerID()){
-            theLobby.setState(Lobby.LOBBY_INGAME);
-            referrer.showOngoingGame(theLobby);
-        }
     }
     private class SeatUpdater implements Runnable{
         @Override

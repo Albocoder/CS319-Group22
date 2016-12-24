@@ -68,7 +68,8 @@ public class Lobby {
         votingHandler = new VotingHandler(ID);
         charList = LobbyConnection.getCharacters(ID);
         System.out.println("In");
-        seats = LobbyConnection.getSeats(ID);
+        if(state != 2)
+            seats = LobbyConnection.getSeats(ID);
         System.out.println("Out");
     }
     
