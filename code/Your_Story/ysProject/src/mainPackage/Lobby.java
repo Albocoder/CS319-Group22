@@ -73,7 +73,7 @@ public class Lobby {
     }
     
     /**
-     *
+     * Constructor of Lobby
      * @param ID
      * @param storyID
      */
@@ -89,7 +89,7 @@ public class Lobby {
     }
             
     /**
-     *
+     * Sample Lobby Constructo, it is not used. 
      */
     public Lobby(){
         this.name = "Sample";
@@ -284,7 +284,7 @@ public class Lobby {
     
     /**
      *
-     * @return
+     * @return returns list of not chosen characters in the story
      */
     public ArrayList<Character> getFreeChars(){
         ArrayList<Character> temp = new ArrayList<Character>();
@@ -296,9 +296,9 @@ public class Lobby {
     }
     
     /**
-     *
-     * @param name
-     * @param s
+     * Creates a new lobby, assigns the player executed this method in first seat. 
+     * @param name name of story
+     * @param s : story object
      * @return
      */
     public static Lobby createLobby(String name, Story s){
