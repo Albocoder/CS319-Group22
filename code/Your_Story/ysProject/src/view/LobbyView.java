@@ -54,6 +54,7 @@ public class LobbyView extends JFrame implements Viewable {
     private JPanel freeChars;
     private ArrayList<JLabel> freeCharList;
     private int myTime;
+    private ArrayList<Player> inGamePlayers;
     
     private ArrayList<JPanel> seats = new ArrayList<JPanel>();
     
@@ -161,7 +162,9 @@ public class LobbyView extends JFrame implements Viewable {
         botWrapper.add(botdown,BorderLayout.CENTER);
         botWrapper.add(divider,BorderLayout.SOUTH);
         theRest.add(botWrapper,BorderLayout.SOUTH);
-        
+        inGamePlayers = new ArrayList<>();
+        showKickable();
+        updateView();
         //Listeners go here
         
         ///////////////////////////////
@@ -170,12 +173,7 @@ public class LobbyView extends JFrame implements Viewable {
         add(theRest,BorderLayout.EAST);
         pack();
         setVisible(true);
-    }    
-    /*
-    public static void main(String args[]){
-        new LobbyView(new Lobby("Erin\'s Lobby",14,0,0,null,5), null);
     }
-    */
 
     /**
      *
@@ -224,13 +222,25 @@ public class LobbyView extends JFrame implements Viewable {
 
     @Override
     public void updateView() {
-        /*
-        ScheduledExecutorService chatExec = Executors.
+        ScheduledExecutorService seatExec = Executors.
             newSingleThreadScheduledExecutor();
-            
-        chatExec.scheduleAtFixedRate(
-            new (),5,5,TimeUnit.SECONDS);
-        */
+        
+        ScheduledExecutorService timeExec = Executors.
+            newSingleThreadScheduledExecutor();
+        
+        ScheduledExecutorService stateUpdate = Executors.
+            newSingleThreadScheduledExecutor();
+        
+        
+        //RUNNING ROUTINES    
+        seatExec.scheduleAtFixedRate(
+            new SeatUpdater(),3,3,TimeUnit.SECONDS);
+        
+        timeExec.scheduleAtFixedRate(
+            new TimeUpdater(),1,1,TimeUnit.SECONDS);
+        
+        stateUpdate.scheduleAtFixedRate(
+            new StatusUpdater(),4,4,TimeUnit.SECONDS);
     }
 
     @Override
@@ -241,6 +251,8 @@ public class LobbyView extends JFrame implements Viewable {
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
         freeOnes = theLobby.getFreeChars();
+        freeCharList.removeAll(freeCharList);
+        freeChars.removeAll();
         freeChars.setLayout(new GridLayout((freeOnes.size()/3),3));
         JLabel rand = new JLabel();
         try {
@@ -349,7 +361,13 @@ public class LobbyView extends JFrame implements Viewable {
         }
         seatsPanel.updateUI();
     }
-    
+    private void checkStatus(){
+        int newState = LobbyConnection.getState(theLobby.getID());
+        this.setState(newState);
+        if(newState == Lobby.LOBBY_INGAME){
+            referrer.showOngoingGame(this.theLobby);
+        }
+    }
     private void logoutOnExitWithDialogue(){
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -360,5 +378,38 @@ public class LobbyView extends JFrame implements Viewable {
                 //System.exit(0);
             }
         });
+    }
+    private void showKickable(){
+        inGamePlayers.removeAll(inGamePlayers);
+        while( kickPlayer.getItemCount() > 1)
+            kickPlayer.removeItemAt(1);
+        for(Seat s: theLobby.getSeats())
+            if(s.getPlayer() != null){
+                inGamePlayers.add(s.getPlayer());
+                kickPlayer.addItem(s.getPlayer().getProfile().getName());
+            }
+    }
+    
+    private class SeatUpdater implements Runnable{
+        @Override
+        public void run(){
+            showSeatsWaiting();
+            showFreeCharacters();
+            showKickable();
+        }
+    }
+    private class TimeUpdater implements Runnable{
+        @Override
+        public void run(){
+            if (myTime > 0)
+                myTime--;
+            timeLeft.setText(""+myTime);
+        }
+    }
+    private class StatusUpdater implements Runnable{
+        @Override
+        public void run(){
+            checkStatus();
+        }
     }
 }

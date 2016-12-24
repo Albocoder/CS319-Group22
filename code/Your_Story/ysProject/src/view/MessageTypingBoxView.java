@@ -14,7 +14,7 @@ import mainPackage.*;
 
 /**
  *
- * @author kaxell
+ * @author ali
  */
 public class MessageTypingBoxView extends JPanel implements KeyListener, MouseListener {
 	
@@ -52,7 +52,6 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
 				l.getChat().sendMessage(typingString);
 				typingString = "";
 				repaint();
-//				panel.repaint();
 				addNotify();
 			}
 		});
@@ -162,16 +161,23 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
      *
      * @param e
      */
-    public void keyPressed(KeyEvent e) {}
+    @Override
+	public void keyTyped(KeyEvent e) {}
 	
     /**
      *
      * @param e
      */
-    @Override
-	public void keyTyped(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
 		if (typingBarIsActive) {
-			typingString += e.getKeyChar();
+			if (e.getKeyCode() > 0x28 && e.getKeyCode() < 0x60 ||
+					e.getKeyCode() == KeyEvent.VK_SPACE ||
+					e.getKeyCode() == KeyEvent.VK_ENTER) {
+				typingString += e.getKeyChar();
+			} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && typingString.length() != 0) {
+				int length = typingString.length();
+				typingString = typingString.substring(0, length - 1);
+			}
 			repaint();
 		}
 	}
@@ -189,7 +195,6 @@ public class MessageTypingBoxView extends JPanel implements KeyListener, MouseLi
      */
     @Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println(e.getX() + ", " + e.getY());
 		if (messageTypingBar.contains(new Point(e.getX(), e.getY()))) {
 			addNotify();
 			if (!typingBarIsActive) {
