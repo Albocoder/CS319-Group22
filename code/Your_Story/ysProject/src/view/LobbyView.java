@@ -367,8 +367,11 @@ public class LobbyView extends JFrame implements Viewable {
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
             */
-
-            JLabel storyTimeline = new JLabel("Selected: "+s.getCharacter().getName());
+            JLabel storyTimeline;
+            if(s.getCharacter()!=null)
+                storyTimeline = new JLabel("Selected: "+s.getCharacter().getName());
+            else
+                storyTimeline = new JLabel("Selected: random");
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
             toFill.add(storyTimeline,BorderLayout.CENTER);
@@ -416,13 +419,19 @@ public class LobbyView extends JFrame implements Viewable {
         }
     }
     private class TimeUpdater implements Runnable{
+        Random r = new Random();
         @Override
         public void run(){
             if (myTime > 0)
                 myTime--;
             else{
+                //cage in the player
+                setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 kickPlayer.setEnabled(false);
                 leaveLobby.setEnabled(false);
+                if(mySeat.getCharacter()==null){
+                    mySeat.setCharacter(theLobby.getFreeChars().get(r.nextInt(theLobby.getFreeChars().size())));
+                }
             }
             timeLeft.setText(""+myTime);
         }
