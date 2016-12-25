@@ -111,6 +111,7 @@ public class LobbyView extends JFrame implements Viewable {
         
         showFreeCharacters();
         JScrollPane charScroller = new JScrollPane(freeChars);
+        charScroller.setPreferredSize(new Dimension(400,400));
         charScroller.getVerticalScrollBar().setUnitIncrement(5);
         theRest.add(charScroller,BorderLayout.CENTER);
         
@@ -271,6 +272,7 @@ public class LobbyView extends JFrame implements Viewable {
     }
     private void showFreeCharacters(){
         ArrayList<Character> freeOnes;
+        theLobby.updateCharacters();
         freeOnes = theLobby.getFreeChars();
         freeCharList.removeAll(freeCharList);
         freeChars.removeAll();
@@ -473,12 +475,15 @@ public class LobbyView extends JFrame implements Viewable {
     private class CharacterSelectionMouseListener extends MouseAdapter{
         @Override
         public void mouseReleased(MouseEvent e){
+            if(e.getComponent()==freeCharList.get(0))
+                return;
             System.out.println("view.LobbyView.CharacterSelectionMouseListener.mouseReleased()");
             Character selected = theLobby.getFreeChars().get(
-                    freeCharList.indexOf((JLabel)(e.getComponent())));
+                    freeCharList.indexOf(e.getComponent())-1);
             mySeat.setCharacter(selected);
             System.out.println("salkdfsdklfhklasdjhfaskljdhflakjsdhlkfjas");
             showSeatsWaiting();
+            showFreeCharacters();
         }
     }
 }
