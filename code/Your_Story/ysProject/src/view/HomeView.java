@@ -425,13 +425,15 @@ public class HomeView extends JFrame implements Viewable{
             lobbyName.setVerticalAlignment(JLabel.NORTH);
             toFill.add(lobbyName,BorderLayout.NORTH);
 
-           /*
-            JLabel lobbyQuota = new JLabel(""+l.getSeats().size());
+            int tmpQuota = l.getSeats().size()-l.getFreeChars().size();
+            if(tmpQuota<0)
+                tmpQuota = 0;
+            JLabel lobbyQuota = new JLabel(tmpQuota+"/"+l.getSeats().size());
             lobbyQuota.setForeground(Color.WHITE);
             lobbyQuota.setHorizontalAlignment(JLabel.RIGHT);
             lobbyQuota.setFont(new Font("Times New Roman",Font.PLAIN,14));
             toFill.add(lobbyQuota,BorderLayout.SOUTH);
-            */
+            
             JLabel storyTimeline = new JLabel("Timeline: "+l.getStory().getTimeline());
             storyTimeline.setForeground(Color.WHITE);
             storyTimeline.setHorizontalAlignment(JLabel.LEFT);
