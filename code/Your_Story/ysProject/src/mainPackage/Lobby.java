@@ -302,6 +302,8 @@ public class Lobby {
         return temp;
     }
     
+    public void updateCharacters(){charList = LobbyConnection.getCharacters(ID);}
+    
     /**
      * Creates a new lobby, assigns the player executed this method in first seat. 
      * @param name name of story
