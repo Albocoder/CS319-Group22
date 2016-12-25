@@ -183,6 +183,7 @@ public class Seat {
     public void setCharacter(Character character)
     {
         this.character = character;//maybe deleted dd
+        charID = character.getCharID();
         LobbyConnection.assignCharacterToPlayer(playerID, charID, lobbyID);
     
     }
