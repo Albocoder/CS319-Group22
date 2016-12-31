@@ -2,8 +2,7 @@
 <center><img src="http://erin.avllazagaj.ug.bilkent.edu.tr/YS.png" width="150" height="150"></center><br>
 Object-Oriented Software Engineering Fall 2016. This is a chat-based role player game. The player can team up with other players and by messaging develop a story on given premade header of a story. The player can also create their own lobby. For more check the Analysis Report in the docs folder<hr />
 [![Build Status](https://travis-ci.org/Albocoder/CS319Project-YourStory.svg?branch=master)](https://travis-ci.org/Albocoder/CS319Project-YourStory)
-
-<br /><br />
+<br />
 ### Members:
 <ul>
 <li>ALI GÜNEŞ</li>
