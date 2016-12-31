@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+import accepters.*;
 /**
  *
- * @author black-knight
+ * @author Erin Avllazagaj
+ * 
+ * This main class is just calling the AcceptersManager with the maximum backlog
  */
-public class YsServer {
 
-    /**
-     * @param args the command line arguments
-     */
+public class YsServer {
+    
+    //atm the project is set to run at port 1337 with maximum of 20 threads
     public static void main(String[] args) {
-        // TODO code application logic here
+        new AcceptersManager(Integer.parseInt(args[0]));
     }
     
 }
