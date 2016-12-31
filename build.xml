@@ -10,6 +10,10 @@
 <project name="ysProject" default="default" basedir="./code/Your_Story/ysProject">
     <description>Builds, tests, and runs the project ysProject.</description>
     <import file="./code/Your_Story/ysProject/nbproject/build-impl.xml"/>
+        <fileset dir="./code/Your_Story/ysProject/">
+            <include name="/img/*.png" />
+            <include name="/img/*.jpg" />
+        </fileset>
     <!--
 
     There exist several targets which are by default empty and which can be
