@@ -2,7 +2,7 @@
 <center><img src="http://erin.avllazagaj.ug.bilkent.edu.tr/YS.png" width="150" height="150"></center><br>
 Object-Oriented Software Engineering Fall 2016. This is a chat-based role player game. The player can team up with other players and by messaging develop a story on given premade header of a story. The player can also create their own lobby. For more check the Analysis Report in the docs folder<hr />
 [![Build Status](https://travis-ci.org/Albocoder/CS319Project-YourStory.svg?branch=master)](https://travis-ci.org/Albocoder/CS319Project-YourStory)
-image:https://img.shields.io/badge/GITTER-join%20chat-green.svg[link="https://gitter.im/YourStoryGame/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
+[![Chat Room](https://img.shields.io/badge/GITTER-join%20chat-green.svg)]https://gitter.im/YourStoryGame/Lobby)]
 <br />
 ### Members:
 <ul>
